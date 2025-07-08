@@ -1,0 +1,74 @@
+{
+    "main": "action_index.html",
+    "chapters": [
+        {
+            "title": "Application settings",
+            "file": "action_Application settings.html"
+        },
+        {
+            "title": "Check for update",
+            "file": "action_Check for update.html"
+        },
+        {
+            "title": "About",
+            "file": "action_About.html"
+        },
+        {
+            "title": "About Qt",
+            "file": "action_About Qt.html"
+        },
+        {
+            "title": "License",
+            "file": "action_License.html"
+        },
+        {
+            "title": "Release notes",
+            "file": "action_Release notes.html"
+        },
+        {
+            "title": "Help",
+            "file": "action_Help.html"
+        },
+        {
+            "title": "Quit",
+            "file": "action_Quit.html"
+        },
+        {
+            "title": "Cloud session manager",
+            "file": "action_Cloud session manager.html"
+        },
+        {
+            "title": "Cloud file manager",
+            "file": "action_Cloud file manager.html"
+        },
+        {
+            "title": "New",
+            "file": "action_New.html"
+        },
+        {
+            "title": "Open",
+            "file": "action_Open.html"
+        },
+        {
+            "title": "Import",
+            "file": "action_Import.html"
+        },
+        {
+            "title": "Compare",
+            "file": "action_Compare.html"
+        },
+        {
+            "title": "Save",
+            "file": "action_Save.html"
+        },
+        {
+            "title": "Save as",
+            "file": "action_Save as.html"
+        },
+        {
+            "title": "Close",
+            "file": "action_Close.html"
+        }
+    ]
+}
+

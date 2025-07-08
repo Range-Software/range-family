@@ -1,0 +1,9 @@
+{
+    "main": "index.html",
+    "chapters": [
+        {
+            "title": "Rodinný strom",
+            "file": "family_tree.html"
+        }
+    ]
+}

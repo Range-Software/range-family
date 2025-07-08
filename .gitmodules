@@ -1,0 +1,20 @@
+[submodule "range-base-lib"]
+	path = src/range-base-lib
+	url = ../range-base-lib
+	branch = main
+[submodule "range-cloud-lib"]
+	path = src/range-cloud-lib
+	url = ../range-cloud-lib
+	branch = main
+[submodule "range-family-lib"]
+	path = src/range-family-lib
+	url = ../range-family-lib
+	branch = main
+[submodule "src/range-build-tools"]
+	path = src/range-build-tools
+	url = ../range-build-tools
+	branch = main
+[submodule "src/range-gui-lib"]
+	path = src/range-gui-lib
+	url = ../range-gui-lib
+	branch = main
