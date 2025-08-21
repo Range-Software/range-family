@@ -85,16 +85,9 @@ add_dependencies(family range-base-lib range-cloud-lib range-gui-lib)
 
 target_link_libraries(family
     PRIVATE
-        Qt6::Core
-        Qt6::Concurrent
-        Qt6::Network
-        Qt6::HttpServer
-        Qt6::Widgets
-        common_defines
-        range-base-lib
-        range-cloud-lib
         range-gui-lib
         range-family-lib
+        common_defines
 )
 
 set_target_properties(family

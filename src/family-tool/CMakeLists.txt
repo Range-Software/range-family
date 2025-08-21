@@ -10,8 +10,6 @@ add_dependencies(family-tool range-base-lib range-family-lib)
 
 target_link_libraries(family-tool
     PRIVATE
-        Qt6::Core
-        common_defines
-        range-base-lib
         range-family-lib
+        common_defines
 )
