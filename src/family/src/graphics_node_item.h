@@ -46,6 +46,8 @@ class GraphicsNodeItem : public QAbstractGraphicsShapeItem
 
         qreal getHeight() const;
 
+        QPointF getCenterPosition() const;
+
         void setHighlighted(bool highlighted);
 
 };

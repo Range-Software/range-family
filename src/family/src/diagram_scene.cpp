@@ -1,5 +1,7 @@
 #include <QGraphicsPathItem>
 
+#include <rbl_logger.h>
+
 #include "diagram_scene.h"
 #include "graphics_node_item.h"
 #include "graphics_edge_item.h"
@@ -11,6 +13,7 @@ DiagramScene::DiagramScene(const FTree *familyTree, const QUuid &itemId, QObject
     , familyTree(familyTree)
     , itemId(itemId)
 {
+    R_LOG_TRACE_IN;
     this->populate();
 
     QObject::connect(this->familyTree,&FTree::personAdded,this,&DiagramScene::onPersonAdded);
@@ -22,12 +25,15 @@ DiagramScene::DiagramScene(const FTree *familyTree, const QUuid &itemId, QObject
     QObject::connect(this->familyTree,&FTree::fileLoaded,this,&DiagramScene::onFileLoaded);
 
     QObject::connect(this,&DiagramScene::selectionChanged,this,&DiagramScene::onSelectionChanged);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::setItemId(const QUuid &itemId)
 {
+    R_LOG_TRACE_IN;
     if (this->itemId == itemId)
     {
+        R_LOG_TRACE_OUT;
         return;
     }
     this->itemId = itemId;
@@ -35,19 +41,24 @@ void DiagramScene::setItemId(const QUuid &itemId)
     this->populate();
 
     emit this->itemIdChanged(this->itemId);
+    R_LOG_TRACE_OUT;
 }
 
 const FTreeModel &DiagramScene::getTreeModel() const
 {
+    R_LOG_TRACE_IN;
     return this->treeModel;
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::populate()
 {
+    R_LOG_TRACE_IN;
     this->clear();
 
     if (!this->familyTree->containsPerson(this->itemId) && !this->familyTree->containsRelation(this->itemId))
     {
+        R_LOG_TRACE_OUT;
         return;
     }
 
@@ -144,45 +155,61 @@ void DiagramScene::populate()
 
     this->setSceneRect(sceneSize);
     emit this->populated();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onPersonAdded(const FPerson &)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onPersonChanged(const FPerson &)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onPersonRemoved(QUuid)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onRelationAdded(const FRelation &)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onRelationChanged(const FRelation &)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onRelationRemoved(QUuid)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onFileLoaded(const QString &)
 {
+    R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramScene::onSelectionChanged()
 {
+    R_LOG_TRACE_IN;
     QList<QUuid> selectedPersonsIds;
     QList<QUuid> selectedRelationsIds;
 
@@ -200,4 +227,5 @@ void DiagramScene::onSelectionChanged()
 
     emit this->personSelectionChanged(selectedPersonsIds);
     emit this->relationSelectionChanged(selectedRelationsIds);
+    R_LOG_TRACE_OUT;
 }

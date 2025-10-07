@@ -33,6 +33,8 @@ class DiagramWidget : public QWidget
 
         void onExportTriggered();
 
+        void onItemIdActivated(const QUuid &itemId);
+
         void onItemIdChanged(const QUuid &itemId);
 
         void onScenePopulated();

@@ -16,6 +16,7 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
     , familyTree{familyTree}
     , itemId{itemId}
 {
+    R_LOG_TRACE_IN;
     QVBoxLayout *mainLayout = new QVBoxLayout;
     this->setLayout(mainLayout);
 
@@ -38,6 +39,7 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
 
     this->scene = new DiagramScene(familyTree,this->itemId);
     this->view->setScene(this->scene);
+    this->view->centerOnItem(itemId);
 
     QObject::connect(exportAction,&QAction::triggered,this,&DiagramWidget::onExportTriggered);
 
@@ -46,27 +48,32 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
     QObject::connect(this->scene,&DiagramScene::personSelectionChanged,this,&DiagramWidget::onPersonSelectionChanged);
     QObject::connect(this->scene,&DiagramScene::relationSelectionChanged,this,&DiagramWidget::onRelationSelectionChanged);
 
-    QObject::connect(this->view,&DiagramView::itemIdActivated,this,&DiagramWidget::onItemIdChanged);
+    QObject::connect(this->view,&DiagramView::itemIdActivated,this,&DiagramWidget::onItemIdActivated);
     QObject::connect(this->view,&DiagramView::scaleChanged,scaleControll,&ScaleControllWidget::setScale);
 
     QObject::connect(scaleControll,&ScaleControllWidget::factorChanged,this,&DiagramWidget::onScaleFactorChanged);
+
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::setItemId(const QUuid &itemId)
 {
+    R_LOG_TRACE_IN;
     if (this->itemId == itemId)
     {
+        R_LOG_TRACE_OUT;
         return;
     }
     this->itemId = itemId;
     this->scene->setItemId(this->itemId);
-    this->view->centerOnItem(this->itemId);
 
     emit this->itemIdChanged(this->itemId);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::onExportTriggered()
 {
+    R_LOG_TRACE_IN;
     QString fileName = RApplication::instance()->getApplicationSettings()->getDataDir() + QDir::separator() + this->itemId.toString(QUuid::WithoutBraces) + ".xml";
     fileName = QFileDialog::getSaveFileName(this,
                                             tr("Export family tree to selected file"),
@@ -89,31 +96,49 @@ void DiagramWidget::onExportTriggered()
                            error.getMessage().toUtf8().constData());
         }
     }
+    R_LOG_TRACE_OUT;
+}
+
+void DiagramWidget::onItemIdActivated(const QUuid &itemId)
+{
+    R_LOG_TRACE_IN;
+    this->setItemId(itemId);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::onItemIdChanged(const QUuid &itemId)
 {
-    this->setItemId(itemId);
+    R_LOG_TRACE_IN;
+    this->view->centerOnItem(itemId);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::onScenePopulated()
 {
+    R_LOG_TRACE_IN;
     QRectF sceneRect(this->scene->sceneRect());
 
     this->view->centerOn(sceneRect.center());
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::onPersonSelectionChanged(const QList<QUuid> &selectedPersonsIds)
 {
+    R_LOG_TRACE_IN;
     emit this->personSelectionChanged(selectedPersonsIds);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::onRelationSelectionChanged(const QList<QUuid> &selectedRelationsIds)
 {
+    R_LOG_TRACE_IN;
     emit this->relationSelectionChanged(selectedRelationsIds);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramWidget::onScaleFactorChanged(double factor)
 {
+    R_LOG_TRACE_IN;
     this->view->zoom(factor,QGraphicsView::AnchorViewCenter);
+    R_LOG_TRACE_OUT;
 }

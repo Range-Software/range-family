@@ -84,6 +84,11 @@ qreal GraphicsNodeItem::getHeight() const
     return this->h;
 }
 
+QPointF GraphicsNodeItem::getCenterPosition() const
+{
+    return QPointF(this->x + this->w/2.0,this->y + this->h/2.0);
+}
+
 void GraphicsNodeItem::setHighlighted(bool highlighted)
 {
     this->highlighted = highlighted;

@@ -3,6 +3,8 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 
+#include <rbl_logger.h>
+
 #include "diagram_dialog.h"
 
 DiagramDialog::DiagramDialog(FTree *familyTree, const QUuid &itemId, QWidget *parent)
@@ -10,6 +12,7 @@ DiagramDialog::DiagramDialog(FTree *familyTree, const QUuid &itemId, QWidget *pa
     , familyTree{familyTree}
     , itemId{itemId}
 {
+    R_LOG_TRACE_IN;
     QIcon closeIcon(":/icons/action/pixmaps/range-close.svg");
 
     this->setWindowTitle(this->itemId);
@@ -36,12 +39,16 @@ DiagramDialog::DiagramDialog(FTree *familyTree, const QUuid &itemId, QWidget *pa
 
     QObject::connect(this->familyTree,&FTree::personRemoved,this,&DiagramDialog::opPersonRemoved);
     QObject::connect(this->familyTree,&FTree::relationRemoved,this,&DiagramDialog::opRelationRemoved);
+
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::setItemId(const QUuid &itemId)
 {
+    R_LOG_TRACE_IN;
     if (this->itemId == itemId)
     {
+        R_LOG_TRACE_OUT;
         return;
     }
     this->itemId = itemId;
@@ -49,10 +56,12 @@ void DiagramDialog::setItemId(const QUuid &itemId)
     this->diagram->setItemId(this->itemId);
 
     emit this->itemIdChanged(this->itemId);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::setWindowTitle(const QUuid &itemId)
 {
+    R_LOG_TRACE_IN;
     QString itemName;
     if (this->familyTree->containsPerson(itemId))
     {
@@ -65,35 +74,47 @@ void DiagramDialog::setWindowTitle(const QUuid &itemId)
     itemName += " " + itemId.toString(QUuid::WithBraces);
 
     this->QDialog::setWindowTitle(tr("Family tree") + " - " + itemName);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::onItemIdChanged(const QUuid &itemId)
 {
+    R_LOG_TRACE_IN;
     this->setItemId(itemId);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::opPersonRemoved(const QUuid personId)
 {
+    R_LOG_TRACE_IN;
     if (personId == this->itemId)
     {
         this->done(QDialog::Rejected);
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::opRelationRemoved(const QUuid relationId)
 {
+    R_LOG_TRACE_IN;
     if (relationId == this->itemId)
     {
         this->done(QDialog::Rejected);
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::onPersonSelectionChanged(const QList<QUuid> &selectedPersonsIds)
 {
+    R_LOG_TRACE_IN;
     emit this->personSelectionChanged(selectedPersonsIds);
+
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramDialog::onRelationSelectionChanged(const QList<QUuid> &selectedRelationsIds)
 {
+    R_LOG_TRACE_IN;
     emit this->relationSelectionChanged(selectedRelationsIds);
+    R_LOG_TRACE_OUT;
 }

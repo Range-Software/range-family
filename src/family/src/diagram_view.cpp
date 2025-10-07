@@ -23,6 +23,7 @@ DiagramView::DiagramView(FTree *familyTree, QWidget *parent)
     , familyTree{familyTree}
     , savedScaleValue{1.0}
 {
+    R_LOG_TRACE_IN;
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     this->setMouseTracking(true);
@@ -55,38 +56,42 @@ DiagramView::DiagramView(FTree *familyTree, QWidget *parent)
 
     this->removeItem = this->addAction(DiagramView::tr("Remove"));
     QObject::connect(this->removeItem,&QAction::triggered,this,&DiagramView::onRemoveItem);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::centerOnItem(const QUuid &itemId)
 {
+    R_LOG_TRACE_IN;
     foreach (const QGraphicsItem *item, this->items())
     {
         if (const GraphicsPersonItem *personItem = qgraphicsitem_cast<const GraphicsPersonItem*>(item))
         {
             if (personItem->getPersonId() == itemId)
             {
-                QPointF position = personItem->pos();
-                this->centerOn(position);
+                this->centerOn(personItem->getCenterPosition());
             }
         }
         if (const GraphicsRelationItem *relationItem = qgraphicsitem_cast<const GraphicsRelationItem*>(item))
         {
             if (relationItem->getRelationId() == itemId)
             {
-
+                this->centerOn(relationItem->getCenterPosition());
             }
         }
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::zoom(double factor, ViewportAnchor anchor)
 {
+    R_LOG_TRACE_IN;
     this->savedScaleValue *= factor;
     const QGraphicsView::ViewportAnchor anchorSave = this->transformationAnchor();
     this->setTransformationAnchor(anchor);
     this->scale(factor,factor);
     this->setTransformationAnchor(anchorSave);
     emit this->scaleChanged(this->savedScaleValue);
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::mousePressEvent(QMouseEvent *event)
@@ -101,11 +106,13 @@ void DiagramView::mousePressEvent(QMouseEvent *event)
         foreach (const GraphicsPersonItem *personItem, this->pickedPersons)
         {
             emit this->itemIdActivated(personItem->getPersonId());
+            R_LOG_TRACE_OUT;
             return;
         }
         foreach (const GraphicsRelationItem *relationItem, this->pickedRelations)
         {
             emit this->itemIdActivated(relationItem->getRelationId());
+            R_LOG_TRACE_OUT;
             return;
         }
     }
@@ -183,6 +190,7 @@ void DiagramView::wheelEvent(QWheelEvent *event)
 
 void DiagramView::processPickedItems(const QList<QGraphicsItem *> pickedItems)
 {
+    R_LOG_TRACE_IN;
     this->pickedPersons.clear();
     this->pickedRelations.clear();
 
@@ -197,10 +205,12 @@ void DiagramView::processPickedItems(const QList<QGraphicsItem *> pickedItems)
             this->pickedRelations.append(relationItem);
         }
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::processSelectedItems(const QList<QGraphicsItem *> selectedItems)
 {
+    R_LOG_TRACE_IN;
     this->selectedPersons.clear();
     this->selectedRelations.clear();
 
@@ -218,10 +228,12 @@ void DiagramView::processSelectedItems(const QList<QGraphicsItem *> selectedItem
             }
         }
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onNewPartnerRelation()
 {
+    R_LOG_TRACE_IN;
     QList<QUuid> partners;
     foreach (const GraphicsPersonItem *personItem, this->pickedPersons)
     {
@@ -233,10 +245,12 @@ void DiagramView::onNewPartnerRelation()
 
     RelationAddDialog relationAddDialog(this->familyTree,newRelation,this);
     relationAddDialog.exec();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onNewChildRelation()
 {
+    R_LOG_TRACE_IN;
     QList<QUuid> children;
     foreach (const GraphicsPersonItem *personItem, this->pickedPersons)
     {
@@ -248,10 +262,12 @@ void DiagramView::onNewChildRelation()
 
     RelationAddDialog relationAddDialog(this->familyTree,newRelation,this);
     relationAddDialog.exec();
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onNewPartner()
 {
+    R_LOG_TRACE_IN;
     foreach (const GraphicsRelationItem *relationItem, this->pickedRelations)
     {
         PersonAddDialog personAddDialog(this->familyTree,FPerson(),this);
@@ -270,10 +286,12 @@ void DiagramView::onNewPartner()
             RJobManager::getInstance().submit(toolTask);
         }
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onNewChild()
 {
+    R_LOG_TRACE_IN;
     foreach (const GraphicsRelationItem *relationItem, this->pickedRelations)
     {
         PersonAddDialog personAddDialog(this->familyTree,FPerson(),this);
@@ -292,10 +310,12 @@ void DiagramView::onNewChild()
             RJobManager::getInstance().submit(toolTask);
         }
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onMergePersons()
 {
+    R_LOG_TRACE_IN;
     QList<QUuid> persons;
     foreach (const GraphicsPersonItem *personItem, this->selectedPersons)
     {
@@ -315,10 +335,12 @@ void DiagramView::onMergePersons()
     {
         this->familyTree->mergePersons(persons);
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onEditItem()
 {
+    R_LOG_TRACE_IN;
     foreach (const GraphicsPersonItem *personItem, this->pickedPersons)
     {
         PersonEditDialog personEditDialog(this->familyTree,this->familyTree->findPerson(personItem->getPersonId()),this);
@@ -329,10 +351,12 @@ void DiagramView::onEditItem()
         RelationEditDialog relationEditDialog(this->familyTree,this->familyTree->findRelation(relationItem->getRelationId()),this);
         relationEditDialog.exec();
     }
+    R_LOG_TRACE_OUT;
 }
 
 void DiagramView::onRemoveItem()
 {
+    R_LOG_TRACE_IN;
     foreach (const GraphicsPersonItem *personItem, this->pickedPersons)
     {
         FPerson person = this->familyTree->findPerson(personItem->getPersonId());
@@ -375,4 +399,5 @@ void DiagramView::onRemoveItem()
             RJobManager::getInstance().submit(toolTask);
         }
     }
+    R_LOG_TRACE_OUT;
 }
