@@ -103,6 +103,22 @@ add_custom_target(deploy-qt ALL
     VERBATIM
 )
 
+# Put family-tool into Family.app/Contents/MacOS on macOS ---------------------
+if(APPLE)
+    # This copies the already-built family-tool next to the main executable inside the bundle
+    add_custom_target(embed-family-tool ALL
+        COMMAND ${CMAKE_COMMAND} -E copy
+                $<TARGET_FILE:family-tool>
+                $<TARGET_FILE_DIR:family>
+        DEPENDS family family-tool
+        COMMENT "Embedding family-tool into Family.app/Contents/MacOS"
+        VERBATIM
+    )
+ 
+    # Make sure we copy the tool BEFORE running macdeployqt/codesign
+    add_dependencies(deploy-qt embed-family-tool)
+endif()
+
 # Create custom .DS_Store on MacOS --------------------------------------------
 if(APPLE)
     set(APP_DIR_OLD "$<TARGET_BUNDLE_DIR:${PROJECT_TARGET_NAME}>")
