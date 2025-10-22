@@ -85,10 +85,36 @@ jobs:
           qmake -v || Write-Host "qmake not on PATH (ok)"
         shell: pwsh
 
+      # --- Import Developer ID cert into an ephemeral keychain ---
+      - name: Create and unlock keychain
+        if: matrix.os == 'macos-latest'
+        run: |
+          security create-keychain -p "$MAC_KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -lut 21600 build.keychain
+          security unlock-keychain -p "$MAC_KEYCHAIN_PASSWORD" build.keychain
+          security list-keychains -s build.keychain login.keychain
+        env:
+          MAC_KEYCHAIN_PASSWORD: ${{ secrets.MAC_KEYCHAIN_PASSWORD }}
+
+      - name: Import Developer ID certificate
+        if: matrix.os == 'macos-latest'
+        run: |
+          base64 -d <<< "$MAC_CERT_P12" > dev.p12
+          security import dev.p12 -k build.keychain -P "$MAC_CERT_P12_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security
+          # Allow codesign to use the key non-interactively:
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MAC_KEYCHAIN_PASSWORD" build.keychain
+          rm -f dev.p12
+        env:
+          MAC_CERT_P12: ${{ secrets.MAC_CERT_P12 }}
+          MAC_CERT_P12_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+          MAC_KEYCHAIN_PASSWORD: ${{ secrets.MAC_KEYCHAIN_PASSWORD }}
+
       # Configure
       - name: Configure (Unix)
         if: matrix.os != 'windows-latest'
-        run: cmake -S src -B build-Release -G Ninja -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S src -B build-Release -G Ninja -DCMAKE_BUILD_TYPE=Release -DCODESIGN_ID="$CODESIGN_ID"
+        env:
+          CODESIGN_ID: ${{ secrets.CODESIGN_ID }}
 
       - name: Configure (Windows)
         if: matrix.os == 'windows-latest'

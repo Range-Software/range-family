@@ -82,8 +82,8 @@ elseif(APPLE)
         ${MACDEPLOYQT_EXECUTABLE}
         $<TARGET_BUNDLE_DIR:${PROJECT_TARGET_NAME}>
     )
-    if(DEFINED APPLE_ID)
-        set(DEPLOY_COMMAND ${DEPLOY_COMMAND} -codesign=${APPLE_ID})
+    if(DEFINED CODESIGN_ID)
+        set(DEPLOY_COMMAND ${DEPLOY_COMMAND} -codesign=${CODESIGN_ID})
     endif()
 else()
     get_filename_component(_qt_dir "${_qt_bin_dir}" DIRECTORY)
