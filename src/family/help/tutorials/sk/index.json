@@ -1,0 +1,9 @@
+{
+    "main": "index.html",
+    "chapters": [
+        {
+            "title": "Cloud user registration",
+            "file": "tutorial_Cloud user registration.html"
+        }
+    ]
+}

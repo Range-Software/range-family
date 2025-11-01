@@ -279,6 +279,7 @@ void Action::onHelp()
     QMap<QString,QString> topics;
 
     topics.insert("general",tr("General"));
+    topics.insert("tutorials",tr("Tutorials"));
 
     RHelpDialog *helpDialog = new RHelpDialog(tr("Help"),topics,Application::instance()->getMainWindow());
     helpDialog->setModal(false);
