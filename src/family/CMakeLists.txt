@@ -174,6 +174,7 @@ qt_add_resources(family icons-cloud
         pixmaps/range-remove.svg
         pixmaps/range-session_manager.svg
         pixmaps/range-upload.svg
+        pixmaps/range-upload_replace.svg
         pixmaps/range-upload_update.svg
 )
 
