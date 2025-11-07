@@ -1,9 +1,9 @@
 {
-    "main": "index.html",
+    "main": "index.md",
     "chapters": [
         {
             "title": "Cloud user registration",
-            "file": "tutorial_Cloud user registration.html"
+            "file": "tutorial_Cloud user registration.md"
         }
     ]
 }

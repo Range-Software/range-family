@@ -1,9 +1,9 @@
 {
-    "main": "index.html",
+    "main": "index.md",
     "chapters": [
         {
-            "title": "Rodinný strom",
-            "file": "family_tree.html"
+            "title": "Family tree",
+            "file": "family_tree.md"
         }
     ]
 }
