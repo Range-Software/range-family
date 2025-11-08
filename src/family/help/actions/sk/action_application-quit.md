@@ -1,0 +1,4 @@
+# Skončiť
+
+Ukončiť beh programu.
+
