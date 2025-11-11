@@ -2,7 +2,7 @@
     "main": "index.md",
     "chapters": [
         {
-            "title": "Family tree",
+            "title": "Rodinný strom",
             "file": "family_tree.md"
         }
     ]
