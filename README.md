@@ -3,8 +3,8 @@ Family tree manager
 
 ## Help and tutorials
 
-1. [General help](./src/family/help/general/en/general_index.md)
-2. [Turorials](./src/family/help/tutorials/en/tutorial_index.md)
+1. [General help](./src/family/help/general/en/index.md)
+2. [Turorials](./src/family/help/tutorials/en/index.md)
 
 ## Prepare build environment
 Initialize all submodules
