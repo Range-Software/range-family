@@ -394,57 +394,67 @@
 <context>
     <name>PersonDetailsWidget</name>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="34"/>
+        <location filename="../src/person_details_widget.cpp" line="160"/>
         <source>Person details</source>
         <translation>Podrobnosti osoby</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="52"/>
+        <location filename="../src/person_details_widget.cpp" line="66"/>
+        <location filename="../src/person_details_widget.cpp" line="178"/>
         <source>Sex</source>
         <translation>Pohlavie</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="56"/>
+        <location filename="../src/person_details_widget.cpp" line="72"/>
+        <location filename="../src/person_details_widget.cpp" line="182"/>
         <source>Born</source>
         <translation>Narodenie</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="60"/>
+        <location filename="../src/person_details_widget.cpp" line="78"/>
+        <location filename="../src/person_details_widget.cpp" line="186"/>
         <source>Died</source>
         <translation>Úmrtie</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="70"/>
-        <source>Relation as a child</source>
-        <translation>Vzťah v roli dieťaťa</translation>
+        <location filename="../src/person_details_widget.cpp" line="85"/>
+        <location filename="../src/person_details_widget.cpp" line="196"/>
+        <source>Parents and siblings</source>
+        <translation>Rodičia a súrodenci</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="71"/>
+        <location filename="../src/person_details_widget.cpp" line="115"/>
+        <location filename="../src/person_details_widget.cpp" line="234"/>
+        <source>Partner and children</source>
+        <translation>Partneri a deti</translation>
+    </message>
+    <message>
+        <location filename="../src/person_details_widget.cpp" line="91"/>
+        <location filename="../src/person_details_widget.cpp" line="197"/>
         <source>Parents</source>
         <translation>Rodičia</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="83"/>
+        <location filename="../src/person_details_widget.cpp" line="99"/>
+        <location filename="../src/person_details_widget.cpp" line="210"/>
         <source>Siblings</source>
         <translation>Súrodenci</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="106"/>
-        <source>Relation as a partner</source>
-        <translation>Vzťah v roli partnera</translation>
-    </message>
-    <message>
-        <location filename="../src/person_details_widget.cpp" line="107"/>
+        <location filename="../src/person_details_widget.cpp" line="120"/>
+        <location filename="../src/person_details_widget.cpp" line="235"/>
         <source>Partner</source>
         <translation>Pertner-ka</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="123"/>
+        <location filename="../src/person_details_widget.cpp" line="132"/>
+        <location filename="../src/person_details_widget.cpp" line="252"/>
         <source>Children</source>
         <translation>Deti</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="137"/>
+        <location filename="../src/person_details_widget.cpp" line="144"/>
+        <location filename="../src/person_details_widget.cpp" line="269"/>
         <source>Additional information</source>
         <translation>Dodatočné informácie</translation>
     </message>
