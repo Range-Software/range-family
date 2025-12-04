@@ -206,17 +206,17 @@
 <context>
     <name>DiagramDialog</name>
     <message>
-        <location filename="../src/diagram_dialog.cpp" line="63"/>
+        <location filename="../src/diagram_dialog.cpp" line="72"/>
         <source>Relation</source>
         <translation>Vzťah</translation>
     </message>
     <message>
-        <location filename="../src/diagram_dialog.cpp" line="67"/>
+        <location filename="../src/diagram_dialog.cpp" line="76"/>
         <source>Family tree</source>
         <translation>Rodinný strom</translation>
     </message>
     <message>
-        <location filename="../src/diagram_dialog.cpp" line="28"/>
+        <location filename="../src/diagram_dialog.cpp" line="31"/>
         <source>Close</source>
         <translation>Zatvoriť</translation>
     </message>
@@ -224,69 +224,69 @@
 <context>
     <name>DiagramView</name>
     <message>
-        <location filename="../src/diagram_view.cpp" line="38"/>
+        <location filename="../src/diagram_view.cpp" line="39"/>
         <source>New relation (partner)</source>
         <translation>Nový vzťah (partner)</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="41"/>
+        <location filename="../src/diagram_view.cpp" line="42"/>
         <source>New relation (child)</source>
         <translation>Nový vzťah (dieťa)</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="44"/>
+        <location filename="../src/diagram_view.cpp" line="45"/>
         <source>New partner</source>
         <translation>Nový partner</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="47"/>
+        <location filename="../src/diagram_view.cpp" line="48"/>
         <source>New child</source>
         <translation>Nové dieťa</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="50"/>
-        <location filename="../src/diagram_view.cpp" line="314"/>
+        <location filename="../src/diagram_view.cpp" line="51"/>
+        <location filename="../src/diagram_view.cpp" line="334"/>
         <source>Merge persons</source>
         <translation>Zlúčiť osoby</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="53"/>
+        <location filename="../src/diagram_view.cpp" line="54"/>
         <source>Edit</source>
         <translation>Upraviť</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="56"/>
+        <location filename="../src/diagram_view.cpp" line="57"/>
         <source>Remove</source>
         <translation>Odstrániť</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="305"/>
+        <location filename="../src/diagram_view.cpp" line="325"/>
         <source>Are you sure you want to merge selected persons?</source>
         <translation>Naozaj chcete spojiť vybrané osoby?</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="340"/>
+        <location filename="../src/diagram_view.cpp" line="364"/>
         <source>Are you sure you want to remove selected person?</source>
         <translation>Naozaj chcete odstrániť vybranú osobu?</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="346"/>
-        <location filename="../src/diagram_view.cpp" line="368"/>
+        <location filename="../src/diagram_view.cpp" line="370"/>
+        <location filename="../src/diagram_view.cpp" line="392"/>
         <source>Remove person</source>
         <translation>Odstrániť osobu</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="360"/>
+        <location filename="../src/diagram_view.cpp" line="384"/>
         <source>Are you sure you want to remove selected relation?</source>
         <translation>Naozaj chcete odstrániť vybraný vzťah?</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="362"/>
+        <location filename="../src/diagram_view.cpp" line="386"/>
         <source>Children</source>
         <translation>Deti</translation>
     </message>
     <message>
-        <location filename="../src/diagram_view.cpp" line="365"/>
+        <location filename="../src/diagram_view.cpp" line="389"/>
         <source>No person will be removed.</source>
         <translation>Žiadna osoba nebude odstránená.</translation>
     </message>
@@ -294,17 +294,17 @@
 <context>
     <name>DiagramWidget</name>
     <message>
-        <location filename="../src/diagram_widget.cpp" line="26"/>
+        <location filename="../src/diagram_widget.cpp" line="27"/>
         <source>Export tree</source>
         <translation>Exportovať strom</translation>
     </message>
     <message>
-        <location filename="../src/diagram_widget.cpp" line="72"/>
+        <location filename="../src/diagram_widget.cpp" line="79"/>
         <source>Export family tree to selected file</source>
         <translation>Exportovať rodinný strom do vybraného súboru</translation>
     </message>
     <message>
-        <location filename="../src/diagram_widget.cpp" line="74"/>
+        <location filename="../src/diagram_widget.cpp" line="81"/>
         <source>Family files</source>
         <translation>Family súbory</translation>
     </message>
@@ -389,57 +389,67 @@
 <context>
     <name>PersonDetailsWidget</name>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="34"/>
+        <location filename="../src/person_details_widget.cpp" line="160"/>
         <source>Person details</source>
         <translation>Podrobnosti osoby</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="52"/>
+        <location filename="../src/person_details_widget.cpp" line="66"/>
+        <location filename="../src/person_details_widget.cpp" line="178"/>
         <source>Sex</source>
         <translation>Pohlavie</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="53"/>
+        <location filename="../src/person_details_widget.cpp" line="72"/>
+        <location filename="../src/person_details_widget.cpp" line="182"/>
         <source>Born</source>
         <translation>Narodenie</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="54"/>
+        <location filename="../src/person_details_widget.cpp" line="78"/>
+        <location filename="../src/person_details_widget.cpp" line="186"/>
         <source>Died</source>
         <translation>Úmrtie</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="64"/>
-        <source>Relation as a child</source>
-        <translation>Vzťah v roli dieťaťa</translation>
+        <location filename="../src/person_details_widget.cpp" line="85"/>
+        <location filename="../src/person_details_widget.cpp" line="196"/>
+        <source>Parents and siblings</source>
+        <translation>Rodičia a súrodenci</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="65"/>
+        <location filename="../src/person_details_widget.cpp" line="115"/>
+        <location filename="../src/person_details_widget.cpp" line="234"/>
+        <source>Partner and children</source>
+        <translation>Partneri a deti</translation>
+    </message>
+    <message>
+        <location filename="../src/person_details_widget.cpp" line="91"/>
+        <location filename="../src/person_details_widget.cpp" line="197"/>
         <source>Parents</source>
         <translation>Rodičia</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="77"/>
+        <location filename="../src/person_details_widget.cpp" line="99"/>
+        <location filename="../src/person_details_widget.cpp" line="210"/>
         <source>Siblings</source>
         <translation>Súrodenci</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="100"/>
-        <source>Relation as a partner</source>
-        <translation>Vzťah v roli partnera</translation>
-    </message>
-    <message>
-        <location filename="../src/person_details_widget.cpp" line="101"/>
+        <location filename="../src/person_details_widget.cpp" line="120"/>
+        <location filename="../src/person_details_widget.cpp" line="235"/>
         <source>Partner</source>
         <translation>Pertner-ka</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="117"/>
+        <location filename="../src/person_details_widget.cpp" line="132"/>
+        <location filename="../src/person_details_widget.cpp" line="252"/>
         <source>Children</source>
         <translation>Deti</translation>
     </message>
     <message>
-        <location filename="../src/person_details_widget.cpp" line="131"/>
+        <location filename="../src/person_details_widget.cpp" line="144"/>
+        <location filename="../src/person_details_widget.cpp" line="269"/>
         <source>Additional information</source>
         <translation>Dodatočné informácie</translation>
     </message>

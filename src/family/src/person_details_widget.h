@@ -17,6 +17,8 @@ class PersonDetailsWidget : public QWidget
         const FTree *tree;
         QList<QUuid> personsIds;
 
+        bool darkMode;
+
         RHtmlViewer *htmlViewer;
 
     public:
@@ -31,6 +33,12 @@ class PersonDetailsWidget : public QWidget
 
         //! Populate.
         void populate();
+
+        //! Generate markdown.
+        QString generateMarkdown() const;
+
+        //! Generate html.
+        QString generateHtml() const;
 
     protected slots:
 
