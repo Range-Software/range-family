@@ -1,0 +1,9 @@
+{
+    "main": "index.md",
+    "chapters": [
+        {
+            "title": "Cloud - User registration",
+            "file": "tutorial_Cloud_user_registration.md"
+        }
+    ]
+}

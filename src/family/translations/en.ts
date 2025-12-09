@@ -40,7 +40,7 @@
     </message>
     <message>
         <location filename="../src/action.cpp" line="101"/>
-        <location filename="../src/action.cpp" line="283"/>
+        <location filename="../src/action.cpp" line="284"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -56,25 +56,25 @@
     </message>
     <message>
         <location filename="../src/action.cpp" line="97"/>
-        <location filename="../src/action.cpp" line="316"/>
+        <location filename="../src/action.cpp" line="317"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="98"/>
-        <location filename="../src/action.cpp" line="331"/>
+        <location filename="../src/action.cpp" line="332"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="99"/>
-        <location filename="../src/action.cpp" line="350"/>
+        <location filename="../src/action.cpp" line="351"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="100"/>
-        <location filename="../src/action.cpp" line="382"/>
+        <location filename="../src/action.cpp" line="383"/>
         <source>Release notes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -131,6 +131,11 @@
     <message>
         <location filename="../src/action.cpp" line="281"/>
         <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/action.cpp" line="282"/>
+        <source>Tutorials</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

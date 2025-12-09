@@ -1,0 +1,4 @@
+# Pomocník
+
+Spustiť tohto pomocníka.
+
