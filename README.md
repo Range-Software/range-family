@@ -4,14 +4,14 @@ Family tree manager
 ## Help and tutorials
 
 1. [General help](./src/family/help/general/en/index.md)
-2. [Turorials](./src/family/help/tutorials/en/index.md)
+2. [Tutorials](./src/family/help/tutorials/en/index.md)
 
 ## Prepare build environment
-Initialize all submodules
+Initialize all sub modules
 ```
 git submodule init && git submodule update --remote
 ```
-Following command will attempt to download and install all required packages, therefore it must be executed under priviledged (root) user
+Following command will attempt to download and install all required packages, therefore it must be executed under privileged (root) user
 ```
 sudo ./src/range-build-tools/prereqs.sh
 ```
