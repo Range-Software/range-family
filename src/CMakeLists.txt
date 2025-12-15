@@ -64,7 +64,7 @@ endforeach()
 
 # Define OpenSSL ROOT directory -----------------------------------------------
 
-set(OPENSSL_ROOT "" CACHE PATH "OpenSSL prefix (e.g. from brew --prefix openssl@3)")
+set(OPENSSL_ROOT "" CACHE PATH "OpenSSL prefix")
 
 if(OPENSSL_ROOT STREQUAL "" AND DEFINED ENV{OPENSSL_ROOT})
   set(OPENSSL_ROOT "$ENV{OPENSSL_ROOT}" CACHE PATH "OpenSSL prefix" FORCE)
@@ -180,14 +180,7 @@ if(APPLE)
         add_custom_target(codesign ALL
             COMMAND /bin/echo "Signing with: ${CODESIGN_ID}"
             COMMAND /bin/chmod -R u+w "${APP_DIR_NEW}"
-            # Sign all nested code (plugins, dylibs, frameworks, helpers)
-            COMMAND /usr/bin/find "${APP_DIR_NEW}/Contents" -type f
-                    \\( -perm -111 -o -name "*.dylib" -o -name "*.so" \\)
-                    -exec /usr/bin/codesign --force --timestamp --options runtime --sign "${CODESIGN_ID}" "{}" \\;
-            # Sign the app bundle
-            COMMAND /usr/bin/codesign --force --timestamp --options runtime --sign "${CODESIGN_ID}" "${APP_DIR_NEW}"
-            # Verify (will fail the build if something is wrong)
-            COMMAND /usr/bin/codesign --verify --strict --verbose=4 "${APP_DIR_NEW}"
+            COMMAND /usr/bin/codesign -vvv --deep --strict --force --options runtime --timestamp --sign "${CODESIGN_ID}" "${APP_DIR_NEW}"
             DEPENDS gen-dsstore
             COMMENT "Codesign"
             VERBATIM

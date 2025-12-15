@@ -80,10 +80,9 @@ jobs:
       - name: Install OpenSSL (Windows)
         if: startsWith(matrix.os, 'windows-')
         run: |
-          choco install openssl.light -y || echo "OpenSSL may already be installed"
-          # Chocolatey commonly installs to C:\Program Files\OpenSSL-Win64
+          choco install openssl.light -y --params "/InstallDir:C:\OpenSSL" || echo "OpenSSL may already be installed"
           # Persist OPENSSL_ROOT for later CMake configure step
-          Write-Output "OPENSSL_ROOT=C:\Program Files\OpenSSL-Win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Output "OPENSSL_ROOT=C:\OpenSSL" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         shell: pwsh
 
       # Qt
