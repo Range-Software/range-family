@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.21)
 project(RangeFamily)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -18,7 +18,7 @@ endif()
 
 set(BUILD_SHARED_LIBS OFF)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Concurrent HttpServer Network Widgets LinguistTools)
+find_package(Qt6 6.10 REQUIRED COMPONENTS Core Concurrent HttpServer Network Widgets LinguistTools)
 qt_standard_project_setup()
 
 add_library(common_defines INTERFACE)
@@ -160,7 +160,7 @@ if(APPLE)
         VERBATIM
     )
 
-    # Put openssl tool into Family.app/Contents/MacOS on macOS ----------------
+    # Put openssl tool into Contents/MacOS on macOS ---------------------------
     if (OPENSSL_ROOT)
         # This copies the already-built openssl tool next to the main executable inside the bundle
         add_custom_target(embed-openssl-tool ALL
