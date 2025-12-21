@@ -444,7 +444,7 @@
         <location filename="../src/person_details_widget.cpp" line="120"/>
         <location filename="../src/person_details_widget.cpp" line="235"/>
         <source>Partner</source>
-        <translation>Pertner-ka</translation>
+        <translation>Partner-ka</translation>
     </message>
     <message>
         <location filename="../src/person_details_widget.cpp" line="132"/>
