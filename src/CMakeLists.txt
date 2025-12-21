@@ -85,31 +85,14 @@ if(WIN32)
         --dir ${_qt_deploy_dir}
         --force-openssl
     )
+
+    add_custom_target(deploy-qt ALL
+        COMMAND ${DEPLOY_COMMAND}
+        DEPENDS family
+        COMMENT "Deploying Windows QT libraries"
+        VERBATIM
+    )
 elseif(APPLE)
-    find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
-    set(DEPLOY_COMMAND
-        ${MACDEPLOYQT_EXECUTABLE}
-        $<TARGET_BUNDLE_DIR:${PROJECT_TARGET_NAME}>
-    )
-else()
-    get_filename_component(_qt_dir "${_qt_bin_dir}" DIRECTORY)
-    set(DEPLOY_COMMAND
-        ${CMAKE_SOURCE_DIR}/range-build-tools/linux_deploy_qt.sh
-        --executable=$<TARGET_FILE:${PROJECT_TARGET_NAME}>
-        --install-to=${_qt_deploy_dir}
-        --only-qt
-        --qt-path=${_qt_dir}
-    )
-endif()
-
-add_custom_target(deploy-qt ALL
-    COMMAND ${DEPLOY_COMMAND}
-    DEPENDS family
-    COMMENT "Deploying QT libraries"
-    VERBATIM
-)
-
-if(APPLE)
     # Put family-tool into Family.app/Contents/MacOS on macOS -----------------
     # This copies the already-built family-tool next to the main executable inside the bundle
     add_custom_target(embed-family-tool ALL
@@ -120,8 +103,6 @@ if(APPLE)
         COMMENT "Embedding family-tool into Family.app/Contents/MacOS"
         VERBATIM
     )
-
-    add_dependencies(deploy-qt embed-family-tool)
 
     # Create custom .DS_Store on MacOS ----------------------------------------
     set(APP_DIR_OLD "$<TARGET_BUNDLE_DIR:${PROJECT_TARGET_NAME}>")
@@ -134,8 +115,22 @@ if(APPLE)
         COMMAND ${CMAKE_COMMAND} -E rename ${APP_DIR_OLD} ${APP_DIR_TMP}
         COMMAND ${CMAKE_COMMAND} -E rm -rf ${APP_DIR_NEW}
         COMMAND ${CMAKE_COMMAND} -E rename ${APP_DIR_TMP} ${APP_DIR_NEW}
-        DEPENDS deploy-qt
+        DEPENDS embed-family-tool
         COMMENT "Renaming ${APP_DIR_OLD} bundle to ${APP_DIR_NEW}"
+        VERBATIM
+    )
+
+    find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+    set(DEPLOY_COMMAND
+        ${MACDEPLOYQT_EXECUTABLE}
+        ${APP_DIR_NEW}
+        -executable=${APP_DIR_NEW}/Contents/MacOS/family-tool
+    )
+
+    add_custom_target(deploy-qt ALL
+        COMMAND ${DEPLOY_COMMAND}
+        DEPENDS app-rename
+        COMMENT "Deploying Windows QT libraries"
         VERBATIM
     )
 
@@ -186,6 +181,22 @@ if(APPLE)
             VERBATIM
         )
     endif()
+else()
+    get_filename_component(_qt_dir "${_qt_bin_dir}" DIRECTORY)
+    set(DEPLOY_COMMAND
+        ${CMAKE_SOURCE_DIR}/range-build-tools/linux_deploy_qt.sh
+        --executable=$<TARGET_FILE:${PROJECT_TARGET_NAME}>
+        --install-to=${_qt_deploy_dir}
+        --only-qt
+        --qt-path=${_qt_dir}
+    )
+
+    add_custom_target(deploy-qt ALL
+        COMMAND ${DEPLOY_COMMAND}
+        DEPENDS family
+        COMMENT "Deploying Windows QT libraries"
+        VERBATIM
+    )
 endif()
 
 # Install ---------------------------------------------------------------------
