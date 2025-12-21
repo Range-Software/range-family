@@ -180,8 +180,8 @@ QString PersonDetailsWidget::generateHtml() const
         QString bornPlaceString = person.getBirth().getPlace().getAddress().toString();
         QString bornSeparator = !bornDateString.isEmpty() && !bornPlaceString.isEmpty() ? ", " : QString();
         content += "<tr><th>" + tr("Born") + "</th><td>" + bornDateString + bornSeparator + bornPlaceString + "</td></tr>";
-        QString deathDateString = QLocale().toString(person.getBirth().getDate().toDate());
-        QString deathPlaceString = person.getBirth().getPlace().getAddress().toString();
+        QString deathDateString = QLocale().toString(person.getDeath().getDate().toDate());
+        QString deathPlaceString = person.getDeath().getPlace().getAddress().toString();
         QString deathSeparator = !deathDateString.isEmpty() && !deathPlaceString.isEmpty() ? ", " : QString();
         content += "<tr><th>" + tr("Died") + "</th><td>" + deathDateString + deathSeparator + deathPlaceString + "</td></tr>";
 
