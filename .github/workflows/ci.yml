@@ -241,10 +241,6 @@ jobs:
           path: |
             build-Release/${{ github.event.repository.name }}-*.deb
             build-Release/${{ github.event.repository.name }}-*.rpm
-            build-Release/${{ github.event.repository.name }}-*.sh
-            build-Release/${{ github.event.repository.name }}-*.run
-            build-Release/${{ github.event.repository.name }}-*.zip
-            build-Release/${{ github.event.repository.name }}-*.tar.gz
             build-Release/${{ github.event.repository.name }}-*.dmg
             build-Release/${{ github.event.repository.name }}-*.exe
           if-no-files-found: error
