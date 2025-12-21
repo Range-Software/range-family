@@ -89,7 +89,7 @@ if(WIN32)
     add_custom_target(deploy-qt ALL
         COMMAND ${DEPLOY_COMMAND}
         DEPENDS family
-        COMMENT "Deploying Windows QT libraries"
+        COMMENT "Deploying Windows Qt libraries"
         VERBATIM
     )
 elseif(APPLE)
@@ -130,7 +130,7 @@ elseif(APPLE)
     add_custom_target(deploy-qt ALL
         COMMAND ${DEPLOY_COMMAND}
         DEPENDS app-rename
-        COMMENT "Deploying Windows QT libraries"
+        COMMENT "Deploying MacOS Qt libraries"
         VERBATIM
     )
 
@@ -194,7 +194,7 @@ else()
     add_custom_target(deploy-qt ALL
         COMMAND ${DEPLOY_COMMAND}
         DEPENDS family
-        COMMENT "Deploying Windows QT libraries"
+        COMMENT "Deploying Linux Qt libraries"
         VERBATIM
     )
 endif()
