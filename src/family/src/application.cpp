@@ -1,8 +1,3 @@
-#include <rbl_tool_task.h>
-#include <rbl_job_manager.h>
-
-#include <rfl_tool_action.h>
-
 #include <rgl_message_box.h>
 
 #include "application.h"
@@ -63,9 +58,6 @@ void Application::onTreeFileChanged(const QString &fileName)
     if (RMessageBox::question(this->mainWindow,tr("Tree file has changed"),question) == RMessageBox::Yes)
     {
         this->session->setTreeFileName(fileName);
-        RToolInput toolInput;
-        toolInput.addAction(FToolAction::readTreeFile(Application::instance()->getSession()->getTree(),fileName));
-        RToolTask *toolTask = new RToolTask(toolInput);
-        RJobManager::getInstance().submit(toolTask);
+        this->session->readTreeFile();
     }
 }

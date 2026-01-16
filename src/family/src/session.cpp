@@ -1,4 +1,8 @@
 #include <rbl_logger.h>
+#include <rbl_job_manager.h>
+#include <rbl_tool_task.h>
+
+#include <rfl_tool_action.h>
 
 #include "session.h"
 
@@ -51,6 +55,29 @@ bool Session::getTreeChanged() const
     return this->treeChanged;
 }
 
+void Session::readTreeFile()
+{
+    RLogger::debug("Registering to load \'%s\'\n",this->treeFileName.toUtf8().constData());
+    RToolInput toolInput;
+    toolInput.addAction(FToolAction::readTreeFile(this->pTree,this->treeFileName));
+    RToolTask *toolTask = new RToolTask(toolInput);
+    RJobManager::getInstance().submit(toolTask);
+}
+
+void Session::writeTreeFile() const
+{
+    RLogger::debug("Registering to write \'%s\'\n",this->treeFileName.toUtf8().constData());
+    RToolInput toolInput;
+    toolInput.addAction(FToolAction::writeTreeFile(this->pTree,this->treeFileName));
+    RToolTask *toolTask = new RToolTask(toolInput);
+
+    QObject::connect(toolTask,&RToolTask::actionFinished,this,&Session::writeActionFinished);
+    QObject::connect(toolTask,&RToolTask::actionFailed,this,&Session::writeActionFailed);
+
+    this->fileSystemWatcher->blockSignals(true);
+    RJobManager::getInstance().submit(toolTask);
+}
+
 void Session::onTreeChanged()
 {
     this->treeChanged = true;
@@ -66,4 +93,14 @@ void Session::onTreeFileChanged(const QString &fileName)
 {
     RLogger::info("File \"%s\" has been modified outside of this application.\n",this->treeFileName.toUtf8().constData());
     emit this->treeFileChanged(fileName);
+}
+
+void Session::writeActionFinished(const QSharedPointer<RToolAction> &action)
+{
+    this->fileSystemWatcher->blockSignals(false);
+}
+
+void Session::writeActionFailed(const QSharedPointer<RToolAction> &action)
+{
+    this->fileSystemWatcher->blockSignals(false);
 }

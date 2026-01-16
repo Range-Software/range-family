@@ -5,6 +5,7 @@
 #include <QString>
 #include <QFileSystemWatcher>
 
+#include <rbl_tool_action.h>
 #include <rfl_tree.h>
 
 class Session : public QObject
@@ -43,6 +44,12 @@ class Session : public QObject
         //! Return tree changed indicator value.
         bool getTreeChanged() const;
 
+        //! Read tree file.
+        void readTreeFile();
+
+        //! Write tree file.
+        void writeTreeFile() const;
+
     protected slots:
 
         //! Handle tree changed signal.
@@ -53,6 +60,13 @@ class Session : public QObject
 
         //! Handle tree file has changed.
         void onTreeFileChanged(const QString &fileName);
+
+        //! Write action has finished.
+        void writeActionFinished(const QSharedPointer<RToolAction> &action);
+
+        //! Write action has failed.
+        void writeActionFailed(const QSharedPointer<RToolAction> &action);
+
 
     signals:
 

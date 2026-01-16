@@ -1,4 +1,11 @@
 ------------------------------------------------------------------
+Version 1.0.2
+
+Bug fixes:
+
+* Do not report that file has changed after saving it
+
+------------------------------------------------------------------
 Version 1.0.1
 
 Bug fixes:

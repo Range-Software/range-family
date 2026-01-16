@@ -9,10 +9,9 @@
 #include <QHBoxLayout>
 
 #include <rbl_error.h>
-#include <rbl_job_manager.h>
 #include <rbl_logger.h>
-#include <rbl_tool_task.h>
 #include <rbl_utils.h>
+#include <rbl_job_manager.h>
 
 #include <rfl_tool_action.h>
 
@@ -85,11 +84,7 @@ MainWindow::MainWindow(Session *session,
     // Load last tree file
     if (!this->session->getTreeFileName().isEmpty())
     {
-        RLogger::debug("Registering to load \'%s\'\n",this->session->getTreeFileName().toUtf8().constData());
-        RToolInput toolInput;
-        toolInput.addAction(FToolAction::readTreeFile(this->session->getTree(),this->session->getTreeFileName()));
-        RToolTask *toolTask = new RToolTask(toolInput);
-        RJobManager::getInstance().submit(toolTask);
+        this->session->readTreeFile();
     }
     R_LOG_TRACE_OUT;
 }

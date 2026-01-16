@@ -157,9 +157,10 @@ void Action::onFileOpen()
     if (!fileName.isEmpty())
     {
         Application::instance()->getSession()->setTreeFileName(fileName);
-        RToolInput toolInput;
-        toolInput.addAction(FToolAction::readTreeFile(Application::instance()->getSession()->getTree(),fileName));
-        this->executeToolAction(toolInput);
+        // RToolInput toolInput;
+        // toolInput.addAction(FToolAction::readTreeFile(Application::instance()->getSession()->getTree(),fileName));
+        // this->executeToolAction(toolInput);
+        Application::instance()->getSession()->readTreeFile();
     }
     R_LOG_TRACE_OUT;
 }
@@ -214,7 +215,7 @@ void Action::onFileSave()
     if (fileName.isEmpty())
     {
         fileName = QFileDialog::getSaveFileName(Application::instance()->getMainWindow(),
-                                                "Save tree as",
+                                                "Save tree",
                                                 Application::instance()->getApplicationSettings()->getDataDir() + "/tree.xml",
                                                 "Family tree files (*.xml *.json);;Any files (*)",
                                                 nullptr,
@@ -223,9 +224,11 @@ void Action::onFileSave()
 
     if (!fileName.isEmpty())
     {
-        RToolInput toolInput;
-        toolInput.addAction(FToolAction::writeTreeFile(Application::instance()->getSession()->getTree(),fileName));
-        this->executeToolAction(toolInput);
+        // RToolInput toolInput;
+        // toolInput.addAction(FToolAction::writeTreeFile(Application::instance()->getSession()->getTree(),fileName));
+        // this->executeToolAction(toolInput);
+        Application::instance()->getSession()->setTreeFileName(fileName);
+        Application::instance()->getSession()->writeTreeFile();
     }
     R_LOG_TRACE_OUT;
 }
@@ -250,9 +253,11 @@ void Action::onFileSaveAs()
 
     if (!fileName.isEmpty())
     {
-        RToolInput toolInput;
-        toolInput.addAction(FToolAction::writeTreeFile(Application::instance()->getSession()->getTree(),fileName));
-        this->executeToolAction(toolInput);
+        // RToolInput toolInput;
+        // toolInput.addAction(FToolAction::writeTreeFile(Application::instance()->getSession()->getTree(),fileName));
+        // this->executeToolAction(toolInput);
+        Application::instance()->getSession()->setTreeFileName(fileName);
+        Application::instance()->getSession()->writeTreeFile();
     }
     R_LOG_TRACE_OUT;
 }
