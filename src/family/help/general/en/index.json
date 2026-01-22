@@ -4,6 +4,10 @@
         {
             "title": "Family tree",
             "file": "family_tree.md"
+        },
+        {
+            "title": "Family tree JSON file specification",
+            "file": "family_tree_json_specification.md"
         }
     ]
 }
