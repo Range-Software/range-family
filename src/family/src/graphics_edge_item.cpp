@@ -1,12 +1,11 @@
 #include <QPainter>
 #include <QPen>
-#include <QtMath>
 
 #include "graphics_edge_item.h"
 
 namespace {
     constexpr qreal lineWidth = 2.0;
-    constexpr qreal arrowSize = 8.0;
+    constexpr qreal pointRadius = 4.0;
     const QColor lineColor(160, 160, 170);
     const QColor lineColorLight(190, 190, 200);
 }
@@ -21,7 +20,7 @@ GraphicsEdgeItem::GraphicsEdgeItem(const GraphicsNodeItem *startItem, const Grap
 
 QRectF GraphicsEdgeItem::boundingRect() const
 {
-    qreal extra = lineWidth + arrowSize;
+    qreal extra = lineWidth + pointRadius;
     QPointF sp(this->mapFromItem(this->startItem,this->startItem->getBottomAttachPoint()));
     QPointF ep(this->mapFromItem(this->endItem,this->endItem->getTopAttachPoint()));
 
@@ -50,17 +49,6 @@ void GraphicsEdgeItem::updatePosition()
     path.cubicTo(ctrl1, ctrl2, ep);
 
     this->setPath(path);
-
-    // Calculate arrowhead at the end point
-    qreal angle = std::atan2(ep.y() - ctrl2.y(), ep.x() - ctrl2.x());
-
-    QPointF arrowP1 = ep - QPointF(std::cos(angle + M_PI / 6) * arrowSize,
-                                    std::sin(angle + M_PI / 6) * arrowSize);
-    QPointF arrowP2 = ep - QPointF(std::cos(angle - M_PI / 6) * arrowSize,
-                                    std::sin(angle - M_PI / 6) * arrowSize);
-
-    arrowHead.clear();
-    arrowHead << ep << arrowP1 << arrowP2;
 }
 
 void GraphicsEdgeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -79,8 +67,9 @@ void GraphicsEdgeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->setPen(pen);
     painter->drawPath(this->path());
 
-    // Draw arrowhead
+    // Draw round point at the end
+    QPointF ep = this->path().pointAtPercent(1.0);
     painter->setPen(Qt::NoPen);
     painter->setBrush(lineColor);
-    painter->drawPolygon(arrowHead);
+    painter->drawEllipse(ep, pointRadius, pointRadius);
 }
