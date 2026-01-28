@@ -73,6 +73,9 @@ class Session : public QObject
         //! Handle tree file has changed.
         void treeFileChanged(const QString &fileName);
 
+        //! Handle tree file has been removed.
+        void treeFileRemoved(const QString &fileName);
+
 };
 
 #endif /* SESSION_H */

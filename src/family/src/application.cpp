@@ -43,6 +43,7 @@ void Application::initialize()
     this->mainWindow->show();
 
     QObject::connect(this->session,&Session::treeFileChanged,this,&Application::onTreeFileChanged);
+    QObject::connect(this->session,&Session::treeFileRemoved,this,&Application::onTreeFileRemoved);
 }
 
 void Application::finalize()
@@ -59,5 +60,17 @@ void Application::onTreeFileChanged(const QString &fileName)
     {
         this->session->setTreeFileName(fileName);
         this->session->readTreeFile();
+    }
+}
+
+void Application::onTreeFileRemoved(const QString &fileName)
+{
+    QString question = tr("Family tree file has been removed.")
+    + "<pre>" + fileName + "</pre>"
+        + tr("Save current tree to file?");
+    if (RMessageBox::question(this->mainWindow,tr("Tree file has been removed"),question) == RMessageBox::Yes)
+    {
+        this->session->setTreeFileName(fileName);
+        this->session->writeTreeFile();
     }
 }

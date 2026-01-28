@@ -1,3 +1,5 @@
+#include <QFileInfo>
+
 #include <rbl_logger.h>
 #include <rbl_job_manager.h>
 #include <rbl_tool_task.h>
@@ -91,8 +93,16 @@ void Session::onTreeFileSaved(const QString &fileName)
 
 void Session::onTreeFileChanged(const QString &fileName)
 {
-    RLogger::info("File \"%s\" has been modified outside of this application.\n",this->treeFileName.toUtf8().constData());
-    emit this->treeFileChanged(fileName);
+    if (QFileInfo::exists(fileName))
+    {
+        RLogger::info("File \"%s\" has been modified outside of this application.\n",this->treeFileName.toUtf8().constData());
+        emit this->treeFileChanged(fileName);
+    }
+    else
+    {
+        RLogger::info("File \"%s\" has been removed outside of this application.\n",this->treeFileName.toUtf8().constData());
+        emit this->treeFileRemoved(fileName);
+    }
 }
 
 void Session::writeActionFinished(const QSharedPointer<RToolAction> &action)

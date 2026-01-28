@@ -2,6 +2,8 @@
 Version 1.0.2
 
 * GUI: Improve diagram graphics with modern visual styling
+* GUI: Print time-stamps in output window
+* GUI: Offer to save a tree when original file is deleted
 
 Bug fixes:
 

@@ -41,6 +41,9 @@ class Application : public RApplication
         //! Handle tree file has changed.
         void onTreeFileChanged(const QString &fileName);
 
+        //! Handle tree file has been removed.
+        void onTreeFileRemoved(const QString &fileName);
+
 };
 
 #endif // APPLICATION_H
