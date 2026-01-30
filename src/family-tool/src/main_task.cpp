@@ -2,6 +2,7 @@
 #include <QDate>
 #include <QFileInfo>
 #include <QDir>
+#include <QLoggingCategory>
 
 #include <rbl_arguments_parser.h>
 #include <rbl_error.h>
@@ -83,6 +84,8 @@ void MainTask::run()
         validOptions.append(RArgumentOption("log-file",RArgumentOption::Path,QVariant(),"Log file name",RArgumentOption::Logger,false));
         validOptions.append(RArgumentOption("log-debug",RArgumentOption::Switch,QVariant(),"Switch on debug log level",RArgumentOption::Logger,false));
         validOptions.append(RArgumentOption("log-trace",RArgumentOption::Switch,QVariant(),"Switch on trace log level",RArgumentOption::Logger,false));
+        validOptions.append(RArgumentOption("log-ssl",RArgumentOption::Switch,QVariant(),"Enable Qt debug logging",RArgumentOption::Logger,false));
+        validOptions.append(RArgumentOption("log-qt",RArgumentOption::Switch,QVariant(),"Enable Qt SSL debug logging",RArgumentOption::Logger,false));
 
         validOptions.append(RArgumentOption("add-person",RArgumentOption::Switch,QVariant(),"Add new person",RArgumentOption::Action,false));
         validOptions.append(RArgumentOption("remove-person",RArgumentOption::Switch,QVariant(),"Remove person identified by --person-id=<person-id>",RArgumentOption::Action,false));
@@ -174,6 +177,30 @@ void MainTask::run()
         if (argumentsParser.isSet("log-trace"))
         {
             RLogger::getInstance().setLevel(R_LOG_LEVEL_TRACE);
+        }
+        if (argumentsParser.isSet("log-qt") ||
+            argumentsParser.isSet("log-ssl"))
+        {
+            RLogger::installQtMessageHandler();
+            RLogger::debug("Qt message handler installed\n");
+
+            if (argumentsParser.isSet("log-qt"))
+            {
+                QLoggingCategory::setFilterRules("qt.*=true");
+                RLogger::debug("All Qt logging enabled\n");
+            }
+            else if (argumentsParser.isSet("log-ssl"))
+            {
+                QLoggingCategory::setFilterRules(
+                    "qt.network.ssl.debug=true\n"
+                    "qt.network.ssl.info=true\n"
+                    "qt.network.ssl.warning=true\n"
+                    "qt.tlsbackend.ossl.debug=true\n"
+                    "qt.tlsbackend.ossl.info=true\n"
+                    "qt.tlsbackend.ossl.warning=true"
+                    );
+                RLogger::debug("SSL logging enabled\n");
+            }
         }
         if (argumentsParser.isSet("log-file"))
         {
@@ -557,7 +584,6 @@ void MainTask::run()
             // Write XML file action
             toolInput.addAction(FToolAction::writeTreeFile(this->application->getTree(),outXmlFileName));
         }
-
 
         // Start tool.
         RToolTask *toolTask = new RToolTask(toolInput);
