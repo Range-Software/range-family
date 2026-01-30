@@ -45,9 +45,6 @@ class CentralWidget : public QWidget
         //! Set text and icon for given tab.
         void setTabTitle(CentralWidget::TabType tabType, RMessage::Type messageType = RMessage::Type::None, const QString &additionalText = QString());
 
-        //! Convert message to string.
-        static QString messageToString(const RMessage &message);
-
     private slots:
 
         //! Print application info message.
