@@ -1,20 +1,22 @@
 ------------------------------------------------------------------
 Version 1.0.2
 
-* GUI: Improve diagram graphics with modern visual styling
-* GUI: Print time-stamps in output window
-* GUI: Offer to save a tree when original file is deleted
+- Improve diagram graphics with modern visual styling
+- Print time-stamps in output window
+- Offer to save a tree when original file is deleted
+- Log Qt debug messages
 
 Bug fixes:
 
-* Do not report that file has changed after saving it
+- Do not report that file has changed after saving it
+- Automatic file synchronization with Range Cloud
 
 ------------------------------------------------------------------
 Version 1.0.1
 
 Bug fixes:
 
-* Fixed problem when too many new files appeared in upload directory
+- Fixed problem when too many new files appeared in upload directory
 
 ------------------------------------------------------------------
 Version 1.0.0
