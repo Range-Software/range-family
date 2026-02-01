@@ -4,6 +4,7 @@
 #include <QLinearGradient>
 
 #include "graphics_person_item.h"
+#include "diagram_colors.h"
 
 namespace {
     // Styling constants
@@ -14,29 +15,6 @@ namespace {
     constexpr qreal borderWidth = 1.5;
     constexpr qreal hoverBorderWidth = 2.5;
     constexpr qreal selectedBorderWidth = 3.0;
-
-    // Colors - softer palette
-    const QColor boxBackground(252, 252, 254);
-    const QColor boxBackgroundBottom(245, 245, 248);
-    const QColor shadowColor(0, 0, 0, 40);
-    const QColor borderColor(200, 200, 210);
-    const QColor borderColorHover(120, 140, 200);
-    const QColor borderColorSelected(80, 120, 200);
-    const QColor textColorPrimary(40, 40, 50);
-    const QColor textColorSecondary(100, 100, 120);
-
-    // Header colors by sex - softer tones
-    const QColor headerMale(220, 235, 250);
-    const QColor headerMaleBottom(200, 220, 245);
-    const QColor headerFemale(250, 230, 235);
-    const QColor headerFemaleBottom(245, 215, 225);
-    const QColor headerOther(250, 248, 225);
-    const QColor headerOtherBottom(245, 240, 210);
-    const QColor headerNeutral(235, 235, 240);
-    const QColor headerNeutralBottom(225, 225, 232);
-
-    // Highlighted versions (darker)
-    const QColor highlightOverlay(0, 0, 0, 25);
 }
 
 GraphicsPersonItem::GraphicsPersonItem(const FPerson &person, const QRectF &slot, GraphicsNodeItem *parent)
@@ -121,31 +99,32 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QRectF headerRect(x, y, w, headerHeight);
 
     // Determine header colors based on sex
-    QColor headerTop = headerNeutral;
-    QColor headerBottom = headerNeutralBottom;
+    QColor headerTop = DiagramColors::headerNeutral();
+    QColor headerBottom = DiagramColors::headerNeutralBottom();
 
     if (this->person.getSex().toLower() == FPerson::SexDesc::male.toLower())
     {
-        headerTop = headerMale;
-        headerBottom = headerMaleBottom;
+        headerTop = DiagramColors::headerMale();
+        headerBottom = DiagramColors::headerMaleBottom();
     }
     else if (this->person.getSex().toLower() == FPerson::SexDesc::female.toLower())
     {
-        headerTop = headerFemale;
-        headerBottom = headerFemaleBottom;
+        headerTop = DiagramColors::headerFemale();
+        headerBottom = DiagramColors::headerFemaleBottom();
     }
     else if (this->person.getSex().toLower() == FPerson::SexDesc::other.toLower())
     {
-        headerTop = headerOther;
-        headerBottom = headerOtherBottom;
+        headerTop = DiagramColors::headerOther();
+        headerBottom = DiagramColors::headerOtherBottom();
     }
 
     // Draw shadow
+    QColor shadow = DiagramColors::shadowColor();
     painter->setPen(Qt::NoPen);
     for (int i = shadowBlur; i > 0; i -= 2)
     {
-        QColor sc = shadowColor;
-        sc.setAlpha(shadowColor.alpha() * (shadowBlur - i) / shadowBlur);
+        QColor sc = shadow;
+        sc.setAlpha(shadow.alpha() * (shadowBlur - i) / shadowBlur);
         painter->setBrush(sc);
         painter->drawRoundedRect(boxRect.adjusted(-i + shadowOffset, -i + shadowOffset,
                                                    i + shadowOffset, i + shadowOffset),
@@ -154,23 +133,23 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     // Draw main box with gradient
     QLinearGradient boxGradient(boxRect.topLeft(), boxRect.bottomLeft());
-    boxGradient.setColorAt(0.0, boxBackground);
-    boxGradient.setColorAt(1.0, boxBackgroundBottom);
+    boxGradient.setColorAt(0.0, DiagramColors::boxBackground());
+    boxGradient.setColorAt(1.0, DiagramColors::boxBackgroundBottom());
 
     painter->setBrush(boxGradient);
 
     // Determine border style based on state
-    QColor currentBorderColor = borderColor;
+    QColor currentBorderColor = DiagramColors::borderColor();
     qreal currentBorderWidth = borderWidth;
 
     if (this->isSelected())
     {
-        currentBorderColor = borderColorSelected;
+        currentBorderColor = DiagramColors::borderColorSelected();
         currentBorderWidth = selectedBorderWidth;
     }
     else if (this->isUnderMouse())
     {
-        currentBorderColor = borderColorHover;
+        currentBorderColor = DiagramColors::borderColorHover();
         currentBorderWidth = hoverBorderWidth;
     }
 
@@ -197,7 +176,7 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     // Draw highlight overlay if highlighted
     if (this->highlighted)
     {
-        painter->setBrush(highlightOverlay);
+        painter->setBrush(DiagramColors::highlightOverlay());
         painter->drawRoundedRect(boxRect, rounding, rounding);
     }
 
@@ -211,7 +190,7 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
         painter->drawImage(QPointF(imgX, imgY), personImage);
 
         // Draw subtle border around photo
-        painter->setPen(QPen(QColor(0, 0, 0, 30), 1.5));
+        painter->setPen(QPen(DiagramColors::photoBorder(), 1.5));
         painter->setBrush(Qt::NoBrush);
         painter->drawEllipse(QRectF(imgX, imgY, imgSize, imgSize));
     }
@@ -221,12 +200,12 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     // Name (bold)
     painter->setFont(nameFont);
-    painter->setPen(textColorPrimary);
+    painter->setPen(DiagramColors::textColorPrimary());
     painter->drawText(textX, y + fmName.ascent() + padding, name);
 
     // Date (smaller, lighter)
     painter->setFont(dateFont);
-    painter->setPen(textColorSecondary);
+    painter->setPen(DiagramColors::textColorSecondary());
     painter->drawText(textX, y + headerHeight + fmDate.ascent() + padding, date);
 
     // Restore font

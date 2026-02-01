@@ -3,6 +3,7 @@
 #include <QLinearGradient>
 
 #include "graphics_relation_item.h"
+#include "diagram_colors.h"
 
 namespace {
     // Styling constants
@@ -15,26 +16,6 @@ namespace {
     constexpr qreal selectedBorderWidth = 3.0;
     constexpr qreal iconSize = 16.0;
     constexpr qreal iconPadding = 6.0;
-
-    // Colors - warm tones to distinguish from person nodes
-    const QColor boxBackground(255, 252, 250);
-    const QColor boxBackgroundBottom(252, 248, 242);
-    const QColor shadowColor(0, 0, 0, 35);
-    const QColor borderColor(210, 195, 180);
-    const QColor borderColorHover(180, 140, 100);
-    const QColor borderColorSelected(160, 100, 60);
-    const QColor textColorPrimary(60, 50, 40);
-    const QColor textColorSecondary(120, 100, 80);
-
-    // Header colors - warm coral/peach tones
-    const QColor headerTop(255, 235, 220);
-    const QColor headerBottom(250, 225, 205);
-
-    // Icon color
-    const QColor iconColor(200, 120, 100);
-
-    // Highlighted overlay
-    const QColor highlightOverlay(0, 0, 0, 20);
 }
 
 GraphicsRelationItem::GraphicsRelationItem(const FRelation &relation, const QRectF &slot, GraphicsNodeItem *parent)
@@ -83,11 +64,12 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
     QRectF headerRect(x, y, w, headerHeight);
 
     // Draw shadow
+    QColor shadow = DiagramColors::relationShadowColor();
     painter->setPen(Qt::NoPen);
     for (int i = shadowBlur; i > 0; i -= 2)
     {
-        QColor sc = shadowColor;
-        sc.setAlpha(shadowColor.alpha() * (shadowBlur - i) / shadowBlur);
+        QColor sc = shadow;
+        sc.setAlpha(shadow.alpha() * (shadowBlur - i) / shadowBlur);
         painter->setBrush(sc);
         painter->drawRoundedRect(boxRect.adjusted(-i + shadowOffset, -i + shadowOffset,
                                                    i + shadowOffset, i + shadowOffset),
@@ -96,23 +78,23 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 
     // Draw main box with gradient
     QLinearGradient boxGradient(boxRect.topLeft(), boxRect.bottomLeft());
-    boxGradient.setColorAt(0.0, boxBackground);
-    boxGradient.setColorAt(1.0, boxBackgroundBottom);
+    boxGradient.setColorAt(0.0, DiagramColors::relationBoxBackground());
+    boxGradient.setColorAt(1.0, DiagramColors::relationBoxBackgroundBottom());
 
     painter->setBrush(boxGradient);
 
     // Determine border style based on state
-    QColor currentBorderColor = borderColor;
+    QColor currentBorderColor = DiagramColors::relationBorderColor();
     qreal currentBorderWidth = borderWidth;
 
     if (this->isSelected())
     {
-        currentBorderColor = borderColorSelected;
+        currentBorderColor = DiagramColors::relationBorderColorSelected();
         currentBorderWidth = selectedBorderWidth;
     }
     else if (this->isUnderMouse())
     {
-        currentBorderColor = borderColorHover;
+        currentBorderColor = DiagramColors::relationBorderColorHover();
         currentBorderWidth = hoverBorderWidth;
     }
 
@@ -121,8 +103,8 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 
     // Draw header with gradient
     QLinearGradient headerGradient(headerRect.topLeft(), headerRect.bottomLeft());
-    headerGradient.setColorAt(0.0, headerTop);
-    headerGradient.setColorAt(1.0, headerBottom);
+    headerGradient.setColorAt(0.0, DiagramColors::relationHeaderTop());
+    headerGradient.setColorAt(1.0, DiagramColors::relationHeaderBottom());
 
     painter->setPen(Qt::NoPen);
     painter->setBrush(headerGradient);
@@ -138,7 +120,7 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
     // Draw highlight overlay if highlighted
     if (this->highlighted)
     {
-        painter->setBrush(highlightOverlay);
+        painter->setBrush(DiagramColors::highlightOverlay());
         painter->drawRoundedRect(boxRect, rounding, rounding);
     }
 
@@ -146,7 +128,7 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
     qreal iconX = x + padding;
     qreal iconY = y + (headerHeight - iconSize) / 2.0;
 
-    painter->setPen(QPen(iconColor, 2.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter->setPen(QPen(DiagramColors::relationIconColor(), 2.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter->setBrush(Qt::NoBrush);
 
     // Draw two interlocking circles
@@ -160,12 +142,12 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 
     // Name (bold)
     painter->setFont(nameFont);
-    painter->setPen(textColorPrimary);
+    painter->setPen(DiagramColors::relationTextPrimary());
     painter->drawText(textX, y + fmName.ascent() + padding, name);
 
     // Date (smaller, lighter)
     painter->setFont(dateFont);
-    painter->setPen(textColorSecondary);
+    painter->setPen(DiagramColors::relationTextSecondary());
     painter->drawText(textX, y + headerHeight + fmDate.ascent() + padding, date);
 
     // Restore font

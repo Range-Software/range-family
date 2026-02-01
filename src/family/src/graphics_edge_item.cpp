@@ -2,12 +2,11 @@
 #include <QPen>
 
 #include "graphics_edge_item.h"
+#include "diagram_colors.h"
 
 namespace {
     constexpr qreal lineWidth = 2.0;
     constexpr qreal pointRadius = 4.0;
-    const QColor lineColor(160, 160, 170);
-    const QColor lineColorLight(190, 190, 200);
 }
 
 GraphicsEdgeItem::GraphicsEdgeItem(const GraphicsNodeItem *startItem, const GraphicsNodeItem *endItem, QGraphicsItem *parent)
@@ -57,11 +56,14 @@ void GraphicsEdgeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
     painter->setRenderHint(QPainter::Antialiasing, true);
 
+    QColor edgeColor = DiagramColors::edgeLineColor();
+    QColor edgeColorLight = DiagramColors::edgeLineColorLight();
+
     // Draw the curved line with gradient effect
     QLinearGradient gradient(this->path().pointAtPercent(0), this->path().pointAtPercent(1));
-    gradient.setColorAt(0.0, lineColorLight);
-    gradient.setColorAt(0.5, lineColor);
-    gradient.setColorAt(1.0, lineColorLight);
+    gradient.setColorAt(0.0, edgeColorLight);
+    gradient.setColorAt(0.5, edgeColor);
+    gradient.setColorAt(1.0, edgeColorLight);
 
     QPen pen(QBrush(gradient), lineWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);
@@ -70,6 +72,6 @@ void GraphicsEdgeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     // Draw round point at the end
     QPointF ep = this->path().pointAtPercent(1.0);
     painter->setPen(Qt::NoPen);
-    painter->setBrush(lineColor);
+    painter->setBrush(edgeColor);
     painter->drawEllipse(ep, pointRadius, pointRadius);
 }
