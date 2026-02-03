@@ -9,38 +9,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="173"/>
+        <location filename="../src/action.cpp" line="174"/>
         <source>Current family tree contains unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="175"/>
+        <location filename="../src/action.cpp" line="176"/>
         <source>Would you like to save it first?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="176"/>
+        <location filename="../src/action.cpp" line="177"/>
         <source>Save current tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="184"/>
+        <location filename="../src/action.cpp" line="185"/>
         <source>Import tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="264"/>
+        <location filename="../src/action.cpp" line="269"/>
         <source>Close tree?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="265"/>
+        <location filename="../src/action.cpp" line="270"/>
         <source>Are you sure you want to close current family tree?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="101"/>
-        <location filename="../src/action.cpp" line="284"/>
+        <location filename="../src/action.cpp" line="289"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -56,25 +56,25 @@
     </message>
     <message>
         <location filename="../src/action.cpp" line="97"/>
-        <location filename="../src/action.cpp" line="317"/>
+        <location filename="../src/action.cpp" line="322"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="98"/>
-        <location filename="../src/action.cpp" line="332"/>
+        <location filename="../src/action.cpp" line="337"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="99"/>
-        <location filename="../src/action.cpp" line="351"/>
+        <location filename="../src/action.cpp" line="356"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/action.cpp" line="100"/>
-        <location filename="../src/action.cpp" line="383"/>
+        <location filename="../src/action.cpp" line="388"/>
         <source>Release notes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -129,12 +129,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="281"/>
+        <location filename="../src/action.cpp" line="286"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="282"/>
+        <location filename="../src/action.cpp" line="287"/>
         <source>Tutorials</source>
         <translation type="unfinished"></translation>
     </message>
@@ -142,18 +142,33 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../src/application.cpp" line="60"/>
+        <location filename="../src/application.cpp" line="56"/>
         <source>Family tree file was modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="62"/>
+        <location filename="../src/application.cpp" line="58"/>
         <source>Load modified file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="63"/>
+        <location filename="../src/application.cpp" line="59"/>
         <source>Tree file has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="68"/>
+        <source>Family tree file has been removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="70"/>
+        <source>Save current tree to file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="71"/>
+        <source>Tree file has been removed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -343,32 +358,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="50"/>
+        <location filename="../src/main_window.cpp" line="49"/>
         <source>Family tree manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="116"/>
+        <location filename="../src/main_window.cpp" line="111"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="132"/>
+        <location filename="../src/main_window.cpp" line="127"/>
         <source>Cloud</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="138"/>
+        <location filename="../src/main_window.cpp" line="133"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="155"/>
+        <location filename="../src/main_window.cpp" line="150"/>
         <source>Main toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="274"/>
+        <location filename="../src/main_window.cpp" line="269"/>
         <source>Current family tree contains unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -676,12 +691,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/graphics_relation_item.cpp" line="17"/>
+        <location filename="../src/graphics_relation_item.cpp" line="43"/>
         <source>Relation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/graphics_relation_item.cpp" line="17"/>
+        <location filename="../src/graphics_relation_item.cpp" line="43"/>
         <source>children</source>
         <translation type="unfinished"></translation>
     </message>
