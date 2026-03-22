@@ -4,6 +4,7 @@ Version 1.0.4
 Bug fixes:
 
 - Fixed memory leak when building family tree diagram
+- Fix SSL error on macOS by seeding system CA certificates
 
 ------------------------------------------------------------------
 Version 1.0.3
