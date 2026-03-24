@@ -53,7 +53,7 @@ void Application::finalize()
 
 void Application::onTreeFileChanged(const QString &fileName)
 {
-    QString question = tr("Family tree file was modified.")
+    QString question = tr("The family tree file was modified.")
                      + "<pre>" + fileName + "</pre>"
                      + tr("Load modified file?");
     if (RMessageBox::question(this->mainWindow,tr("Tree file has changed"),question) == RMessageBox::Yes)
@@ -65,7 +65,7 @@ void Application::onTreeFileChanged(const QString &fileName)
 
 void Application::onTreeFileRemoved(const QString &fileName)
 {
-    QString question = tr("Family tree file has been removed.")
+    QString question = tr("The family tree file has been removed.")
     + "<pre>" + fileName + "</pre>"
         + tr("Save current tree to file?");
     if (RMessageBox::question(this->mainWindow,tr("Tree file has been removed"),question) == RMessageBox::Yes)

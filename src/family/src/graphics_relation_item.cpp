@@ -40,7 +40,7 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
     QFontMetrics fmName(nameFont);
     QFontMetrics fmDate(dateFont);
 
-    QString name = QObject::tr("Relation") + " (" + QObject::tr("children") + ": " + QLocale().toString(this->relation.getChildren().size()) + ")";
+    QString name = QObject::tr("Relation") + " (" + QObject::tr("Children") + ": " + QLocale().toString(this->relation.getChildren().size()) + ")";
     QString date = QLocale().toString(this->relation.getBegin().getDate().toDate(),QLocale::ShortFormat)
                    + " – "
                    + QLocale().toString(this->relation.getEnd().getDate().toDate(),QLocale::ShortFormat);

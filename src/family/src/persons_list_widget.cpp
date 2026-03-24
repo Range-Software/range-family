@@ -224,7 +224,7 @@ void PersonsListWidget::onPersonEditButtonClicked()
     if (selectedItems.count() > 1)
     {
         question = tr("Are you sure you want to edit all selected persons?");
-        int response = RMessageBox::question(this,tr("Remove person"),question);
+        int response = RMessageBox::question(this,tr("Edit persons"),question);
         if (response != RMessageBox::Yes)
         {
             edit = false;
@@ -255,7 +255,7 @@ void PersonsListWidget::onPersonRemoveButtonClicked()
     }
     else
     {
-        question = tr("Are you sure you want to remove selected person?");
+        question = tr("Are you sure you want to remove the selected person?");
     }
 
     int response = RMessageBox::question(this,tr("Remove person"),question);

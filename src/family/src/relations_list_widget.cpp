@@ -237,7 +237,7 @@ void RelationsListWidget::onRelationEditButtonClicked()
     if (selectedItems.count() > 1)
     {
         question = tr("Are you sure you want to edit all selected relations?");
-        int response = RMessageBox::question(this,tr("Remove relation"),question);
+        int response = RMessageBox::question(this,tr("Edit relations"),question);
         if (response != RMessageBox::Yes)
         {
             edit = false;
@@ -268,7 +268,7 @@ void RelationsListWidget::onRelationRemoveButtonClicked()
     }
     else
     {
-        question = tr("Are you sure you want to remove selected relation?");
+        question = tr("Are you sure you want to remove the selected relation?");
     }
 
     int response = RMessageBox::question(this,tr("Remove relation"),question);

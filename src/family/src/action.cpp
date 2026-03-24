@@ -171,7 +171,7 @@ void Action::onFileImport()
 
     if (Application::instance()->getSession()->getTreeChanged())
     {
-        QString question = tr("Current family tree contains unsaved changes.")
+        QString question = tr("The current family tree contains unsaved changes.")
                          + "<br/>"
                          + tr("Would you like to save it first?");
         if (RMessageBox::question(Application::instance()->getMainWindow(),tr("Save current tree"),question) == RMessageBox::Yes)

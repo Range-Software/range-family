@@ -13,7 +13,7 @@ TreeDiffDialog::TreeDiffDialog(const QString &aFileName, const QString &bFileNam
 {
     QIcon closeIcon(":/icons/action/pixmaps/range-close.svg");
 
-    this->setWindowTitle(tr("Family trees differences"));
+    this->setWindowTitle(tr("Family tree differences"));
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     this->setLayout (mainLayout);
@@ -36,7 +36,7 @@ TreeDiffDialog::TreeDiffDialog(const QString &aFileName, const QString &bFileNam
 void TreeDiffDialog::onAccepted()
 {
     if (this->bTreeSaved ||
-        RMessageBox::question(this,tr("Tree not saved"),tr("B tree was changed but not saved. Close anyway?")) == RMessageBox::Yes)
+        RMessageBox::question(this,tr("Tree not saved"),tr("Tree B was changed but not saved. Close anyway?")) == RMessageBox::Yes)
     {
         this->accept();
     }

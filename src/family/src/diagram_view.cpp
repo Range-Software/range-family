@@ -322,7 +322,7 @@ void DiagramView::onMergePersons()
         persons.append(personItem->getPersonId());
     }
 
-    QString question = tr("Are you sure you want to merge selected persons?");
+    QString question = tr("Are you sure you want to merge the selected persons?");
 
     question += "<ul>";
     foreach (QUuid id, persons)
@@ -361,7 +361,7 @@ void DiagramView::onRemoveItem()
     {
         FPerson person = this->familyTree->findPerson(personItem->getPersonId());
 
-        QString question  = tr("Are you sure you want to remove selected person?")
+        QString question  = tr("Are you sure you want to remove the selected person?")
                           + "<p>"
                           + "<b>" + person.getName().toString() + "</b>"
                           + " (" + QLocale().toString(person.getBirth().getDate().toDate()) + " - " + QLocale().toString(person.getDeath().getDate().toDate()) + ")"
@@ -381,7 +381,7 @@ void DiagramView::onRemoveItem()
     {
         FRelation relation = this->familyTree->findRelation(relationItem->getRelationId());
 
-        QString question  = tr("Are you sure you want to remove selected relation?")
+        QString question  = tr("Are you sure you want to remove the selected relation?")
                           + "<p>"
                           + "<b>" + tr("Children") + ": " + QLocale().toString(relation.getChildren().size()) + "</b>"
                           + " (" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + ")"
@@ -389,7 +389,7 @@ void DiagramView::onRemoveItem()
                           + "<i>" + tr("No person will be removed.") + "</i>"
                           + "</p>";
 
-        int response = RMessageBox::question(this,tr("Remove person"),question);
+        int response = RMessageBox::question(this,tr("Remove relation"),question);
         if (response == RMessageBox::Yes)
         {
 

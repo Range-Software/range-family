@@ -9,11 +9,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="174"/>
-        <source>Current family tree contains unsaved changes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/action.cpp" line="176"/>
         <source>Would you like to save it first?</source>
         <translation type="unfinished"></translation>
@@ -129,6 +124,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/action.cpp" line="174"/>
+        <source>The current family tree contains unsaved changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/action.cpp" line="286"/>
         <source>General</source>
         <translation type="unfinished"></translation>
@@ -143,7 +143,7 @@
     <name>Application</name>
     <message>
         <location filename="../src/application.cpp" line="56"/>
-        <source>Family tree file was modified.</source>
+        <source>The family tree file was modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <location filename="../src/application.cpp" line="68"/>
-        <source>Family tree file has been removed.</source>
+        <source>The family tree file has been removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -281,23 +281,27 @@
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="325"/>
-        <source>Are you sure you want to merge selected persons?</source>
+        <source>Are you sure you want to merge the selected persons?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="364"/>
-        <source>Are you sure you want to remove selected person?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/diagram_view.cpp" line="370"/>
-        <location filename="../src/diagram_view.cpp" line="392"/>
-        <source>Remove person</source>
+        <source>Are you sure you want to remove the selected person?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="384"/>
-        <source>Are you sure you want to remove selected relation?</source>
+        <source>Are you sure you want to remove the selected relation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/diagram_view.cpp" line="392"/>
+        <source>Remove relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/diagram_view.cpp" line="370"/>
+        <source>Remove person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -384,7 +388,7 @@
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="269"/>
-        <source>Current family tree contains unsaved changes.</source>
+        <source>The current family tree contains unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -633,6 +637,15 @@
     </message>
     <message>
         <location filename="../src/persons_list_widget.cpp" line="227"/>
+        <source>Edit persons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/persons_list_widget.cpp" line="258"/>
+        <source>Are you sure you want to remove the selected person?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/persons_list_widget.cpp" line="261"/>
         <source>Remove person</source>
         <translation type="unfinished"></translation>
@@ -640,11 +653,6 @@
     <message>
         <location filename="../src/persons_list_widget.cpp" line="254"/>
         <source>Are you sure you want to remove all selected persons?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/persons_list_widget.cpp" line="258"/>
-        <source>Are you sure you want to remove selected person?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -697,7 +705,7 @@
     </message>
     <message>
         <location filename="../src/graphics_relation_item.cpp" line="43"/>
-        <source>children</source>
+        <source>Children</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -811,6 +819,15 @@
     </message>
     <message>
         <location filename="../src/relations_list_widget.cpp" line="240"/>
+        <source>Edit relations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/relations_list_widget.cpp" line="271"/>
+        <source>Are you sure you want to remove the selected relation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/relations_list_widget.cpp" line="274"/>
         <source>Remove relation</source>
         <translation type="unfinished"></translation>
@@ -818,11 +835,6 @@
     <message>
         <location filename="../src/relations_list_widget.cpp" line="267"/>
         <source>Are you sure you want to remove all selected relations?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/relations_list_widget.cpp" line="271"/>
-        <source>Are you sure you want to remove selected relation?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -843,7 +855,7 @@
     <name>TreeDiffDialog</name>
     <message>
         <location filename="../src/tree_diff_dialog.cpp" line="16"/>
-        <source>Family trees differences</source>
+        <source>Family tree differences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -858,7 +870,7 @@
     </message>
     <message>
         <location filename="../src/tree_diff_dialog.cpp" line="39"/>
-        <source>B tree was changed but not saved. Close anyway?</source>
+        <source>Tree B was changed but not saved. Close anyway?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -266,7 +266,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QString quitQuestion;
     if (this->session && this->session->getTreeChanged())
     {
-        quitQuestion = "<b>" + tr("Current family tree contains unsaved changes.") + "</b><br/>";
+        quitQuestion = "<b>" + tr("The current family tree contains unsaved changes.") + "</b><br/>";
     }
 
     if (RMessageBox::quit(this,quitQuestion) == RMessageBox::Yes)

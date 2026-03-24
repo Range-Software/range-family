@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../src/action.cpp" line="174"/>
-        <source>Current family tree contains unsaved changes.</source>
+        <source>The current family tree contains unsaved changes.</source>
         <translation>Aktuálny rodinný strom obsahuje neuložené zmeny.</translation>
     </message>
     <message>
@@ -143,7 +143,7 @@
     <name>Application</name>
     <message>
         <location filename="../src/application.cpp" line="56"/>
-        <source>Family tree file was modified.</source>
+        <source>The family tree file was modified.</source>
         <translation>Súbor rodinného stromu bol zmenený.</translation>
     </message>
     <message>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <location filename="../src/application.cpp" line="68"/>
-        <source>Family tree file has been removed.</source>
+        <source>The family tree file has been removed.</source>
         <translation>Súbor rodinného stromu bol odstránený.</translation>
     </message>
     <message>
@@ -281,24 +281,28 @@
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="325"/>
-        <source>Are you sure you want to merge selected persons?</source>
+        <source>Are you sure you want to merge the selected persons?</source>
         <translation>Naozaj chcete spojiť vybrané osoby?</translation>
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="364"/>
-        <source>Are you sure you want to remove selected person?</source>
+        <source>Are you sure you want to remove the selected person?</source>
         <translation>Naozaj chcete odstrániť vybranú osobu?</translation>
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="370"/>
-        <location filename="../src/diagram_view.cpp" line="392"/>
         <source>Remove person</source>
         <translation>Odstrániť osobu</translation>
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="384"/>
-        <source>Are you sure you want to remove selected relation?</source>
+        <source>Are you sure you want to remove the selected relation?</source>
         <translation>Naozaj chcete odstrániť vybraný vzťah?</translation>
+    </message>
+    <message>
+        <location filename="../src/diagram_view.cpp" line="392"/>
+        <source>Remove relation</source>
+        <translation>Odstrániť vzťah</translation>
     </message>
     <message>
         <location filename="../src/diagram_view.cpp" line="386"/>
@@ -384,7 +388,7 @@
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="269"/>
-        <source>Current family tree contains unsaved changes.</source>
+        <source>The current family tree contains unsaved changes.</source>
         <translation>Aktuálny rodinný strom obsahuje neuložené zmeny.</translation>
     </message>
 </context>
@@ -633,9 +637,18 @@
     </message>
     <message>
         <location filename="../src/persons_list_widget.cpp" line="227"/>
+        <source>Edit persons</source>
+        <translation>Upraviť osoby</translation>
+    </message>
+    <message>
         <location filename="../src/persons_list_widget.cpp" line="261"/>
         <source>Remove person</source>
         <translation>Odstrániť osobu</translation>
+    </message>
+    <message>
+        <location filename="../src/persons_list_widget.cpp" line="336"/>
+        <source>Are you sure you want to merge selected persons?</source>
+        <translation>Naozaj chcete zlúčiť vybrané osoby?</translation>
     </message>
     <message>
         <location filename="../src/persons_list_widget.cpp" line="254"/>
@@ -644,13 +657,8 @@
     </message>
     <message>
         <location filename="../src/persons_list_widget.cpp" line="258"/>
-        <source>Are you sure you want to remove selected person?</source>
+        <source>Are you sure you want to remove the selected person?</source>
         <translation>Naozaj chcete odstrániť vybranú osobu?</translation>
-    </message>
-    <message>
-        <location filename="../src/persons_list_widget.cpp" line="336"/>
-        <source>Are you sure you want to merge selected persons?</source>
-        <translation>Naozaj chcete spojiť vybrané osoby?</translation>
     </message>
     <message>
         <location filename="../src/persons_list_widget.cpp" line="345"/>
@@ -697,8 +705,8 @@
     </message>
     <message>
         <location filename="../src/graphics_relation_item.cpp" line="43"/>
-        <source>children</source>
-        <translation>detí</translation>
+        <source>Children</source>
+        <translation>Deti</translation>
     </message>
 </context>
 <context>
@@ -811,6 +819,10 @@
     </message>
     <message>
         <location filename="../src/relations_list_widget.cpp" line="240"/>
+        <source>Edit relations</source>
+        <translation>Upraviť vzťahy</translation>
+    </message>
+    <message>
         <location filename="../src/relations_list_widget.cpp" line="274"/>
         <source>Remove relation</source>
         <translation>Odstrániť vzťah</translation>
@@ -822,7 +834,7 @@
     </message>
     <message>
         <location filename="../src/relations_list_widget.cpp" line="271"/>
-        <source>Are you sure you want to remove selected relation?</source>
+        <source>Are you sure you want to remove the selected relation?</source>
         <translation>Naozaj chcete odstrániť vybraný vzťah?</translation>
     </message>
 </context>
@@ -843,7 +855,7 @@
     <name>TreeDiffDialog</name>
     <message>
         <location filename="../src/tree_diff_dialog.cpp" line="16"/>
-        <source>Family trees differences</source>
+        <source>Family tree differences</source>
         <translation>Rozdiely medzi rodinnými stromami</translation>
     </message>
     <message>
@@ -858,8 +870,8 @@
     </message>
     <message>
         <location filename="../src/tree_diff_dialog.cpp" line="39"/>
-        <source>B tree was changed but not saved. Close anyway?</source>
-        <translation>B strom bol zmenený ale neuložený. Aj tak zatvoriť?</translation>
+        <source>Tree B was changed but not saved. Close anyway?</source>
+        <translation>Strom B bol zmenený ale neuložený. Aj tak zatvoriť?</translation>
     </message>
 </context>
 <context>
