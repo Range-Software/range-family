@@ -12,7 +12,7 @@
 #include "person_add_dialog.h"
 #include "person_edit_dialog.h"
 #include "persons_list_widget.h"
-#include "person_suggeted_dates_dialog.h"
+#include "person_suggested_dates_dialog.h"
 
 #define _FP_TR(qstr) qApp->translate("FPerson",qstr.toUtf8().constData())
 
@@ -28,7 +28,7 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
     this->setLayout(mainLayout);
 
     QList<RTreeWidget::ColumnInfoItem> columnInfo;
-    for (int type=ColumnId;type<NunberOfColumns;type++)
+    for (int type=ColumnId;type<NumberOfColumns;type++)
     {
         RTreeWidget::ColumnInfoItem columnInfoItem;
         columnInfoItem.column = type;
@@ -95,7 +95,7 @@ void PersonsListWidget::highlightPersons(const QList<QUuid> &ids)
     {
         if (ids.contains(QUuid((*it)->text(ColumnId))))
         {
-            for (int column=0;column<NunberOfColumns;column++)
+            for (int column=0;column<NumberOfColumns;column++)
             {
                 (*it)->setBackground(column,QBrush(Qt::yellow));
                 (*it)->setForeground(column,QBrush(Qt::black));
@@ -103,7 +103,7 @@ void PersonsListWidget::highlightPersons(const QList<QUuid> &ids)
         }
         else
         {
-            for (int column=0;column<NunberOfColumns;column++)
+            for (int column=0;column<NumberOfColumns;column++)
             {
                 (*it)->setBackground(column,QBrush());
                 (*it)->setForeground(column,QBrush());
@@ -353,7 +353,7 @@ void PersonsListWidget::onSuggestPersonBirthAndDeathDatesAction()
     foreach (auto selectedId, this->getSelectedIds())
     {
         FPerson person(this->familyTree->findPerson(selectedId));
-        PersonSuggetedDatesDialog personSuggestedDatesDialog(this->familyTree,person,this);
+        PersonSuggestedDatesDialog personSuggestedDatesDialog(this->familyTree,person,this);
         personSuggestedDatesDialog.exec();
     }
 }

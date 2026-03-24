@@ -74,7 +74,7 @@ qreal GraphicsNodeItem::getY() const
     return this->y;
 }
 
-qreal GraphicsNodeItem::getWith() const
+qreal GraphicsNodeItem::getWidth() const
 {
     return this->w;
 }

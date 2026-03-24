@@ -10,9 +10,9 @@
 
 #include <rfl_tool_action.h>
 
-#include "person_suggeted_dates_dialog.h"
+#include "person_suggested_dates_dialog.h"
 
-PersonSuggetedDatesDialog::PersonSuggetedDatesDialog(FTree *familyTree, const FPerson &rPerson, QWidget *parent)
+PersonSuggestedDatesDialog::PersonSuggestedDatesDialog(FTree *familyTree, const FPerson &rPerson, QWidget *parent)
     : QDialog(parent)
     , familyTree(familyTree)
     , person(rPerson)
@@ -78,7 +78,7 @@ PersonSuggetedDatesDialog::PersonSuggetedDatesDialog(FTree *familyTree, const FP
     QObject::connect(buttonBox,&QDialogButtonBox::accepted,this,&QDialog::accept);
 }
 
-int PersonSuggetedDatesDialog::exec()
+int PersonSuggestedDatesDialog::exec()
 {
     int retVal = QDialog::exec();
 

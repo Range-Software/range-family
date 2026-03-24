@@ -38,9 +38,9 @@ class DiagramDialog : public QDialog
 
         void onItemIdChanged(const QUuid &itemId);
 
-        void opPersonRemoved(const QUuid personId);
+        void onPersonRemoved(const QUuid personId);
 
-        void opRelationRemoved(const QUuid relationId);
+        void onRelationRemoved(const QUuid relationId);
 
         void onPersonSelectionChanged(const QList<QUuid> &selectedPersonsIds);
 

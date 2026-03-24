@@ -40,7 +40,7 @@ RelationEditDialog::RelationEditDialog(FTree *familyTree, const FRelation &relat
     QObject::connect(buttonBox,&QDialogButtonBox::rejected,this,&QDialog::reject);
     QObject::connect(buttonBox,&QDialogButtonBox::accepted,this,&QDialog::accept);
 
-    QObject::connect(this->relationEditWidget,&RelationEditWidget::changed,this,&RelationEditDialog::onRelationEdidWidgetChanged);
+    QObject::connect(this->relationEditWidget,&RelationEditWidget::changed,this,&RelationEditDialog::onRelationEditWidgetChanged);
 }
 
 int RelationEditDialog::exec()
@@ -59,7 +59,7 @@ int RelationEditDialog::exec()
     return retVal;
 }
 
-void RelationEditDialog::onRelationEdidWidgetChanged(const FRelation &)
+void RelationEditDialog::onRelationEditWidgetChanged(const FRelation &)
 {
     this->editButton->setEnabled(true);
     this->editButton->setDefault(true);

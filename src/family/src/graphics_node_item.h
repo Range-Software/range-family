@@ -42,7 +42,7 @@ class GraphicsNodeItem : public QAbstractGraphicsShapeItem
 
         qreal getY() const;
 
-        qreal getWith() const;
+        qreal getWidth() const;
 
         qreal getHeight() const;
 

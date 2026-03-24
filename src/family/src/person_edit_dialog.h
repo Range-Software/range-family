@@ -29,7 +29,7 @@ class PersonEditDialog : public QDialog
 
     protected slots:
 
-        void onPersonEdidWidgetChanged(const FPerson &);
+        void onPersonEditWidgetChanged(const FPerson &);
 
 };
 

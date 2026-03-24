@@ -9,7 +9,7 @@
 #include <rgl_application.h>
 
 #include "diagram_widget.h"
-#include "scale_controll_widget.h"
+#include "scale_control_widget.h"
 
 DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *parent)
     : QWidget{parent}
@@ -31,8 +31,8 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     toolBar->addWidget(spacer);
 
-    ScaleControllWidget *scaleControll = new ScaleControllWidget;
-    toolBar->addWidget(scaleControll);
+    ScaleControlWidget *scaleControl = new ScaleControlWidget;
+    toolBar->addWidget(scaleControl);
 
     this->view = new DiagramView(familyTree);
     mainLayout->addWidget(this->view);
@@ -49,9 +49,9 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
     QObject::connect(this->scene,&DiagramScene::relationSelectionChanged,this,&DiagramWidget::onRelationSelectionChanged);
 
     QObject::connect(this->view,&DiagramView::itemIdActivated,this,&DiagramWidget::onItemIdActivated);
-    QObject::connect(this->view,&DiagramView::scaleChanged,scaleControll,&ScaleControllWidget::setScale);
+    QObject::connect(this->view,&DiagramView::scaleChanged,scaleControl,&ScaleControlWidget::setScale);
 
-    QObject::connect(scaleControll,&ScaleControllWidget::factorChanged,this,&DiagramWidget::onScaleFactorChanged);
+    QObject::connect(scaleControl,&ScaleControlWidget::factorChanged,this,&DiagramWidget::onScaleFactorChanged);
 
     R_LOG_TRACE_OUT;
 }

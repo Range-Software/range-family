@@ -31,7 +31,7 @@ class PersonsListWidget : public QWidget
             ColumnDeathDate,
             ColumnDeathAddress,
             ColumnDeathCoordinates,
-            NunberOfColumns
+            NumberOfColumns
         };
 
         QPushButton *personAddButton;

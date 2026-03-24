@@ -28,7 +28,7 @@ class RelationsListWidget : public QWidget
             ColumnEndDate,
             ColumnEndAddress,
             ColumnEndCoordinates,
-            NunberOfColumns
+            NumberOfColumns
         };
 
         QPushButton *relationAddButton;

@@ -27,7 +27,7 @@ class RelationEditDialog : public QDialog
 
     protected slots:
 
-        void onRelationEdidWidgetChanged(const FRelation &);
+        void onRelationEditWidgetChanged(const FRelation &);
 
 };
 

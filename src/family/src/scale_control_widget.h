@@ -1,10 +1,10 @@
-#ifndef SCALE_CONTROLL_WIDGET_H
-#define SCALE_CONTROLL_WIDGET_H
+#ifndef SCALE_CONTROL_WIDGET_H
+#define SCALE_CONTROL_WIDGET_H
 
 #include <QWidget>
 #include <QDoubleSpinBox>
 
-class ScaleControllWidget : public QWidget
+class ScaleControlWidget : public QWidget
 {
     Q_OBJECT
 
@@ -19,7 +19,7 @@ class ScaleControllWidget : public QWidget
     public:
 
         //! Constructor.
-        explicit ScaleControllWidget(QWidget *parent = nullptr);
+        explicit ScaleControlWidget(QWidget *parent = nullptr);
 
     public slots:
 
@@ -42,4 +42,4 @@ class ScaleControllWidget : public QWidget
 
 };
 
-#endif // SCALE_CONTROLL_WIDGET_H
+#endif // SCALE_CONTROL_WIDGET_H

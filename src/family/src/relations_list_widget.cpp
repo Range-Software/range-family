@@ -25,7 +25,7 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
     this->setLayout(mainLayout);
 
     QList<RTreeWidget::ColumnInfoItem> columnInfo;
-    for (int type=ColumnId;type<NunberOfColumns;type++)
+    for (int type=ColumnId;type<NumberOfColumns;type++)
     {
         RTreeWidget::ColumnInfoItem columnInfoItem;
         columnInfoItem.column = type;
@@ -84,7 +84,7 @@ void RelationsListWidget::highlightRelations(const QList<QUuid> &ids)
     {
         if (ids.contains(QUuid((*it)->text(ColumnId))))
         {
-            for (int column=0;column<NunberOfColumns;column++)
+            for (int column=0;column<NumberOfColumns;column++)
             {
                 (*it)->setBackground(column,QBrush(Qt::yellow));
                 (*it)->setForeground(column,QBrush(Qt::black));
@@ -92,7 +92,7 @@ void RelationsListWidget::highlightRelations(const QList<QUuid> &ids)
         }
         else
         {
-            for (int column=0;column<NunberOfColumns;column++)
+            for (int column=0;column<NumberOfColumns;column++)
             {
                 (*it)->setBackground(column,QBrush());
                 (*it)->setForeground(column,QBrush());

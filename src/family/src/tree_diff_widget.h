@@ -20,7 +20,7 @@ class TreeDiffWidget : public QWidget
             ColumnItemType,
             ColumnId,
             ColumnText,
-            NunberOfColumns
+            NumberOfColumns
         };
 
     protected:

@@ -493,35 +493,35 @@
     </message>
 </context>
 <context>
-    <name>PersonSuggetedDatesDialog</name>
+    <name>PersonSuggestedDatesDialog</name>
     <message>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="23"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="23"/>
         <source>Suggested person birth and death dates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="33"/>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="34"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="33"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="34"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="65"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="65"/>
         <source>Birth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="66"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="66"/>
         <source>Death</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="71"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="71"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/person_suggeted_dates_dialog.cpp" line="74"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="74"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -827,14 +827,14 @@
     </message>
 </context>
 <context>
-    <name>ScaleControllWidget</name>
+    <name>ScaleControlWidget</name>
     <message>
-        <location filename="../src/scale_controll_widget.cpp" line="16"/>
+        <location filename="../src/scale_control_widget.cpp" line="16"/>
         <source>Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/scale_controll_widget.cpp" line="34"/>
+        <location filename="../src/scale_control_widget.cpp" line="34"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>

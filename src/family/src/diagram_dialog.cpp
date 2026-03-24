@@ -37,8 +37,8 @@ DiagramDialog::DiagramDialog(FTree *familyTree, const QUuid &itemId, QWidget *pa
     QObject::connect(this->diagram,&DiagramWidget::personSelectionChanged,this,&DiagramDialog::onPersonSelectionChanged);
     QObject::connect(this->diagram,&DiagramWidget::relationSelectionChanged,this,&DiagramDialog::onRelationSelectionChanged);
 
-    QObject::connect(this->familyTree,&FTree::personRemoved,this,&DiagramDialog::opPersonRemoved);
-    QObject::connect(this->familyTree,&FTree::relationRemoved,this,&DiagramDialog::opRelationRemoved);
+    QObject::connect(this->familyTree,&FTree::personRemoved,this,&DiagramDialog::onPersonRemoved);
+    QObject::connect(this->familyTree,&FTree::relationRemoved,this,&DiagramDialog::onRelationRemoved);
 
     R_LOG_TRACE_OUT;
 }
@@ -84,7 +84,7 @@ void DiagramDialog::onItemIdChanged(const QUuid &itemId)
     R_LOG_TRACE_OUT;
 }
 
-void DiagramDialog::opPersonRemoved(const QUuid personId)
+void DiagramDialog::onPersonRemoved(const QUuid personId)
 {
     R_LOG_TRACE_IN;
     if (personId == this->itemId)
@@ -94,7 +94,7 @@ void DiagramDialog::opPersonRemoved(const QUuid personId)
     R_LOG_TRACE_OUT;
 }
 
-void DiagramDialog::opRelationRemoved(const QUuid relationId)
+void DiagramDialog::onRelationRemoved(const QUuid relationId)
 {
     R_LOG_TRACE_IN;
     if (relationId == this->itemId)

@@ -40,7 +40,7 @@ PersonEditDialog::PersonEditDialog(FTree *familyTree, const FPerson &person, QWi
     QObject::connect(buttonBox,&QDialogButtonBox::rejected,this,&QDialog::reject);
     QObject::connect(buttonBox,&QDialogButtonBox::accepted,this,&QDialog::accept);
 
-    QObject::connect(this->personEditWidget,&PersonEditWidget::changed,this,&PersonEditDialog::onPersonEdidWidgetChanged);
+    QObject::connect(this->personEditWidget,&PersonEditWidget::changed,this,&PersonEditDialog::onPersonEditWidgetChanged);
 }
 
 int PersonEditDialog::exec()
@@ -59,7 +59,7 @@ int PersonEditDialog::exec()
     return retVal;
 }
 
-void PersonEditDialog::onPersonEdidWidgetChanged(const FPerson &)
+void PersonEditDialog::onPersonEditWidgetChanged(const FPerson &)
 {
     this->editButton->setEnabled(true);
     this->editButton->setDefault(true);

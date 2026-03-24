@@ -4,9 +4,9 @@
 
 #include <rbl_utils.h>
 
-#include "scale_controll_widget.h"
+#include "scale_control_widget.h"
 
-ScaleControllWidget::ScaleControllWidget(QWidget *parent)
+ScaleControlWidget::ScaleControlWidget(QWidget *parent)
     : QWidget{parent}
     , savedScaleValue{1.0}
 {
@@ -34,14 +34,14 @@ ScaleControllWidget::ScaleControllWidget(QWidget *parent)
     QPushButton *resetButton = new QPushButton(tr("Reset"));
     mainLayout->addWidget(resetButton);
 
-    QObject::connect(downButton,&QPushButton::clicked,this,&ScaleControllWidget::onDownButtonClicked);
-    QObject::connect(upButton,&QPushButton::clicked,this,&ScaleControllWidget::onUpButtonClicked);
-    QObject::connect(resetButton,&QPushButton::clicked,this,&ScaleControllWidget::onResetButtonClicked);
+    QObject::connect(downButton,&QPushButton::clicked,this,&ScaleControlWidget::onDownButtonClicked);
+    QObject::connect(upButton,&QPushButton::clicked,this,&ScaleControlWidget::onUpButtonClicked);
+    QObject::connect(resetButton,&QPushButton::clicked,this,&ScaleControlWidget::onResetButtonClicked);
 
-    QObject::connect(this->scaleBox,&QDoubleSpinBox::valueChanged,this,&ScaleControllWidget::onScaleValueChanged);
+    QObject::connect(this->scaleBox,&QDoubleSpinBox::valueChanged,this,&ScaleControlWidget::onScaleValueChanged);
 }
 
-void ScaleControllWidget::setScale(double newScale)
+void ScaleControlWidget::setScale(double newScale)
 {
     bool signalsBlockedSaved = this->signalsBlocked();
     this->blockSignals(true);
@@ -49,22 +49,22 @@ void ScaleControllWidget::setScale(double newScale)
     this->blockSignals(signalsBlockedSaved);
 }
 
-void ScaleControllWidget::onDownButtonClicked()
+void ScaleControlWidget::onDownButtonClicked()
 {
     this->scaleBox->stepDown();
 }
 
-void ScaleControllWidget::onUpButtonClicked()
+void ScaleControlWidget::onUpButtonClicked()
 {
     this->scaleBox->stepUp();
 }
 
-void ScaleControllWidget::onResetButtonClicked()
+void ScaleControlWidget::onResetButtonClicked()
 {
     this->scaleBox->setValue(1.0);
 }
 
-void ScaleControllWidget::onScaleValueChanged(double value)
+void ScaleControlWidget::onScaleValueChanged(double value)
 {
     double factor = (std::fabs(this->savedScaleValue) < RConstants::eps ? 1.0 : value / this->savedScaleValue);
     this->savedScaleValue = value;

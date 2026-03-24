@@ -24,7 +24,7 @@ qt_add_executable(family
     src/person_details_widget.cpp
     src/person_edit_dialog.cpp
     src/person_edit_widget.cpp
-    src/person_suggeted_dates_dialog.cpp
+    src/person_suggested_dates_dialog.cpp
     src/persons_list_edit_widget.cpp
     src/persons_list_widget.cpp
     src/picture_edit_widget.cpp
@@ -33,7 +33,7 @@ qt_add_executable(family
     src/relation_edit_dialog.cpp
     src/relation_edit_widget.cpp
     src/relations_list_widget.cpp
-    src/scale_controll_widget.cpp
+    src/scale_control_widget.cpp
     src/session.cpp
     src/tree_diff_dialog.cpp
     src/tree_diff_update_person_dialog.cpp
@@ -64,7 +64,7 @@ qt_add_executable(family
     src/person_details_widget.h
     src/person_edit_dialog.h
     src/person_edit_widget.h
-    src/person_suggeted_dates_dialog.h
+    src/person_suggested_dates_dialog.h
     src/persons_list_edit_widget.h
     src/persons_list_widget.h
     src/picture_edit_widget.h
@@ -73,7 +73,7 @@ qt_add_executable(family
     src/relation_edit_dialog.h
     src/relation_edit_widget.h
     src/relations_list_widget.h
-    src/scale_controll_widget.h
+    src/scale_control_widget.h
     src/session.h
     src/tree_diff_dialog.h
     src/tree_diff_update_person_dialog.h

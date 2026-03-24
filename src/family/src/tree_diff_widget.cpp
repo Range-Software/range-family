@@ -149,7 +149,7 @@ QWidget *TreeDiffWidget::createTreeWidget(FTreeDiff::Side side)
     }
 
     QList<RTreeWidget::ColumnInfoItem> columnInfo;
-    for (int type=ColumnState;type<NunberOfColumns;type++)
+    for (int type=ColumnState;type<NumberOfColumns;type++)
     {
         RTreeWidget::ColumnInfoItem columnInfoItem;
         columnInfoItem.column = type;

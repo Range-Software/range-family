@@ -117,7 +117,7 @@ class Action : public RAction
         //! Save file.
         void onFileSave();
 
-        //! Sasve file as ...
+        //! Save file as ...
         void onFileSaveAs();
 
         //! Close file.
