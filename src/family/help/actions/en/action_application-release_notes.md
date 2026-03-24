@@ -1,4 +1,4 @@
 # Release notes
 
-Display release notes for current version of the software.
+Display the release notes for the current version of the software.
 

@@ -65,7 +65,7 @@ QString Action::getName(Type type)
         case ACTION_FILE_SAVE:                  return "file-save";
         case ACTION_FILE_SAVE_AS:               return "file-save_as";
         case ACTION_FILE_CLOSE:                 return "file-close";
-        case ACTION_CLOUD_SESSION_MANAGER:      return "cloud-sessiion_manager";
+        case ACTION_CLOUD_SESSION_MANAGER:      return "cloud-session_manager";
         case ACTION_CLOUD_FILE_MANAGER:         return "cloud-file_manager";
         default: return QString();
     }

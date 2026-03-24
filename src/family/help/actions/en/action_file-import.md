@@ -1,6 +1,6 @@
 # Import
 
-Load family tree from selected file and merge with current one.
+Load a family tree from the selected file and merge it with the current one.
 
 
 *Supported file extensions are `xml` and `json`.*

@@ -1,4 +1,4 @@
 # License
 
-Display Range-Software license.
+Display the Range-Software license.
 

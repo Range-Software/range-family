@@ -1,56 +1,56 @@
 # Cloud - Registrácia užívateľa
 
-Registered **Range Cloud** users may authenticate using CA signed client certificate or by using temporary one-time *authentication token*. This guide will demonstrate how to register new user on **Range Cloud**. The whole registration process consists of following steps:
-1. Creation of new *user account*
-2. Generation of temporary one-time *authentication token*
-3. Generation of *Certificate Signing Request (CSR)*
-4. Sending *CSR* to **Range Cloud** using newly created *user account* and generated *authentication token*
-5. Fetching *CA signed client certificate* from **Range Cloud** and configuring setting it for future usage
+Registrovaní používatelia **Range Cloud** sa môžu overovať pomocou klientského certifikátu podpísaného CA alebo pomocou dočasného jednorazového *overovacieho tokenu*. Tento návod ukáže, ako zaregistrovať nového používateľa na **Range Cloud**. Celý registračný proces pozostáva z nasledujúcich krokov:
+1. Vytvorenie nového *používateľského účtu*
+2. Vygenerovanie dočasného jednorazového *overovacieho tokenu*
+3. Vygenerovanie *žiadosti o podpis certifikátu (CSR)*
+4. Odoslanie *CSR* na **Range Cloud** pomocou novovytvoreného *používateľského účtu* a vygenerovaného *overovacieho tokenu*
+5. Stiahnutie *klientského certifikátu podpísaného CA* z **Range Cloud** a jeho nastavenie pre budúce použitie
 
-By using *Cloud session manager* this whole process is simplified to few clicks.
+Pomocou *správcu cloudových relácií* je celý tento proces zjednodušený na niekoľko kliknutí.
 
-## 1. Confirm or change user settings
+## 1. Potvrďte alebo zmeňte nastavenia používateľa
 
-**Menu:** *File -> Application settings*
+**Menu:** *Súbor -> Nastavenia aplikácie*
 
-First make sure that user personal information is set.
+Najprv sa uistite, že vaše osobné informácie sú vyplnené.
 
-![User settings](image-User_settings.png)
+![Nastavenia používateľa](image-User_settings.png)
 
-## 2. Open Cloud session manager
+## 2. Otvorte správcu cloudových relácií
 
-**Menu:** *Cloud -> Cloud session manager*
+**Menu:** *Cloud -> Správca cloudových relácií*
 
-Keep all values as they are and click *Request new certificate* button.
+Ponechajte všetky hodnoty tak, ako sú, a kliknite na tlačidlo *Požiadať o nový certifikát*.
 
-![Cloud session](image-Cloud_session.png)
+![Cloudová relácia](image-Cloud_session.png)
 
-## 3. Generate Certificate Signing Request (CSR)
+## 3. Vygenerujte žiadosť o podpis certifikátu (CSR)
 
-In newly open *OpenSSL certificate signing request* dialog window fill in all missing *Certificate subject fields* and click *Generate certificate signing request* button.
+V novo otvorenom dialógovom okne *žiadosti o podpis certifikátu OpenSSL* vyplňte všetky chýbajúce *polia predmetu certifikátu* a kliknite na tlačidlo *Vygenerovať žiadosť o podpis certifikátu*.
 
-**Note:** *CN field* must contain an email address which will be used as your **Range Cloud** *user name*.
+**Poznámka:** Pole *CN* musí obsahovať e-mailovú adresu, ktorá bude použitá ako vaše *používateľské meno* na **Range Cloud**.
 
-![Cloud CSR - generate](image-Cloud_csr_generate.png)
+![Cloud CSR - generovanie](image-Cloud_csr_generate.png)
 
-## 4. Register new user
+## 4. Zaregistrujte nového používateľa
 
-Once *CSR* is generated its content will be shown in previously empty text area. To continue click *Register new user* button which will request to create a new *user name* along with *authentication token* on **Range Cloud**.
+Po vygenerovaní *CSR* sa jeho obsah zobrazí v predtým prázdnej textovej oblasti. Pokračujte kliknutím na tlačidlo *Zaregistrovať nového používateľa*, ktoré požiada o vytvorenie nového *používateľského mena* spolu s *overovacím tokenom* na **Range Cloud**.
 
-![Cloud CSR - user registration](image-Cloud_csr_user_registration.png)
+![Cloud CSR - registrácia používateľa](image-Cloud_csr_user_registration.png)
 
-Once new *user account* is successfully created a confirmation dialog window will appear containing user details. After clicking *OK* button *CSR* will be send to **Range Cloud**.
+Po úspešnom vytvorení nového *používateľského účtu* sa zobrazí potvrdzujúce dialógové okno s údajmi používateľa. Po kliknutí na tlačidlo *OK* bude *CSR* odoslaný na **Range Cloud**.
 
-![Cloud CSR - user registered](image-Cloud_csr_user_registered.png)
+![Cloud CSR - používateľ zaregistrovaný](image-Cloud_csr_user_registered.png)
 
-## 5. Sign user certificate
+## 5. Podpíšte používateľský certifikát
 
-After *CSR* is successfully processed and *client certificate* is signed by **Range CA** a dialog window will appear offering to apply newly generated key ans signed certificate. Accept it.
+Po úspešnom spracovaní *CSR* a podpísaní *klientského certifikátu* certifikačnou autoritou **Range CA** sa zobrazí dialógové okno ponúkajúce možnosť použiť novovygenerovaný kľúč a podpísaný certifikát. Prijmite ho.
 
-![Cloud CSR - certificate signed](image-Cloud_csr_cert_signed.png)
+![Cloud CSR - certifikát podpísaný](image-Cloud_csr_cert_signed.png)
 
-## 6. Accept generated key and signed certificate
+## 6. Prijmite vygenerovaný kľúč a podpísaný certifikát
 
-*Cloud session manager* dialog window now shows correct *Private key* and *Certificate* file names. Clicking *OK* button will save it for the future use.
+Dialógové okno *správcu cloudových relácií* teraz zobrazuje správne názvy súborov *súkromného kľúča* a *certifikátu*. Kliknutím na tlačidlo *OK* ich uložíte pre budúce použitie.
 
-![Cloud session accept](image-Cloud_session_accept.png)
+![Prijatie cloudovej relácie](image-Cloud_session_accept.png)

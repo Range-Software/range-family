@@ -1,10 +1,13 @@
 ------------------------------------------------------------------
 Version 1.0.4
 
+- Translated tutorials to Slovak
+
 Bug fixes:
 
 - Fixed memory leak when building family tree diagram
 - Fix SSL error on macOS by seeding system CA certificates
+- Fixed spelling errors in user interface
 
 ------------------------------------------------------------------
 Version 1.0.3

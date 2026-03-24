@@ -1,4 +1,4 @@
 # Close
 
-Close current family tree.
+Close the current family tree.
 

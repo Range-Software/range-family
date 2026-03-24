@@ -1,4 +1,4 @@
 # Quit
 
-Quit program.
+Quit the program.
 
