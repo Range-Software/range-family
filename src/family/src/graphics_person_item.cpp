@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <QPainter>
 #include <QFontMetrics>
 #include <QStyleOptionGraphicsItem>
@@ -20,8 +22,14 @@ namespace {
 GraphicsPersonItem::GraphicsPersonItem(const FPerson &person, const QRectF &slot, GraphicsNodeItem *parent)
     : GraphicsNodeItem(slot,parent)
     , person(person)
+    , active(false)
 {
 
+}
+
+void GraphicsPersonItem::setActive(bool active)
+{
+    this->active = active;
 }
 
 void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -210,6 +218,28 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     // Restore font
     painter->setFont(baseFont);
+
+    // Draw golden star badge if this is the active person
+    if (this->active)
+    {
+        constexpr qreal starR = 10.0;
+        constexpr qreal starInnerR = starR * 0.382;
+        constexpr int starPoints = 5;
+        QPointF starCenter(boxRect.left() + starR + 2.0, boxRect.top() + starR + 2.0);
+
+        QPolygonF star;
+        for (int i = 0; i < starPoints * 2; ++i)
+        {
+            qreal angle = M_PI * i / starPoints - M_PI_2;
+            qreal r = (i % 2 == 0) ? starR : starInnerR;
+            star << QPointF(starCenter.x() + r * std::cos(angle),
+                            starCenter.y() + r * std::sin(angle));
+        }
+
+        painter->setPen(QPen(QColor(180, 120, 0), 1.0));
+        painter->setBrush(QColor(255, 210, 0));
+        painter->drawPolygon(star);
+    }
 }
 
 const QUuid &GraphicsPersonItem::getPersonId() const

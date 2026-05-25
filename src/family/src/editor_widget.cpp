@@ -26,6 +26,7 @@ EditorWidget::EditorWidget(Session *session, QWidget *parent)
     verticalSplitter->addWidget(this->relationList);
 
     QObject::connect(this->personList,&PersonsListWidget::selectionChanged,this,&EditorWidget::onPersonsSelectionChanged);
+    QObject::connect(this->session,&Session::activePersonIdChanged,this->personList,&PersonsListWidget::onActivePersonIdChanged);
     QObject::connect(this->relationList,&RelationsListWidget::selectionChanged,this,&EditorWidget::onRelationsSelectionChanged);
     QObject::connect(this->session->getTree(),&FTree::personChanged,this,&EditorWidget::onPersonChanged);
     QObject::connect(this->session->getTree(),&FTree::relationChanged,this,&EditorWidget::onRelationChanged);

@@ -2,6 +2,7 @@
 
 #include <rbl_logger.h>
 
+#include "application.h"
 #include "diagram_scene.h"
 #include "graphics_node_item.h"
 #include "graphics_edge_item.h"
@@ -12,10 +13,12 @@ DiagramScene::DiagramScene(const FTree *familyTree, const QUuid &itemId, QObject
     : QGraphicsScene(parent)
     , familyTree(familyTree)
     , itemId(itemId)
+    , activePersonId(Application::instance()->getSession()->getActivePersonId())
 {
     R_LOG_TRACE_IN;
     this->populate();
 
+    QObject::connect(Application::instance()->getSession(),&Session::activePersonIdChanged,this,&DiagramScene::onActivePersonIdChanged);
     QObject::connect(this->familyTree,&FTree::personAdded,this,&DiagramScene::onPersonAdded);
     QObject::connect(this->familyTree,&FTree::personChanged,this,&DiagramScene::onPersonChanged);
     QObject::connect(this->familyTree,&FTree::personRemoved,this,&DiagramScene::onPersonRemoved);
@@ -88,6 +91,7 @@ void DiagramScene::populate()
                 FPerson person = this->familyTree->findPerson(modelItem->getId());
                 GraphicsPersonItem *personItem = new GraphicsPersonItem(person,slot);
                 personItem->setHighlighted(person.getId() == this->itemId);
+                personItem->setActive(person.getId() == this->activePersonId);
 
                 itemsMap[modelItem] = personItem;
                 this->addItem(personItem);
@@ -204,6 +208,21 @@ void DiagramScene::onFileLoaded(const QString &)
 {
     R_LOG_TRACE_IN;
     this->populate();
+    R_LOG_TRACE_OUT;
+}
+
+void DiagramScene::onActivePersonIdChanged(const QUuid &id)
+{
+    R_LOG_TRACE_IN;
+    this->activePersonId = id;
+    foreach (QGraphicsItem *item, this->items())
+    {
+        if (GraphicsPersonItem *personItem = qgraphicsitem_cast<GraphicsPersonItem*>(item))
+        {
+            personItem->setActive(personItem->getPersonId() == id);
+            personItem->update();
+        }
+    }
     R_LOG_TRACE_OUT;
 }
 

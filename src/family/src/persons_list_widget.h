@@ -8,6 +8,8 @@
 
 #include <rgl_tree_widget.h>
 
+#include "scroll_bar_with_markers.h"
+
 class PersonsListWidget : public QWidget
 {
 
@@ -38,7 +40,9 @@ class PersonsListWidget : public QWidget
         QPushButton *personEditButton;
         QPushButton *personRemoveButton;
         RTreeWidget *treeWidget;
+        ScrollBarWithMarkers *scrollBarWithMarkers;
         QAction *showTreeAction;
+        QAction *setActivePersonAction;
         QAction *mergePersonsAction;
         QAction *suggestPersonBirthAndDeathDatesAction;
 
@@ -99,6 +103,9 @@ class PersonsListWidget : public QWidget
         //! Show family tree diagram of selected persons.
         void onShowDiagramDialog();
 
+        //! Set selected person as active.
+        void onSetActivePersonAction();
+
         //! Merge selected persons.
         void onMergePersonsAction();
 
@@ -106,6 +113,11 @@ class PersonsListWidget : public QWidget
         void onSuggestPersonBirthAndDeathDatesAction();
 
         void personDiagramSelectionChanged(const QList<QUuid> &);
+
+    public slots:
+
+        //! Active person ID changed.
+        void onActivePersonIdChanged(const QUuid &id);
 
 
     signals:

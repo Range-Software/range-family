@@ -40,6 +40,9 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
     this->treeWidget->setAlternatingRowColors(true);
     mainLayout->addWidget(this->treeWidget);
 
+    this->scrollBarWithMarkers = new ScrollBarWithMarkers(Qt::Vertical, this->treeWidget);
+    this->treeWidget->setVerticalScrollBar(this->scrollBarWithMarkers);
+
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     mainLayout->addLayout(buttonLayout);
 
@@ -79,27 +82,26 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
 
 void RelationsListWidget::highlightRelations(const QList<QUuid> &ids)
 {
+    int totalItems = this->treeWidget->topLevelItemCount();
+    QList<double> markerPositions;
+    int index = 0;
+
     QTreeWidgetItemIterator it(this->treeWidget);
     while (*it)
     {
-        if (ids.contains(QUuid((*it)->text(ColumnId))))
+        bool highlighted = ids.contains(QUuid((*it)->text(ColumnId)));
+        for (int column=0;column<NumberOfColumns;column++)
         {
-            for (int column=0;column<NumberOfColumns;column++)
-            {
-                (*it)->setBackground(column,QBrush(Qt::yellow));
-                (*it)->setForeground(column,QBrush(Qt::black));
-            }
+            (*it)->setBackground(column,highlighted ? QBrush(Qt::yellow) : QBrush());
+            (*it)->setForeground(column,highlighted ? QBrush(Qt::black) : QBrush());
         }
-        else
-        {
-            for (int column=0;column<NumberOfColumns;column++)
-            {
-                (*it)->setBackground(column,QBrush());
-                (*it)->setForeground(column,QBrush());
-            }
-        }
+        if (highlighted && totalItems > 0)
+            markerPositions.append(static_cast<double>(index) / totalItems);
         ++it;
+        ++index;
     }
+
+    this->scrollBarWithMarkers->setMarkers(markerPositions);
 }
 
 QList<QUuid> RelationsListWidget::getSelectedIds() const

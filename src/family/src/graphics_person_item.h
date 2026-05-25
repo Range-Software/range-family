@@ -11,10 +11,13 @@ class GraphicsPersonItem : public GraphicsNodeItem
     public:
 
         FPerson person;
+        bool active;
 
     public:
 
         explicit GraphicsPersonItem(const FPerson &person, const QRectF &slot, GraphicsNodeItem *parent = nullptr);
+
+        void setActive(bool active);
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
 

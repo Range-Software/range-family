@@ -19,6 +19,12 @@ class Session : public QObject
         FTree *pTree;
         //! Tree file name
         QString treeFileName;
+        //! Active person ID.
+        QUuid activePersonId;
+        //! Last AI chat agent.
+        QString lastAiChatAgent;
+        //! Last AI chat language.
+        QString lastAiChatLanguage;
         //! Tree changed indicator.
         bool treeChanged;
 
@@ -40,6 +46,24 @@ class Session : public QObject
 
         //! Set tree new file name.
         void setTreeFileName(const QString &treeFileName);
+
+        //! Return const reference to active person name.
+        const QUuid &getActivePersonId() const;
+
+        //! Set active person name.
+        void setActivePersonId(const QUuid &activePersonId);
+
+        //! Return const reference to last AI chat agent.
+        const QString &getLastAiChatAgent() const;
+
+        //! Set last AI chat agent.
+        void setLastAiChatAgent(const QString &lastAiAgent);
+
+        //! Return const reference to last AI chat language.
+        const QString &getLastAiChatLanguage() const;
+
+        //! Set last AI chat language.
+        void setLastAiChatLanguage(const QString &lastAiChatLanguage);
 
         //! Return tree changed indicator value.
         bool getTreeChanged() const;
@@ -70,11 +94,14 @@ class Session : public QObject
 
     signals:
 
-        //! Handle tree file has changed.
+        //! Tree file has changed.
         void treeFileChanged(const QString &fileName);
 
-        //! Handle tree file has been removed.
+        //! Tree file has been removed.
         void treeFileRemoved(const QString &fileName);
+
+        //! Active person ID has changed.
+        void activePersonIdChanged(const QUuid &fileName);
 
 };
 

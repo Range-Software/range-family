@@ -52,6 +52,40 @@ void Session::setTreeFileName(const QString &treeFileName)
     }
 }
 
+const QUuid &Session::getActivePersonId() const
+{
+    return this->activePersonId;
+}
+
+void Session::setActivePersonId(const QUuid &activePersonId)
+{
+    if (this->activePersonId != activePersonId)
+    {
+        this->activePersonId = activePersonId;
+        emit this->activePersonIdChanged(activePersonId);
+    }
+}
+
+const QString &Session::getLastAiChatAgent() const
+{
+    return this->lastAiChatAgent;
+}
+
+void Session::setLastAiChatAgent(const QString &lastAiAgent)
+{
+    this->lastAiChatAgent = lastAiAgent;
+}
+
+const QString &Session::getLastAiChatLanguage() const
+{
+    return this->lastAiChatLanguage;
+}
+
+void Session::setLastAiChatLanguage(const QString &lastAiChatLanguage)
+{
+    this->lastAiChatLanguage = lastAiChatLanguage;
+}
+
 bool Session::getTreeChanged() const
 {
     return this->treeChanged;
@@ -83,6 +117,14 @@ void Session::writeTreeFile() const
 void Session::onTreeChanged()
 {
     this->treeChanged = true;
+
+    if (!this->activePersonId.isNull())
+    {
+        if (!this->pTree->containsPerson(this->activePersonId))
+        {
+            this->setActivePersonId(QUuid());
+        }
+    }
 }
 
 void Session::onTreeFileSaved(const QString &fileName)

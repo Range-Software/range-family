@@ -71,8 +71,8 @@ QString PersonDetailsWidget::generateMarkdown() const
 
         content += "- " + tr("Born") + ": " + bornDateString + bornSeparator + bornPlaceString + '\n';
 
-        QString deathDateString = QLocale().toString(person.getBirth().getDate().toDate());
-        QString deathPlaceString = person.getBirth().getPlace().getAddress().toString();
+        QString deathDateString = QLocale().toString(person.getDeath().getDate().toDate());
+        QString deathPlaceString = person.getDeath().getPlace().getAddress().toString();
         QString deathSeparator = !deathDateString.isEmpty() && !deathPlaceString.isEmpty() ? ", " : QString();
 
         content += "- " + tr("Died") + ": " + deathDateString + deathSeparator + deathPlaceString + '\n';

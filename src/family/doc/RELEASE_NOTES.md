@@ -1,42 +1,60 @@
-------------------------------------------------------------------
-Version 1.0.4
+## Version 1.1.0
+
+- Added AI assistant
+- Can specify an active person in the family tree which will be treated as
+  the main character in the family tree diagram and in the AI assistant
+  responses
+- Added scroll markers to persons and relationships lists
+- Release notes displayed in a dedicated dialog with markdown rendering
+
+### Bug fixes
+
+- Fixed person details markdown view displaying birth date and place instead
+  of death date and place in the "Died" field
+
+---
+
+## Version 1.0.4
 
 - Translated tutorials to Slovak
 
-Bug fixes:
+### Bug fixes
 
 - Fixed memory leak when building family tree diagram
 - Fix SSL error on macOS by seeding system CA certificates
 - Fixed spelling errors in user interface
 
-------------------------------------------------------------------
-Version 1.0.3
+---
+
+## Version 1.0.3
 
 - Automatic client certificate renewal
 - Show warning when client certificate is about to expire
 
-------------------------------------------------------------------
-Version 1.0.2
+---
+
+## Version 1.0.2
 
 - Improve diagram graphics with modern visual styling
 - Print time-stamps in output window
 - Offer to save a tree when original file is deleted
 - Log Qt debug messages
 
-Bug fixes:
+### Bug fixes
 
 - Do not report that file has changed after saving it
 - Automatic file synchronization with Range Cloud
 
-------------------------------------------------------------------
-Version 1.0.1
+---
 
-Bug fixes:
+## Version 1.0.1
+
+### Bug fixes
 
 - Fixed problem when too many new files appeared in upload directory
 
-------------------------------------------------------------------
-Version 1.0.0
+---
+
+## Version 1.0.0
 
 Initial release.
-

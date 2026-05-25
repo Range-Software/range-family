@@ -9,15 +9,18 @@
 #include <rfl_tool_action.h>
 
 #include <rgl_application_settings_dialog.h>
+#include <rgl_ai_agent_settings_manager_dialog.h>
 #include <rgl_cloud_file_manager_dialog.h>
 #include <rgl_cloud_session_dialog.h>
 #include <rgl_help_dialog.h>
 #include <rgl_message_box.h>
+#include <rgl_release_notes_dialog.h>
 #include <rgl_software_manager_dialog.h>
 #include <rgl_text_browser_dialog.h>
 
 #include "application.h"
 #include "action.h"
+#include "ai_chat_dialog.h"
 #include "tree_diff_dialog.h"
 
 Action::Action(RAction::Definition definition, QObject *parent)
@@ -41,6 +44,8 @@ QString Action::getGroupName(GroupType groupType)
             return QObject::tr("Debug");
         case ACTION_GROUP_CLOUD:
             return QObject::tr("Cloud");
+        case ACTION_GROUP_AI:
+            return QObject::tr("AI");
         default:
             return QString();
     }
@@ -67,6 +72,8 @@ QString Action::getName(Type type)
         case ACTION_FILE_CLOSE:                 return "file-close";
         case ACTION_CLOUD_SESSION_MANAGER:      return "cloud-session_manager";
         case ACTION_CLOUD_FILE_MANAGER:         return "cloud-file_manager";
+        case ACTION_AI_SETTINGS_MANAGER:        return "ai-settings-manager";
+        case ACTION_AI_CHAT:                    return "ai-chat";
         default: return QString();
     }
 }
@@ -81,6 +88,7 @@ QList<Action::GroupType> Action::getGroupTypes(GroupTypeMask groupTypeMask)
     if (groupTypeMask & ACTION_GROUP_EDIT) groupTypes.append(ACTION_GROUP_EDIT);
     if (groupTypeMask & ACTION_GROUP_DEBUG) groupTypes.append(ACTION_GROUP_DEBUG);
     if (groupTypeMask & ACTION_GROUP_CLOUD) groupTypes.append(ACTION_GROUP_CLOUD);
+    if (groupTypeMask & ACTION_GROUP_AI) groupTypes.append(ACTION_GROUP_AI);
 
     return groupTypes;
 }
@@ -109,6 +117,8 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_CLOSE, tr("Close"), "", "Ctrl+W", ":/icons/file/pixmaps/range-close.svg", static_cast<PointerToMemberTrigger>(&Action::onFileClose));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_SESSION_MANAGER, tr("Cloud session manager"), "", "", ":/icons/cloud/pixmaps/range-session_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudSessionManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
+    Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_SETTINGS_MANAGER, tr("AI settings manager"), "", "", ":/icons/ai/pixmaps/range-ai_settings_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onAiSettingsManager));
+    Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_CHAT, tr("AI chat"), "", "", ":/icons/ai/pixmaps/range-ai_chat.svg", static_cast<PointerToMemberTrigger>(&Action::onAiChat));
 
     return actionDef;
 }
@@ -373,29 +383,8 @@ void Action::onLicense()
 void Action::onReleaseNotes()
 {
     R_LOG_TRACE_IN;
-    QString releaseNotesFileName(Application::instance()->getApplicationSettings()->findReleaseNotesFileName());
-
-    try
-    {
-        QFile file(releaseNotesFileName);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            throw RError(RError::Type::OpenFile,R_ERROR_REF,"Failed to open the file \'%s\'.",releaseNotesFileName.toUtf8().constData());
-        }
-        QString releaseNotesText(file.readAll());
-        file.close();
-
-        RTextBrowserDialog textBrowserDialog(tr("Release notes"), releaseNotesFileName, releaseNotesText, Application::instance()->getMainWindow());
-        textBrowserDialog.exec();
-    }
-    catch (const RError &RError)
-    {
-        RLogger::error("Failed to display release notes from file \'%s\'. %s\n",releaseNotesFileName.toUtf8().constData(),RError.getMessage().toUtf8().constData());
-    }
-    catch (...)
-    {
-        RLogger::error("Failed to display release notes from file \'%s\'.\n",releaseNotesFileName.toUtf8().constData());
-    }
+    RReleaseNotesDialog releaseNotesDialog(Application::instance()->getMainWindow());
+    releaseNotesDialog.exec();
     R_LOG_TRACE_OUT;
 }
 
@@ -421,5 +410,24 @@ void Action::onCloudFileManager()
                                                    false,
                                                    Application::instance()->getMainWindow());
     cloudFileManagerDialog.exec();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onAiSettingsManager()
+{
+    R_LOG_TRACE_IN;
+    RAiAgentSettingsManagerDialog aiAgentSettingsManagerDialog(Application::instance()->getAiAgentSettingsManager(),
+                                                               Application::instance()->getMainWindow());
+    aiAgentSettingsManagerDialog.exec();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onAiChat()
+{
+    R_LOG_TRACE_IN;
+    AiChatDialog *aiChatDialog = new AiChatDialog(Application::instance()->getAiAgentSettingsManager(),
+                                                  Application::instance()->getApplicationSettings(),
+                                                  Application::instance()->getMainWindow());
+    aiChatDialog->show();
     R_LOG_TRACE_OUT;
 }

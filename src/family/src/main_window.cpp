@@ -129,6 +129,12 @@ void MainWindow::createMenus()
     menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
     menubar->addAction(menuCloud->menuAction());
 
+    QMenu *menuAi = new QMenu(menubar);
+    menuAi->setTitle(QApplication::translate("MainWindow", "AI"));
+    menuAi->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
+    menuAi->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
+    menubar->addAction(menuAi->menuAction());
+
     QMenu *menuHelp = new QMenu(menubar);
     menuHelp->setTitle(QApplication::translate("MainWindow", "Help"));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_HELP));
@@ -168,6 +174,8 @@ void MainWindow::createToolBars()
     mainToolBar->addSeparator();
 
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
+    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
+    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
 
     QWidget* spacer = new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -230,6 +238,9 @@ void MainWindow::readSettings()
     if (this->applicationSettings->getStoredVersion() <= RVendor::version())
     {
         this->session->setTreeFileName(this->applicationSettings->value("session/treeFile").toString());
+        this->session->setActivePersonId(this->applicationSettings->value("session/activePersonId").toUuid());
+        this->session->setLastAiChatAgent(this->applicationSettings->value("session/lastAiAgent").toString());
+        this->session->setLastAiChatLanguage(this->applicationSettings->value("session/lastAiChatLanguage").toString());
     }
     this->applicationSettings->sync();
     R_LOG_TRACE_OUT;
@@ -255,6 +266,9 @@ void MainWindow::writeSettings() const
     }
 
     this->applicationSettings->setValue("session/treeFile",this->session->getTreeFileName());
+    this->applicationSettings->setValue("session/activePersonId",this->session->getActivePersonId());
+    this->applicationSettings->setValue("session/lastAiAgent",this->session->getLastAiChatAgent());
+    this->applicationSettings->setValue("session/lastAiChatLanguage",this->session->getLastAiChatLanguage());
     this->applicationSettings->sync();
     R_LOG_TRACE_OUT;
 }

@@ -8,6 +8,8 @@
 
 #include <rgl_tree_widget.h>
 
+#include "scroll_bar_with_markers.h"
+
 class RelationsListWidget : public QWidget
 {
 
@@ -35,6 +37,7 @@ class RelationsListWidget : public QWidget
         QPushButton *relationEditButton;
         QPushButton *relationRemoveButton;
         RTreeWidget *treeWidget;
+        ScrollBarWithMarkers *scrollBarWithMarkers;
         QAction *showTreeAction;
 
     public:

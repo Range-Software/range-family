@@ -18,3 +18,7 @@
 	path = src/range-gui-lib
 	url = ../range-gui-lib
 	branch = main
+[submodule "src/range-ai-lib"]
+	path = src/range-ai-lib
+	url = ../range-ai-lib
+	branch = main

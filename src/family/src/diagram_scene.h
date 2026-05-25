@@ -14,6 +14,7 @@ class DiagramScene : public QGraphicsScene
 
         const FTree *familyTree;
         QUuid itemId;
+        QUuid activePersonId;
         FTreeModel treeModel;
 
     public:
@@ -53,6 +54,9 @@ class DiagramScene : public QGraphicsScene
 
         //! File loaded.
         void onFileLoaded(const QString &);
+
+        //! Active person ID changed.
+        void onActivePersonIdChanged(const QUuid &id);
 
         //! Selection changed.
         void onSelectionChanged();

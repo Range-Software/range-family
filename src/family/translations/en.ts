@@ -4,138 +4,155 @@
 <context>
     <name>Action</name>
     <message>
-        <location filename="../src/action.cpp" line="152"/>
+        <location filename="../src/action.cpp" line="162"/>
         <source>Open tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="176"/>
+        <location filename="../src/action.cpp" line="186"/>
         <source>Would you like to save it first?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="177"/>
+        <location filename="../src/action.cpp" line="187"/>
         <source>Save current tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="185"/>
+        <location filename="../src/action.cpp" line="195"/>
         <source>Import tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="269"/>
+        <location filename="../src/action.cpp" line="279"/>
         <source>Close tree?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="270"/>
+        <location filename="../src/action.cpp" line="280"/>
         <source>Are you sure you want to close current family tree?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="101"/>
-        <location filename="../src/action.cpp" line="289"/>
+        <location filename="../src/action.cpp" line="109"/>
+        <location filename="../src/action.cpp" line="299"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="95"/>
+        <location filename="../src/action.cpp" line="103"/>
         <source>Application settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="96"/>
+        <location filename="../src/action.cpp" line="104"/>
         <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="97"/>
-        <location filename="../src/action.cpp" line="322"/>
+        <location filename="../src/action.cpp" line="105"/>
+        <location filename="../src/action.cpp" line="332"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="98"/>
-        <location filename="../src/action.cpp" line="337"/>
+        <location filename="../src/action.cpp" line="106"/>
+        <location filename="../src/action.cpp" line="347"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="99"/>
-        <location filename="../src/action.cpp" line="356"/>
+        <location filename="../src/action.cpp" line="107"/>
+        <location filename="../src/action.cpp" line="366"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="100"/>
-        <location filename="../src/action.cpp" line="388"/>
+        <location filename="../src/action.cpp" line="108"/>
         <source>Release notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="102"/>
+        <location filename="../src/action.cpp" line="110"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="103"/>
+        <location filename="../src/action.cpp" line="111"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="104"/>
+        <location filename="../src/action.cpp" line="112"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="105"/>
+        <location filename="../src/action.cpp" line="113"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="106"/>
+        <location filename="../src/action.cpp" line="114"/>
         <source>Compare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="107"/>
+        <location filename="../src/action.cpp" line="115"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="108"/>
+        <location filename="../src/action.cpp" line="116"/>
         <source>Save as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="109"/>
+        <location filename="../src/action.cpp" line="117"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="110"/>
+        <location filename="../src/action.cpp" line="118"/>
         <source>Cloud session manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="111"/>
+        <location filename="../src/action.cpp" line="119"/>
         <source>Cloud file manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="174"/>
+        <location filename="../src/action.cpp" line="120"/>
+        <source>AI settings manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/action.cpp" line="121"/>
+        <source>AI chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/action.cpp" line="184"/>
         <source>The current family tree contains unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="286"/>
+        <location filename="../src/action.cpp" line="296"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="287"/>
+        <location filename="../src/action.cpp" line="297"/>
         <source>Tutorials</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AiChatDialog</name>
+    <message>
+        <location filename="../src/ai_chat_dialog.cpp" line="12"/>
+        <source>AI chat</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -378,16 +395,21 @@
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="133"/>
+        <source>AI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="139"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="150"/>
+        <location filename="../src/main_window.cpp" line="156"/>
         <source>Main toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="269"/>
+        <location filename="../src/main_window.cpp" line="283"/>
         <source>The current family tree contains unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -541,127 +563,132 @@
 <context>
     <name>PersonsListWidget</name>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="49"/>
+        <location filename="../src/persons_list_widget.cpp" line="53"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="52"/>
+        <location filename="../src/persons_list_widget.cpp" line="56"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="55"/>
+        <location filename="../src/persons_list_widget.cpp" line="59"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="62"/>
+        <location filename="../src/persons_list_widget.cpp" line="66"/>
         <source>Show family tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="69"/>
+        <location filename="../src/persons_list_widget.cpp" line="73"/>
+        <source>Set selected person as active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/persons_list_widget.cpp" line="80"/>
         <source>Merge selected persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="72"/>
+        <location filename="../src/persons_list_widget.cpp" line="83"/>
         <source>Suggest birth and death dates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="145"/>
+        <location filename="../src/persons_list_widget.cpp" line="157"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="146"/>
+        <location filename="../src/persons_list_widget.cpp" line="158"/>
         <source>Sex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="147"/>
+        <location filename="../src/persons_list_widget.cpp" line="159"/>
         <source>First name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="148"/>
+        <location filename="../src/persons_list_widget.cpp" line="160"/>
         <source>Middle name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="149"/>
+        <location filename="../src/persons_list_widget.cpp" line="161"/>
         <source>Last name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="150"/>
+        <location filename="../src/persons_list_widget.cpp" line="162"/>
         <source>Maiden name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="151"/>
+        <location filename="../src/persons_list_widget.cpp" line="163"/>
         <source>Birth date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="152"/>
+        <location filename="../src/persons_list_widget.cpp" line="164"/>
         <source>Birth address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="153"/>
+        <location filename="../src/persons_list_widget.cpp" line="165"/>
         <source>Birth coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="154"/>
+        <location filename="../src/persons_list_widget.cpp" line="166"/>
         <source>Death date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="155"/>
+        <location filename="../src/persons_list_widget.cpp" line="167"/>
         <source>Death address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="156"/>
+        <location filename="../src/persons_list_widget.cpp" line="168"/>
         <source>Death coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="226"/>
+        <location filename="../src/persons_list_widget.cpp" line="239"/>
         <source>Are you sure you want to edit all selected persons?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="227"/>
+        <location filename="../src/persons_list_widget.cpp" line="240"/>
         <source>Edit persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="258"/>
+        <location filename="../src/persons_list_widget.cpp" line="271"/>
         <source>Are you sure you want to remove the selected person?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="261"/>
+        <location filename="../src/persons_list_widget.cpp" line="274"/>
         <source>Remove person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="254"/>
+        <location filename="../src/persons_list_widget.cpp" line="267"/>
         <source>Are you sure you want to remove all selected persons?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="336"/>
+        <location filename="../src/persons_list_widget.cpp" line="359"/>
         <source>Are you sure you want to merge selected persons?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/persons_list_widget.cpp" line="345"/>
+        <location filename="../src/persons_list_widget.cpp" line="368"/>
         <source>Merge persons</source>
         <translation type="unfinished"></translation>
     </message>
@@ -669,33 +696,38 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/action.cpp" line="33"/>
+        <location filename="../src/action.cpp" line="36"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="35"/>
+        <location filename="../src/action.cpp" line="38"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="37"/>
+        <location filename="../src/action.cpp" line="40"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="39"/>
+        <location filename="../src/action.cpp" line="42"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="41"/>
+        <location filename="../src/action.cpp" line="44"/>
         <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="43"/>
+        <location filename="../src/action.cpp" line="46"/>
         <source>Cloud</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/action.cpp" line="48"/>
+        <source>AI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -748,92 +780,92 @@
 <context>
     <name>RelationsListWidget</name>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="46"/>
+        <location filename="../src/relations_list_widget.cpp" line="49"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="49"/>
+        <location filename="../src/relations_list_widget.cpp" line="52"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="52"/>
+        <location filename="../src/relations_list_widget.cpp" line="55"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="59"/>
+        <location filename="../src/relations_list_widget.cpp" line="62"/>
         <source>Show family tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="134"/>
+        <location filename="../src/relations_list_widget.cpp" line="136"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="135"/>
+        <location filename="../src/relations_list_widget.cpp" line="137"/>
         <source>Partners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="136"/>
+        <location filename="../src/relations_list_widget.cpp" line="138"/>
         <source>Children</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="137"/>
+        <location filename="../src/relations_list_widget.cpp" line="139"/>
         <source>Begin date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="138"/>
+        <location filename="../src/relations_list_widget.cpp" line="140"/>
         <source>Begin address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="139"/>
+        <location filename="../src/relations_list_widget.cpp" line="141"/>
         <source>Begin coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="140"/>
+        <location filename="../src/relations_list_widget.cpp" line="142"/>
         <source>End date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="141"/>
+        <location filename="../src/relations_list_widget.cpp" line="143"/>
         <source>End address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="142"/>
+        <location filename="../src/relations_list_widget.cpp" line="144"/>
         <source>End coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="239"/>
+        <location filename="../src/relations_list_widget.cpp" line="241"/>
         <source>Are you sure you want to edit all selected relations?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="240"/>
+        <location filename="../src/relations_list_widget.cpp" line="242"/>
         <source>Edit relations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="271"/>
+        <location filename="../src/relations_list_widget.cpp" line="273"/>
         <source>Are you sure you want to remove the selected relation?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="274"/>
+        <location filename="../src/relations_list_widget.cpp" line="276"/>
         <source>Remove relation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/relations_list_widget.cpp" line="267"/>
+        <location filename="../src/relations_list_widget.cpp" line="269"/>
         <source>Are you sure you want to remove all selected relations?</source>
         <translation type="unfinished"></translation>
     </message>

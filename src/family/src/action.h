@@ -13,7 +13,8 @@
     Action::ACTION_GROUP_VIEW        | \
     Action::ACTION_GROUP_EDIT        | \
     Action::ACTION_GROUP_DEBUG       | \
-    Action::ACTION_GROUP_CLOUD         \
+    Action::ACTION_GROUP_CLOUD       | \
+    Action::ACTION_GROUP_AI            \
     )
 
 class Action : public RAction
@@ -33,7 +34,8 @@ class Action : public RAction
             ACTION_GROUP_VIEW        = 1 << 3,
             ACTION_GROUP_EDIT        = 1 << 4,
             ACTION_GROUP_DEBUG       = 1 << 5,
-            ACTION_GROUP_CLOUD       = 1 << 6
+            ACTION_GROUP_CLOUD       = 1 << 6,
+            ACTION_GROUP_AI          = 1 << 7
         };
 
         enum Type
@@ -56,6 +58,8 @@ class Action : public RAction
             ACTION_FILE_CLOSE,
             ACTION_CLOUD_SESSION_MANAGER,
             ACTION_CLOUD_FILE_MANAGER,
+            ACTION_AI_SETTINGS_MANAGER,
+            ACTION_AI_CHAT,
             ACTION_N_TYPES
         };
 
@@ -152,6 +156,12 @@ class Action : public RAction
 
         //! Cloud file manager.
         void onCloudFileManager();
+
+        //! AI settings manager.
+        void onAiSettingsManager();
+
+        //! AI chat.
+        void onAiChat();
 
 };
 

@@ -8,6 +8,7 @@
 
 #include <rgl_message_box.h>
 
+#include "application.h"
 #include "diagram_dialog.h"
 #include "person_add_dialog.h"
 #include "person_edit_dialog.h"
@@ -43,6 +44,9 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
     this->treeWidget->setAlternatingRowColors(true);
     mainLayout->addWidget(this->treeWidget);
 
+    this->scrollBarWithMarkers = new ScrollBarWithMarkers(Qt::Vertical, this->treeWidget);
+    this->treeWidget->setVerticalScrollBar(this->scrollBarWithMarkers);
+
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     mainLayout->addLayout(buttonLayout);
 
@@ -62,9 +66,16 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
     this->showTreeAction = this->addAction(PersonsListWidget::tr("Show family tree"));
     QObject::connect(this->showTreeAction,&QAction::triggered,this,&PersonsListWidget::onShowDiagramDialog);
 
-    QAction *separatorAction = new QAction;
-    separatorAction->setSeparator(true);
-    this->addAction(separatorAction);
+    QAction *separator1Action = new QAction;
+    separator1Action->setSeparator(true);
+    this->addAction(separator1Action);
+
+    this->setActivePersonAction = this->addAction(PersonsListWidget::tr("Set selected person as active"));
+    QObject::connect(this->setActivePersonAction,&QAction::triggered,this,&PersonsListWidget::onSetActivePersonAction);
+
+    QAction *separator2Action = new QAction;
+    separator2Action->setSeparator(true);
+    this->addAction(separator2Action);
 
     this->mergePersonsAction = this->addAction(PersonsListWidget::tr("Merge selected persons"));
     QObject::connect(this->mergePersonsAction,&QAction::triggered,this,&PersonsListWidget::onMergePersonsAction);
@@ -90,27 +101,26 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
 
 void PersonsListWidget::highlightPersons(const QList<QUuid> &ids)
 {
+    int totalItems = this->treeWidget->topLevelItemCount();
+    QList<double> markerPositions;
+    int index = 0;
+
     QTreeWidgetItemIterator it(this->treeWidget);
     while (*it)
     {
-        if (ids.contains(QUuid((*it)->text(ColumnId))))
+        bool highlighted = ids.contains(QUuid((*it)->text(ColumnId)));
+        for (int column=0;column<NumberOfColumns;column++)
         {
-            for (int column=0;column<NumberOfColumns;column++)
-            {
-                (*it)->setBackground(column,QBrush(Qt::yellow));
-                (*it)->setForeground(column,QBrush(Qt::black));
-            }
+            (*it)->setBackground(column,highlighted ? QBrush(Qt::yellow) : QBrush());
+            (*it)->setForeground(column,highlighted ? QBrush(Qt::black) : QBrush());
         }
-        else
-        {
-            for (int column=0;column<NumberOfColumns;column++)
-            {
-                (*it)->setBackground(column,QBrush());
-                (*it)->setForeground(column,QBrush());
-            }
-        }
+        if (highlighted && totalItems > 0)
+            markerPositions.append(static_cast<double>(index) / totalItems);
         ++it;
+        ++index;
     }
+
+    this->scrollBarWithMarkers->setMarkers(markerPositions);
 }
 
 QList<QUuid> PersonsListWidget::getSelectedIds() const
@@ -136,6 +146,8 @@ void PersonsListWidget::populate()
 
     treeWidget->resizeColumnToContents(ColumnFirstName);
     treeWidget->resizeColumnToContents(ColumnLastName);
+
+    this->onActivePersonIdChanged(Application::instance()->getSession()->getActivePersonId());
 }
 
 QString PersonsListWidget::getColumnName(ColumnType columnType)
@@ -193,6 +205,7 @@ void PersonsListWidget::onItemSelectionChanged()
 
     this->personEditButton->setEnabled(ids.count() > 0);
     this->personRemoveButton->setEnabled(ids.count() > 0);
+    this->setActivePersonAction->setEnabled(ids.count() == 1);
     this->mergePersonsAction->setEnabled(ids.count() > 1);
     this->suggestPersonBirthAndDeathDatesAction->setEnabled(ids.count() > 0);
 
@@ -324,6 +337,16 @@ void PersonsListWidget::onShowDiagramDialog()
     }
 }
 
+void PersonsListWidget::onSetActivePersonAction()
+{
+    QList<QUuid> selectedIds = this->getSelectedIds();
+
+    if (selectedIds.size() > 0)
+    {
+        Application::instance()->getSession()->setActivePersonId(selectedIds.at(0));
+    }
+}
+
 void PersonsListWidget::onMergePersonsAction()
 {
     QList<QUuid> selectedIds = this->getSelectedIds();
@@ -361,4 +384,28 @@ void PersonsListWidget::onSuggestPersonBirthAndDeathDatesAction()
 void PersonsListWidget::personDiagramSelectionChanged(const QList<QUuid> &)
 {
 
+}
+
+void PersonsListWidget::onActivePersonIdChanged(const QUuid &id)
+{
+    int nItems = this->treeWidget->topLevelItemCount();
+    QList<double> markerPositions;
+
+    for (int i = 0; i < nItems; i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        bool isActive = (item->data(ColumnId, Qt::UserRole).toUuid() == id);
+        QFont font = item->font(ColumnFirstName);
+        font.setBold(isActive);
+        for (int col = 0; col < NumberOfColumns; col++)
+        {
+            item->setFont(col, font);
+        }
+        if (isActive && nItems > 0)
+        {
+            markerPositions.append(static_cast<double>(i) / nItems);
+        }
+    }
+
+    this->scrollBarWithMarkers->setActiveMarkers(markerPositions);
 }
