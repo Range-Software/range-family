@@ -30,7 +30,7 @@ jobs:
             arch: x64
             qt_host: windows
             qt_arch: win64_msvc2022_64
-            qt_version: '6.10.0'
+            qt_version: '6.11.1'
 
     runs-on: ${{ matrix.os }}
 
