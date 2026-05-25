@@ -20,14 +20,17 @@ jobs:
             arch: x86_64
             qt_host: linux
             qt_arch: linux_gcc_64
+            qt_version: '6.11.1'
           - os: macos-latest
             arch: arm64
             qt_host: mac
             qt_arch: clang_64
+            qt_version: '6.11.1'
           - os: windows-latest
             arch: x64
             qt_host: windows
             qt_arch: win64_msvc2022_64
+            qt_version: '6.10.0'
 
     runs-on: ${{ matrix.os }}
 
@@ -86,10 +89,10 @@ jobs:
         shell: pwsh
 
       # Qt
-      - name: Install Qt 6.11.1
+      - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.11.1'
+          version: ${{ matrix.qt_version }}
           host: ${{ matrix.qt_host }}
           target: desktop
           arch: ${{ matrix.qt_arch }}
