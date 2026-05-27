@@ -285,9 +285,32 @@ if(WIN32)
         install(FILES ${_rn_json_path} DESTINATION doc COMPONENT Application)
     endif()
     if(OPENSSL_ROOT)
-        install(FILES ${OPENSSL_ROOT}/bin/openssl.exe DESTINATION bin COMPONENT Application)
-        install(FILES ${OPENSSL_ROOT}/bin/libcrypto-3-x64.dll DESTINATION bin COMPONENT Application)
-        install(FILES ${OPENSSL_ROOT}/bin/libssl-3-x64.dll DESTINATION bin COMPONENT Application)
+        set(_openssl_exe "${OPENSSL_ROOT}/bin/openssl.exe")
+        set(_openssl_crypto "${OPENSSL_ROOT}/bin/libcrypto-3-x64.dll")
+        set(_openssl_ssl "${OPENSSL_ROOT}/bin/libssl-3-x64.dll")
+        if(EXISTS "${_openssl_exe}" AND EXISTS "${_openssl_crypto}" AND EXISTS "${_openssl_ssl}")
+            install(FILES "${_openssl_exe}" DESTINATION bin COMPONENT Application)
+            install(FILES "${_openssl_crypto}" DESTINATION bin COMPONENT Application)
+            install(FILES "${_openssl_ssl}" DESTINATION bin COMPONENT Application)
+        else()
+            message(WARNING "OPENSSL_ROOT is set to '${OPENSSL_ROOT}', but required OpenSSL runtime files were not found. Skipping bundling OpenSSL into the installer.")
+        endif()
+    endif()
+
+    # MinGW runtime DLLs
+    if(MINGW)
+        get_filename_component(_mingw_bin_dir "${CMAKE_CXX_COMPILER}" DIRECTORY)
+        foreach(_dll IN ITEMS
+                libgomp-1.dll
+                libgcc_s_seh-1.dll
+                libstdc++-6.dll
+                libwinpthread-1.dll)
+            if(EXISTS "${_mingw_bin_dir}/${_dll}")
+                install(FILES "${_mingw_bin_dir}/${_dll}" DESTINATION bin COMPONENT Application)
+            else()
+                message(WARNING "MinGW runtime DLL not found, skipping: ${_mingw_bin_dir}/${_dll}")
+            endif()
+        endforeach()
     endif()
 elseif(APPLE)
     install(DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_TARGET_NAME}/${PROJECT_SHORT_REL_NAME}.app DESTINATION . USE_SOURCE_PERMISSIONS COMPONENT Application)
@@ -455,6 +478,26 @@ if(WIN32)
         ${CMAKE_BINARY_DIR}/setup.iss
         @ONLY
     )
+
+    find_program(ISCC_EXECUTABLE
+        NAMES iscc ISCC
+        PATHS
+            "$ENV{ProgramFiles\(x86\)}/Inno Setup 6"
+            "$ENV{ProgramFiles}/Inno Setup 6"
+        DOC "Inno Setup Compiler (iscc.exe)"
+    )
+
+    if(ISCC_EXECUTABLE)
+        configure_file(
+            ${CMAKE_SOURCE_DIR}/packaging/windows/run_iscc.cmake.in
+            ${CMAKE_BINARY_DIR}/run_iscc.cmake
+            @ONLY
+        )
+        set(CPACK_POST_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/run_iscc.cmake")
+        message(STATUS "Inno Setup found: ${ISCC_EXECUTABLE} — installer .exe will be created by the 'package' target")
+    else()
+        message(STATUS "Inno Setup (iscc.exe) not found; installer .exe will not be created. Install from https://jrsoftware.org/isinfo.php")
+    endif()
 endif()
 
 if(APPLE)
