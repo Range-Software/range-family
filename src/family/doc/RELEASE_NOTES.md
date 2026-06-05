@@ -1,5 +1,7 @@
 ## Version 1.1.0
 
+### Improvements
+
 - Added AI assistant
 - Can specify an active person in the family tree which will be treated as
   the main character in the family tree diagram and in the AI assistant
