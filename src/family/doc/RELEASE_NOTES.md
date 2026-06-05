@@ -14,6 +14,15 @@
 - Fixed person details markdown view displaying birth date and place instead
   of death date and place in the "Died" field
 
+### Submodules
+
+- range-ai-lib @ v1.0.0
+- range-base-lib @ v1.0.0
+- range-build-tools @ v1.0.0
+- range-cloud-lib @ v1.0.0
+- range-family-lib @ v1.0.0
+- range-gui-lib @ v1.0.0
+
 ---
 
 ## Version 1.0.4

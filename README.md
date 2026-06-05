@@ -9,7 +9,7 @@ Family tree manager
 ## Prepare build environment
 Initialize all sub modules
 ```
-git submodule init && git submodule update --remote
+git submodule update --init --recursive
 ```
 Following command will attempt to download and install all required packages, therefore it must be executed under privileged (root) user
 ```
@@ -31,20 +31,20 @@ cmake --build build-Release --target package
 ### MacOS
 #### Drag & Drop
 ```
-open './build-Release/range-family-1.0.0-darwin-arm64.dmg'
+open './build-Release/range-family-1.0.5-darwin-arm64.dmg'
 ```
 ### Linux
 #### Self extracting Tar GZip
 ```
-./build-Release/range-family-1.0.0-linux-x86_64.sh
+./build-Release/range-family-1.0.5-linux-x86_64.sh
 ```
 #### Debian DEB package
 ```
-sudo apt install ./build-Release/range-family-1.0.0-linux-x86_64.deb
+sudo apt install ./build-Release/range-family-1.0.5-linux-x86_64.deb
 ```
 #### RedHat RPM package
 ```
-sudo dnf install ./build-Release/range-family-1.0.0-linux-x86_64.rpm
+sudo dnf install ./build-Release/range-family-1.0.5-linux-x86_64.rpm
 ```
 
 ## Download
