@@ -1,5 +1,7 @@
 ## Version 1.1.0
 
+### Improvements
+
 - Added AI assistant
 - Can specify an active person in the family tree which will be treated as
   the main character in the family tree diagram and in the AI assistant
@@ -11,6 +13,15 @@
 
 - Fixed person details markdown view displaying birth date and place instead
   of death date and place in the "Died" field
+
+### Submodules
+
+- range-ai-lib @ v1.0.0
+- range-base-lib @ v1.0.0
+- range-build-tools @ v1.0.0
+- range-cloud-lib @ v1.0.0
+- range-family-lib @ v1.0.0
+- range-gui-lib @ v1.0.0
 
 ---
 
