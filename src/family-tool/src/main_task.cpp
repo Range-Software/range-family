@@ -77,7 +77,7 @@ void MainTask::run()
         // Process command line arguments.
         QList<RArgumentOption> validOptions;
 
-        validOptions.append(RArgumentOption("file",RArgumentOption::Path,QVariant(),"File name",RArgumentOption::Mandatory,false));
+        validOptions.append(RArgumentOption("file",RArgumentOption::Path,QVariant(),"File name (.json or .xml)",RArgumentOption::Mandatory,false));
         validOptions.append(RArgumentOption("create-new",RArgumentOption::Switch,QVariant(),"Create new file (do not read existing)",RArgumentOption::File,false));
         validOptions.append(RArgumentOption("generate-dot-file",RArgumentOption::Switch,QVariant(),"Generate dot file (Graphviz format)",RArgumentOption::File,false));
 
@@ -207,16 +207,16 @@ void MainTask::run()
             RLogger::getInstance().setFile(argumentsParser.getValue("log-file").toString());
         }
 
-        QString inXmlFileName(argumentsParser.getValue("file").toString());
-        QString outXmlFileName(argumentsParser.getValue("file").toString());
+        QString inFileName(argumentsParser.getValue("file").toString());
+        QString outFileName(argumentsParser.getValue("file").toString());
 
         RToolInput toolInput;
 
         if (!argumentsParser.isSet("create-new"))
         {
-            // Read XML file action
-            this->application->getTree()->readXmlFile(inXmlFileName);
-            RLogger::info("Tree has been successfully loaded from file \'%s\'.\n", inXmlFileName.toUtf8().constData());
+            // Read tree file action
+            this->application->getTree()->readFile(inFileName);
+            RLogger::info("Tree has been successfully loaded from file \'%s\'.\n", inFileName.toUtf8().constData());
         }
 
         QString sortPath;
@@ -226,7 +226,7 @@ void MainTask::run()
             sortPath = argToPathMap.value(sortPath,sortPath);
         }
 
-        bool writeXml(false);
+        bool writeTree(false);
 
         // PERSON
 
@@ -373,12 +373,12 @@ void MainTask::run()
         {
             person.setId(FTree::generateId());
             toolInput.addAction(FToolAction::addPerson(this->application->getTree(),person));
-            writeXml = true;
+            writeTree = true;
         }
         if (argumentsParser.isSet("modify-person"))
         {
             toolInput.addAction(FToolAction::modifyPerson(this->application->getTree(),person));
-            writeXml = true;
+            writeTree = true;
         }
 
         // RELATION
@@ -530,7 +530,7 @@ void MainTask::run()
         if (argumentsParser.isSet("remove-person"))
         {
             toolInput.addAction(FToolAction::removePerson(this->application->getTree(),personId));
-            writeXml = true;
+            writeTree = true;
         }
         if (argumentsParser.isSet("add-relation"))
         {
@@ -540,7 +540,7 @@ void MainTask::run()
             relation.setEnd(end);
 
             toolInput.addAction(FToolAction::addRelation(this->application->getTree(),relation));
-            writeXml = true;
+            writeTree = true;
         }
         if (argumentsParser.isSet("modify-relation"))
         {
@@ -549,12 +549,12 @@ void MainTask::run()
             relation.setEnd(end);
 
             toolInput.addAction(FToolAction::modifyRelation(this->application->getTree(),relation));
-            writeXml = true;
+            writeTree = true;
         }
         if (argumentsParser.isSet("remove-relation"))
         {
             toolInput.addAction(FToolAction::removeRelation(this->application->getTree(),relationId));
-            writeXml = true;
+            writeTree = true;
         }
         if (argumentsParser.isSet("list-persons"))
         {
@@ -574,15 +574,15 @@ void MainTask::run()
         }
         if (argumentsParser.isSet("generate-dot-file"))
         {
-            QFileInfo fi(inXmlFileName);
+            QFileInfo fi(inFileName);
             QString outDotFileName = fi.path() + QDir::separator() + fi.completeBaseName() + ".dot";
             toolInput.addAction(FToolAction::generateDot(this->application->getTree(),outDotFileName));
         }
 
-        if (writeXml)
+        if (writeTree)
         {
-            // Write XML file action
-            toolInput.addAction(FToolAction::writeTreeFile(this->application->getTree(),outXmlFileName));
+            // Write tree file action
+            toolInput.addAction(FToolAction::writeTreeFile(this->application->getTree(),outFileName));
         }
 
         // Start tool.

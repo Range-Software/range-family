@@ -129,6 +129,8 @@ void Session::onTreeChanged()
 
 void Session::onTreeFileSaved(const QString &fileName)
 {
+    // Point picture urls at the files which were written next to the saved tree.
+    this->pTree->rebasePictureUrls(fileName);
     this->setTreeFileName(fileName);
     this->treeChanged = false;
 }

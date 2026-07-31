@@ -73,7 +73,19 @@ Každá osoba v rodokmeni je reprezentovaná objektom Person s nasledujúcou št
 
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
-| base64Data | Reťazec | Áno | Obrazové dáta kódované v Base64 (formát PNG) |
+| title | Reťazec | Nie | Názov obrázka |
+| description | Reťazec | Nie | Popis obrázka |
+| url | Reťazec | Nie | Cesta k súboru s obrázkom, relatívna k súboru rodokmeňa |
+| base64Data | Reťazec | Nie | Obrazové dáta kódované v Base64 (formát PNG) |
+
+Samotný obrázok je uložený buď v samostatnom súbore, na ktorý odkazuje `url`,
+alebo je vložený priamo v súbore rodokmeňa ako `base64Data`.
+
+Ak je `url` uvedená, vyhodnocuje sa relatívne k adresáru, v ktorom sa nachádza
+súbor rodokmeňa, a musí odkazovať na súbor v tomto adresári alebo pod ním. Cesty
+smerujúce mimo neho (napríklad `../fotky/jan.png` alebo cesta na inom disku) sú
+odmietnuté a obrázok sa namiesto toho vloží ako `base64Data`. Obrázok úspešne
+uložený do odkazovaného súboru neobsahuje `base64Data`.
 
 ## 4. Objekt Relation (Vzťah)
 

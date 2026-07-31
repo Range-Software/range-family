@@ -73,7 +73,19 @@ Each person in the family tree is represented by a Person object with the follow
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| base64Data | String | Yes | Base64-encoded image data (PNG format) |
+| title | String | No | Picture title |
+| description | String | No | Picture description |
+| url | String | No | Path to an image file, relative to the family tree file |
+| base64Data | String | No | Base64-encoded image data (PNG format) |
+
+The image itself is stored either in a separate file referenced by `url`, or
+embedded in the tree file as `base64Data`.
+
+When `url` is present, it is resolved relative to the directory containing the
+family tree file and must point to a file at or below that directory. Paths
+leading outside of it (for example `../photos/john.png` or a path on a different
+drive) are rejected, and the image is embedded as `base64Data` instead. A picture
+successfully stored in a referenced file carries no `base64Data`.
 
 ## 4. Relation Object
 

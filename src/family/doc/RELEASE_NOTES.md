@@ -1,3 +1,28 @@
+## Version 1.1.1
+
+### Improvements
+
+- Person pictures can be stored in separate image files next to the family
+  tree file instead of being embedded in it, which keeps tree files small.
+  Saving the tree under a new name copies the images alongside it.
+- Documented the picture `url` field and the rest of the picture object in the
+  family tree JSON file specification, in both English and Slovak
+- Family tool accepts both `.json` and `.xml` family tree files. Until now it
+  could only read `.xml`, even though it was able to write both. An
+  unsupported file type is now reported as such instead of failing as a
+  malformed XML file.
+
+### Submodules
+
+- range-ai-lib @ v1.0.0
+- range-base-lib @ v1.0.0
+- range-build-tools @ v1.0.0
+- range-cloud-lib @ v1.0.0
+- range-family-lib @ v1.1.0
+- range-gui-lib @ v1.0.0
+
+---
+
 ## Version 1.1.0
 
 ### Improvements

@@ -39,6 +39,8 @@ qt_add_executable(family
     src/graphics_relation_item.h
     src/image_button.cpp
     src/image_button.h
+
+
     src/main.cpp
     src/main_window.cpp
     src/main_window.h
