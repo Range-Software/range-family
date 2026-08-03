@@ -54,6 +54,15 @@ void PictureEditWidget::onDescriptionChanged(const QString &text)
 
 void PictureEditWidget::onPictureButtonImageChanged(const QImage &image, const QString &url)
 {
+    if (image.isNull())
+    {
+        // Image was removed.
+        this->picture.setUrl(QString());
+        this->picture.setData(QByteArray());
+        emit this->changed(this->picture);
+        return;
+    }
+
     uint width = std::min(FPicture::maxWidth,uint(image.width()));
     uint height = std::min(FPicture::maxHeight,uint(image.height()));
 

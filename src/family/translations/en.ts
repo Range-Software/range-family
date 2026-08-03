@@ -180,41 +180,41 @@
     </message>
     <message>
         <location filename="../src/application.cpp" line="99"/>
-        <source>The family tree file was not moved.</source>
+        <source>Would you like to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="100"/>
-        <source>Tree file was not moved</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/application.cpp" line="109"/>
-        <source>The family tree file was modified.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/application.cpp" line="111"/>
-        <source>Load modified file?</source>
+        <location filename="../src/application.cpp" line="101"/>
+        <source>Overwrite tree file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/application.cpp" line="112"/>
+        <source>The family tree file was modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="114"/>
+        <source>Load modified file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="115"/>
         <source>Tree file has changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="121"/>
+        <location filename="../src/application.cpp" line="124"/>
         <source>The family tree file has been removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="123"/>
+        <location filename="../src/application.cpp" line="126"/>
         <source>Save current tree to file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
+        <location filename="../src/application.cpp" line="127"/>
         <source>Tree file has been removed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -391,52 +391,57 @@
 <context>
     <name>ImageButton</name>
     <message>
-        <location filename="../src/image_button.cpp" line="35"/>
+        <location filename="../src/image_button.cpp" line="36"/>
+        <source>Remove current picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/image_button.cpp" line="51"/>
         <source>Click to select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="115"/>
+        <location filename="../src/image_button.cpp" line="135"/>
         <source>Select image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="117"/>
+        <location filename="../src/image_button.cpp" line="137"/>
         <source>Image files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="142"/>
+        <location filename="../src/image_button.cpp" line="162"/>
         <source>Store image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="143"/>
+        <location filename="../src/image_button.cpp" line="163"/>
         <source>How should the image be stored?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="144"/>
+        <location filename="../src/image_button.cpp" line="164"/>
         <source>An image stored within the family tree is reduced to occupy a maximum of %1 MB.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="148"/>
+        <location filename="../src/image_button.cpp" line="168"/>
         <source>The family tree must be saved to a file and the person must be a part of it before an image can be stored as a separate file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="149"/>
+        <location filename="../src/image_button.cpp" line="169"/>
         <source>A separate image will be stored as file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="151"/>
+        <location filename="../src/image_button.cpp" line="171"/>
         <source>Within the tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="152"/>
+        <location filename="../src/image_button.cpp" line="172"/>
         <source>Separate file</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2,6 +2,7 @@
 #define IMAGE_BUTTON_H
 
 #include <QPushButton>
+#include <QToolButton>
 #include <QUuid>
 #include <QWidget>
 
@@ -22,6 +23,8 @@ class ImageButton : public QPushButton
         QUuid personId;
         uint maxWidth;
         uint maxHeight;
+        //! Button removing the current image.
+        QToolButton *clearButton;
 
     public:
 
@@ -36,9 +39,17 @@ class ImageButton : public QPushButton
         //! Return image scaled down so that its PNG representation does not exceed maxDataSize bytes.
         static QImage reduceImage(const QImage &image, qsizetype maxDataSize);
 
+        //! Move the clear button to the upper right corner.
+        void placeClearButton();
+
+        //! Widget has been resized.
+        void resizeEvent(QResizeEvent *event) override;
+
     protected slots:
 
         void onButtonClicked();
+
+        void onClearButtonClicked();
 
     signals:
 

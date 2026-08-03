@@ -94,11 +94,14 @@ void Application::onTreeFileLoaded(const QString &fileName)
 
     if (QFileInfo::exists(newFileName))
     {
-        QString message = tr("The data directory already contains a file with the same name.")
-                        + "<pre>" + newFileName + "</pre>"
-                        + tr("The family tree file was not moved.");
-        RMessageBox::warning(this->mainWindow,tr("Tree file was not moved"),message);
-        return;
+        QString overwriteQuestion = tr("The data directory already contains a file with the same name.")
+                                  + "<pre>" + newFileName + "</pre>"
+                                  + tr("Would you like to overwrite it?");
+
+        if (RMessageBox::question(this->mainWindow,tr("Overwrite tree file"),overwriteQuestion) != RMessageBox::Yes)
+        {
+            return;
+        }
     }
 
     this->session->moveTreeFile(newFileName);

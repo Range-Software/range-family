@@ -3,6 +3,8 @@
 #include <QBuffer>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QResizeEvent>
+#include <QStyle>
 
 #include <rbl_file_tools.h>
 #include <rbl_logger.h>
@@ -23,20 +25,33 @@ ImageButton::ImageButton(const QImage &image, const QUuid &personId, uint maxWid
     , maxWidth(maxWidth)
     , maxHeight(maxHeight)
 {
+    int buttonSize = this->style()->pixelMetric(QStyle::PM_TitleBarButtonSize);
+    int buttonIconSize = this->style()->pixelMetric(QStyle::PM_TitleBarButtonIconSize);
+
+    this->clearButton = new QToolButton(this);
+    this->clearButton->setIcon(QIcon(":/icons/action/pixmaps/range-clear.svg"));
+    this->clearButton->setIconSize(QSize(buttonIconSize,buttonIconSize));
+    this->clearButton->setFixedSize(buttonSize,buttonSize);
+    this->clearButton->setAutoRaise(true);
+    this->clearButton->setToolTip(tr("Remove current picture"));
+
     this->setImage(image);
 
     QObject::connect(this,&QPushButton::clicked,this,&ImageButton::onButtonClicked);
+    QObject::connect(this->clearButton,&QToolButton::clicked,this,&ImageButton::onClearButtonClicked);
 }
 
 void ImageButton::setImage(const QImage &image)
 {
-    if (image.isNull())
+    this->image = image;
+
+    if (this->image.isNull())
     {
+        this->setIcon(QIcon());
         this->setText(tr("Click to select"));
     }
     else
     {
-        this->image = image;
         QPixmap iconPixmap = QPixmap::fromImage(this->image);
 
         QSize iconSize(iconPixmap.rect().size());
@@ -47,6 +62,26 @@ void ImageButton::setImage(const QImage &image)
         this->setIconSize(iconSize);
         this->setText(QString());
     }
+
+    // There is nothing to remove without an image.
+    this->clearButton->setVisible(!this->image.isNull());
+
+    this->placeClearButton();
+}
+
+void ImageButton::placeClearButton()
+{
+    const int margin = 2;
+
+    this->clearButton->move(this->width() - this->clearButton->width() - margin,margin);
+    this->clearButton->raise();
+}
+
+void ImageButton::resizeEvent(QResizeEvent *event)
+{
+    QPushButton::resizeEvent(event);
+
+    this->placeClearButton();
 }
 
 QImage ImageButton::reduceImage(const QImage &image, qsizetype maxDataSize)
@@ -159,4 +194,15 @@ void ImageButton::onButtonClicked()
 
     this->setImage(image);
     emit this->imageChanged(this->image,pictureUrl);
+}
+
+void ImageButton::onClearButtonClicked()
+{
+    if (this->image.isNull())
+    {
+        return;
+    }
+
+    this->setImage(QImage());
+    emit this->imageChanged(this->image,QString());
 }
