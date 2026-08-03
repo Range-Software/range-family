@@ -56,6 +56,8 @@ class Action : public RAction
             ACTION_FILE_SAVE,
             ACTION_FILE_SAVE_AS,
             ACTION_FILE_CLOSE,
+            ACTION_FILE_STORE_IMAGES_IN_TREE,
+            ACTION_FILE_STORE_IMAGES_IN_DATA_DIR,
             ACTION_CLOUD_SESSION_MANAGER,
             ACTION_CLOUD_FILE_MANAGER,
             ACTION_AI_SETTINGS_MANAGER,
@@ -126,6 +128,12 @@ class Action : public RAction
 
         //! Close file.
         void onFileClose();
+
+        //! Move all images stored in the data directory into the family tree.
+        void onFileStoreImagesInTree();
+
+        //! Move all images stored in the family tree into the data directory.
+        void onFileStoreImagesInDataDir();
 
         //! Help center.
         void onHelp();

@@ -21,6 +21,9 @@ class Session : public QObject
         QString treeFileName;
         //! Tree file to be removed once the tree has been written under a new name.
         QString treeFileToRemove;
+        //! Picture files which are no longer referenced by the tree. They are
+        //! removed once the tree has been successfully written.
+        QStringList obsoletePictureFiles;
         //! Active person ID.
         QUuid activePersonId;
         //! Last AI chat agent.
@@ -78,6 +81,18 @@ class Session : public QObject
 
         //! Write tree file under a new name and remove the file it was read from.
         void moveTreeFile(const QString &newTreeFileName);
+
+        //! Register a picture file to be removed once the tree has been successfully written.
+        void addObsoletePictureFile(const QString &fileName);
+
+        //! Forget all registered picture files. To be called whenever the tree
+        //! content is dropped without having been written.
+        void clearObsoletePictureFiles();
+
+    protected:
+
+        //! Remove all registered picture files which are no longer referenced by the tree.
+        void removeObsoletePictureFiles();
 
     protected slots:
 

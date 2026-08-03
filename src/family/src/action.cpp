@@ -1,5 +1,6 @@
 #include <QString>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QMessageBox>
 
 #include <rbl_error.h>
@@ -21,6 +22,7 @@
 #include "application.h"
 #include "action.h"
 #include "ai_chat_dialog.h"
+#include "image_button.h"
 #include "tree_diff_dialog.h"
 
 Action::Action(RAction::Definition definition, QObject *parent)
@@ -70,6 +72,8 @@ QString Action::getName(Type type)
         case ACTION_FILE_SAVE:                  return "file-save";
         case ACTION_FILE_SAVE_AS:               return "file-save_as";
         case ACTION_FILE_CLOSE:                 return "file-close";
+        case ACTION_FILE_STORE_IMAGES_IN_TREE:  return "file-store_images_in_tree";
+        case ACTION_FILE_STORE_IMAGES_IN_DATA_DIR: return "file-store_images_in_data_dir";
         case ACTION_CLOUD_SESSION_MANAGER:      return "cloud-session_manager";
         case ACTION_CLOUD_FILE_MANAGER:         return "cloud-file_manager";
         case ACTION_AI_SETTINGS_MANAGER:        return "ai-settings-manager";
@@ -115,6 +119,8 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_SAVE, tr("Save"), "", "Ctrl+S", ":/icons/file/pixmaps/range-save.svg", static_cast<PointerToMemberTrigger>(&Action::onFileSave));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_SAVE_AS, tr("Save as"), "", "Ctrl+Shift+S", ":/icons/file/pixmaps/range-save_as.svg", static_cast<PointerToMemberTrigger>(&Action::onFileSaveAs));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_CLOSE, tr("Close"), "", "Ctrl+W", ":/icons/file/pixmaps/range-close.svg", static_cast<PointerToMemberTrigger>(&Action::onFileClose));
+    Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_TREE, tr("Store all images in family tree"), "", "", ":/icons/file/pixmaps/range-import.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInTree));
+    Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_DATA_DIR, tr("Store all images in data directory"), "", "", ":/icons/file/pixmaps/range-export.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInDataDir));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_SESSION_MANAGER, tr("Cloud session manager"), "", "", ":/icons/cloud/pixmaps/range-session_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudSessionManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_SETTINGS_MANAGER, tr("AI settings manager"), "", "", ":/icons/ai/pixmaps/range-ai_settings_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onAiSettingsManager));
@@ -282,8 +288,144 @@ void Action::onFileClose()
     {
         RLogger::info("Closing active tree.\n");
         Application::instance()->getSession()->getTree()->clear();
+        Application::instance()->getSession()->clearObsoletePictureFiles();
         Application::instance()->getSession()->setTreeFileName(QString());
     }
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onFileStoreImagesInTree()
+{
+    R_LOG_TRACE_IN;
+
+    Session *session = Application::instance()->getSession();
+    FTree *pTree = session->getTree();
+
+    QString question = tr("All images which are stored in the data directory will be moved into the family tree.")
+                     + "<br/>"
+                     + tr("An image stored within the family tree is reduced to occupy a maximum of %1 MB.")
+                           .arg(ImageButton::maxTreeDataSize / (1024 * 1024))
+                     + "<br/>"
+                     + tr("Would you like to continue?");
+
+    if (RMessageBox::question(Application::instance()->getMainWindow(),tr("Store images in family tree"),question) != RMessageBox::Yes)
+    {
+        R_LOG_TRACE_OUT;
+        return;
+    }
+
+    uint nMovedImages = 0;
+
+    const QList<QUuid> personIds = pTree->getPersons();
+    for (const QUuid &personId : personIds)
+    {
+        FPerson person = pTree->findPerson(personId);
+        FPicture picture = person.getPicture();
+
+        if (picture.getUrl().isEmpty() || picture.getData().isEmpty())
+        {
+            // The image is already stored within the tree.
+            continue;
+        }
+
+        QByteArray imageData = ImageButton::reduceImageData(picture.getData(),ImageButton::maxTreeDataSize);
+        if (imageData.isEmpty())
+        {
+            RLogger::warning("Failed to store image of person \"%s\" within the family tree.\n",
+                             personId.toString(QUuid::WithoutBraces).toUtf8().constData());
+            continue;
+        }
+
+        QString pictureFilePath = picture.getUrl();
+
+        picture.setUrl(QString());
+        picture.setData(imageData);
+        person.setPicture(picture);
+        pTree->setPerson(person);
+
+        // The picture file is no longer referenced - it is removed once the tree has been saved.
+        session->addObsoletePictureFile(pictureFilePath);
+
+        nMovedImages++;
+    }
+
+    RLogger::info("%u images were moved into the family tree.\n",nMovedImages);
+
+    RMessageBox::information(Application::instance()->getMainWindow(),
+                             tr("Store images in family tree"),
+                             tr("Number of images moved into the family tree: %1").arg(nMovedImages)
+                             + "<br/>"
+                             + tr("The family tree must be saved for the change to take effect."));
+
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onFileStoreImagesInDataDir()
+{
+    R_LOG_TRACE_IN;
+
+    Session *session = Application::instance()->getSession();
+    FTree *pTree = session->getTree();
+
+    QString treeFileName = session->getTreeFileName();
+
+    if (treeFileName.isEmpty())
+    {
+        RMessageBox::warning(Application::instance()->getMainWindow(),
+                             tr("Store images in data directory"),
+                             tr("The family tree must be saved to a file before images can be stored as separate files."));
+        R_LOG_TRACE_OUT;
+        return;
+    }
+
+    QString question = tr("All images which are stored in the family tree will be moved into the data directory \"%1\".")
+                           .arg(QFileInfo(treeFileName).absolutePath())
+                     + "<br/>"
+                     + tr("Would you like to continue?");
+
+    if (RMessageBox::question(Application::instance()->getMainWindow(),tr("Store images in data directory"),question) != RMessageBox::Yes)
+    {
+        R_LOG_TRACE_OUT;
+        return;
+    }
+
+    uint nMovedImages = 0;
+
+    const QList<QUuid> personIds = pTree->getPersons();
+    for (const QUuid &personId : personIds)
+    {
+        FPerson person = pTree->findPerson(personId);
+        FPicture picture = person.getPicture();
+
+        if (!picture.getUrl().isEmpty() || picture.getData().isEmpty())
+        {
+            // The image is already stored in a separate file.
+            continue;
+        }
+
+        QString pictureFilePath = FTree::pictureFilePath(treeFileName,personId);
+        if (pictureFilePath.isEmpty())
+        {
+            RLogger::warning("Failed to store image of person \"%s\" in the data directory.\n",
+                             personId.toString(QUuid::WithoutBraces).toUtf8().constData());
+            continue;
+        }
+
+        picture.setUrl(pictureFilePath);
+        person.setPicture(picture);
+        pTree->setPerson(person);
+
+        nMovedImages++;
+    }
+
+    RLogger::info("%u images were moved into the data directory.\n",nMovedImages);
+
+    RMessageBox::information(Application::instance()->getMainWindow(),
+                             tr("Store images in data directory"),
+                             tr("Number of images moved into the data directory: %1").arg(nMovedImages)
+                             + "<br/>"
+                             + tr("The family tree must be saved for the change to take effect."));
+
     R_LOG_TRACE_OUT;
 }
 

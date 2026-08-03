@@ -118,6 +118,9 @@ void MainWindow::createMenus()
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_IMPORT));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_COMPARE));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
+    menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_STORE_IMAGES_IN_TREE));
+    menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_STORE_IMAGES_IN_DATA_DIR));
+    menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_SETTINGS));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));

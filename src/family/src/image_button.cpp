@@ -130,6 +130,31 @@ QImage ImageButton::reduceImage(const QImage &image, qsizetype maxDataSize)
     return reducedImage;
 }
 
+QByteArray ImageButton::reduceImageData(const QByteArray &data, qsizetype maxDataSize)
+{
+    if (data.isEmpty() || data.size() <= maxDataSize)
+    {
+        return data;
+    }
+
+    QImage image = QImage::fromData(data);
+    if (image.isNull())
+    {
+        RLogger::error("Failed to read image from data.\n");
+        return QByteArray();
+    }
+
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    if (!ImageButton::reduceImage(image,maxDataSize).save(&buffer,"PNG"))
+    {
+        RLogger::error("Failed to save image into buffer.\n");
+        return QByteArray();
+    }
+
+    return buffer.data();
+}
+
 void ImageButton::onButtonClicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,tr("Select image"),

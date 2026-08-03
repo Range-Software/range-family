@@ -34,10 +34,15 @@ class ImageButton : public QPushButton
         //! Set new image.
         void setImage(const QImage &image);
 
-    protected:
-
         //! Return image scaled down so that its PNG representation does not exceed maxDataSize bytes.
         static QImage reduceImage(const QImage &image, qsizetype maxDataSize);
+
+        //! Return given image data reduced so that they do not exceed maxDataSize bytes.
+        //! Data which already fit are returned unchanged. Return empty byte array
+        //! if the image can not be read.
+        static QByteArray reduceImageData(const QByteArray &data, qsizetype maxDataSize);
+
+    protected:
 
         //! Move the clear button to the upper right corner.
         void placeClearButton();

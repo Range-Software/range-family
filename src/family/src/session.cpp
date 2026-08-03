@@ -129,6 +129,59 @@ void Session::moveTreeFile(const QString &newTreeFileName)
     this->writeTreeFile();
 }
 
+void Session::addObsoletePictureFile(const QString &fileName)
+{
+    if (fileName.isEmpty() || this->obsoletePictureFiles.contains(fileName))
+    {
+        return;
+    }
+    this->obsoletePictureFiles.append(fileName);
+}
+
+void Session::clearObsoletePictureFiles()
+{
+    this->obsoletePictureFiles.clear();
+}
+
+void Session::removeObsoletePictureFiles()
+{
+    if (this->obsoletePictureFiles.isEmpty())
+    {
+        return;
+    }
+
+    QStringList referencedFiles;
+    const QList<QUuid> personIds = this->pTree->getPersons();
+    for (const QUuid &personId : personIds)
+    {
+        QString url = this->pTree->findPerson(personId).getPicture().getUrl();
+        if (!url.isEmpty())
+        {
+            referencedFiles.append(url);
+        }
+    }
+
+    for (const QString &fileName : std::as_const(this->obsoletePictureFiles))
+    {
+        // A picture may have been moved back to the file in the meantime.
+        if (referencedFiles.contains(fileName) || !QFileInfo::exists(fileName))
+        {
+            continue;
+        }
+
+        if (QFile::remove(fileName))
+        {
+            RLogger::info("Picture file \"%s\" was removed.\n",fileName.toUtf8().constData());
+        }
+        else
+        {
+            RLogger::warning("Failed to remove picture file \"%s\".\n",fileName.toUtf8().constData());
+        }
+    }
+
+    this->obsoletePictureFiles.clear();
+}
+
 void Session::onTreeChanged()
 {
     this->treeChanged = true;
@@ -144,6 +197,9 @@ void Session::onTreeChanged()
 
 void Session::onTreeFileLoaded(const QString &fileName)
 {
+    // Pending picture files belong to the tree which has just been replaced.
+    this->clearObsoletePictureFiles();
+
     emit this->treeFileLoaded(fileName);
 }
 
@@ -153,6 +209,10 @@ void Session::onTreeFileSaved(const QString &fileName)
     this->pTree->rebasePictureUrls(fileName);
     this->setTreeFileName(fileName);
     this->treeChanged = false;
+
+    // Picture data of the pictures which were moved into the tree are stored
+    // in the saved file - the files they were stored in before can be removed.
+    this->removeObsoletePictureFiles();
 
     if (!this->treeFileToRemove.isEmpty())
     {
