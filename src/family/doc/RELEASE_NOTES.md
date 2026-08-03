@@ -4,7 +4,16 @@
 
 - Person pictures can be stored in separate image files next to the family
   tree file instead of being embedded in it, which keeps tree files small.
-  Saving the tree under a new name copies the images alongside it.
+- Selecting a person picture asks where it should be stored. A picture kept
+  within the family tree is reduced to occupy a maximum of 1 MB, a picture
+  stored separately is written next to the tree file as
+  `<tree name>_<person id>.png`.
+- Saving the tree under a new name moves the separate image files along with
+  it and renames them after the new tree file name.
+- A newly added person is assigned its ID up front, so its picture can be
+  stored as a separate image file already in the "Add person" dialog.
+- Opening a family tree file which is not stored in the data directory offers
+  to move it, together with its image files, to the data directory.
 - Documented the picture `url` field and the rest of the picture object in the
   family tree JSON file specification, in both English and Slovak
 - Family tool accepts both `.json` and `.xml` family tree files. Until now it

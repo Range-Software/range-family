@@ -38,6 +38,9 @@ class Application : public RApplication
 
     private slots:
 
+        //! Handle tree file has been loaded.
+        void onTreeFileLoaded(const QString &fileName);
+
         //! Handle tree file has changed.
         void onTreeFileChanged(const QString &fileName);
 

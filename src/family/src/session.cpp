@@ -1,3 +1,4 @@
+#include <QFile>
 #include <QFileInfo>
 
 #include <rbl_logger.h>
@@ -17,6 +18,7 @@ Session::Session(QObject *parent)
     this->fileSystemWatcher = new QFileSystemWatcher(this);
 
     QObject::connect(this->pTree,&FTree::changed,this,&Session::onTreeChanged);
+    QObject::connect(this->pTree,&FTree::fileLoaded,this,&Session::onTreeFileLoaded);
     QObject::connect(this->pTree,&FTree::fileSaved,this,&Session::onTreeFileSaved);
 
     QObject::connect(this->fileSystemWatcher,&QFileSystemWatcher::fileChanged,this,&Session::onTreeFileChanged);
@@ -114,6 +116,19 @@ void Session::writeTreeFile() const
     RJobManager::getInstance().submit(toolTask);
 }
 
+void Session::moveTreeFile(const QString &newTreeFileName)
+{
+    RLogger::info("Moving tree file \'%s\' to \'%s\'\n",
+                  this->treeFileName.toUtf8().constData(),
+                  newTreeFileName.toUtf8().constData());
+
+    // The file the tree was read from is removed once it has been written under its new name.
+    this->treeFileToRemove = this->treeFileName;
+
+    this->setTreeFileName(newTreeFileName);
+    this->writeTreeFile();
+}
+
 void Session::onTreeChanged()
 {
     this->treeChanged = true;
@@ -127,12 +142,35 @@ void Session::onTreeChanged()
     }
 }
 
+void Session::onTreeFileLoaded(const QString &fileName)
+{
+    emit this->treeFileLoaded(fileName);
+}
+
 void Session::onTreeFileSaved(const QString &fileName)
 {
     // Point picture urls at the files which were written next to the saved tree.
     this->pTree->rebasePictureUrls(fileName);
     this->setTreeFileName(fileName);
     this->treeChanged = false;
+
+    if (!this->treeFileToRemove.isEmpty())
+    {
+        if (QFileInfo(this->treeFileToRemove) != QFileInfo(fileName))
+        {
+            if (QFile::remove(this->treeFileToRemove))
+            {
+                RLogger::info("Tree file \"%s\" was moved to \"%s\".\n",
+                              this->treeFileToRemove.toUtf8().constData(),
+                              fileName.toUtf8().constData());
+            }
+            else
+            {
+                RLogger::warning("Failed to remove tree file \"%s\".\n",this->treeFileToRemove.toUtf8().constData());
+            }
+        }
+        this->treeFileToRemove.clear();
+    }
 }
 
 void Session::onTreeFileChanged(const QString &fileName)
@@ -156,5 +194,8 @@ void Session::writeActionFinished(const QSharedPointer<RToolAction> &action)
 
 void Session::writeActionFailed(const QSharedPointer<RToolAction> &action)
 {
+    // The tree was not written - the file it was read from must be kept.
+    this->treeFileToRemove.clear();
+
     this->fileSystemWatcher->blockSignals(false);
 }

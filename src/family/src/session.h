@@ -19,6 +19,8 @@ class Session : public QObject
         FTree *pTree;
         //! Tree file name
         QString treeFileName;
+        //! Tree file to be removed once the tree has been written under a new name.
+        QString treeFileToRemove;
         //! Active person ID.
         QUuid activePersonId;
         //! Last AI chat agent.
@@ -74,10 +76,16 @@ class Session : public QObject
         //! Write tree file.
         void writeTreeFile() const;
 
+        //! Write tree file under a new name and remove the file it was read from.
+        void moveTreeFile(const QString &newTreeFileName);
+
     protected slots:
 
         //! Handle tree changed signal.
         void onTreeChanged();
+
+        //! Handle tree loaded signal.
+        void onTreeFileLoaded(const QString &fileName);
 
         //! Handle tree saved signal.
         void onTreeFileSaved(const QString &fileName);
@@ -93,6 +101,9 @@ class Session : public QObject
 
 
     signals:
+
+        //! Tree file has been loaded.
+        void treeFileLoaded(const QString &fileName);
 
         //! Tree file has changed.
         void treeFileChanged(const QString &fileName);

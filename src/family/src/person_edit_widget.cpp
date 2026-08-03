@@ -72,7 +72,7 @@ PersonEditWidget::PersonEditWidget(const FPerson &person, QWidget *parent)
     QVBoxLayout *pictureLayout = new QVBoxLayout;
     pictureGroupBox->setLayout(pictureLayout);
 
-    PictureEditWidget *pictureEdit = new PictureEditWidget(this->person.getPicture());
+    PictureEditWidget *pictureEdit = new PictureEditWidget(this->person.getPicture(),this->person.getId());
     pictureLayout->addWidget(pictureEdit);
 
     QGroupBox *textGroupBox = new QGroupBox(_FP_TR(FPerson::ElementDesc::text));

@@ -1,6 +1,7 @@
 #ifndef PICTURE_EDIT_WIDGET_H
 #define PICTURE_EDIT_WIDGET_H
 
+#include <QUuid>
 #include <QWidget>
 
 #include <rfl_picture.h>
@@ -17,7 +18,7 @@ class PictureEditWidget : public QWidget
     public:
 
         //! Constructor.
-        explicit PictureEditWidget(const FPicture &picture, QWidget *parent = nullptr);
+        explicit PictureEditWidget(const FPicture &picture, const QUuid &personId, QWidget *parent = nullptr);
 
     protected slots:
 
@@ -25,7 +26,7 @@ class PictureEditWidget : public QWidget
 
         void onDescriptionChanged(const QString &text);
 
-        void onPictureButtonImageChanged(const QImage &image);
+        void onPictureButtonImageChanged(const QImage &image, const QString &url);
 
     signals:
 

@@ -13,7 +13,7 @@
 
 #define _FN_TR(qstr) qApp->translate("FPicture",qstr.toUtf8().constData())
 
-PictureEditWidget::PictureEditWidget(const FPicture &picture, QWidget *parent)
+PictureEditWidget::PictureEditWidget(const FPicture &picture, const QUuid &personId, QWidget *parent)
     : QWidget{parent}
     , picture{picture}
 {
@@ -31,7 +31,7 @@ PictureEditWidget::PictureEditWidget(const FPicture &picture, QWidget *parent)
     description->setClearButtonEnabled(true);
     mainLayout->addWidget(description);
 
-    ImageButton *pictureButton = new ImageButton(QImage::fromData(picture.getData()));
+    ImageButton *pictureButton = new ImageButton(QImage::fromData(picture.getData()),personId);
     pictureButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     mainLayout->addWidget(pictureButton,1);
 
@@ -52,7 +52,7 @@ void PictureEditWidget::onDescriptionChanged(const QString &text)
     emit this->changed(this->picture);
 }
 
-void PictureEditWidget::onPictureButtonImageChanged(const QImage &image)
+void PictureEditWidget::onPictureButtonImageChanged(const QImage &image, const QString &url)
 {
     uint width = std::min(FPicture::maxWidth,uint(image.width()));
     uint height = std::min(FPicture::maxHeight,uint(image.height()));
@@ -64,6 +64,7 @@ void PictureEditWidget::onPictureButtonImageChanged(const QImage &image)
         RLogger::error("Failed to save image into buffer.\n");
         return;
     }
+    this->picture.setUrl(url);
     this->picture.setData(buffer.data());
     emit this->changed(this->picture);
 }

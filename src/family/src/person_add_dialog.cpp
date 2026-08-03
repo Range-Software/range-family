@@ -23,7 +23,15 @@ PersonAddDialog::PersonAddDialog(FTree *familyTree, const FPerson &newPerson, QW
     QVBoxLayout *mainLayout = new QVBoxLayout;
     this->setLayout(mainLayout);
 
-    this->personEditWidget = new PersonEditWidget(newPerson);
+    FPerson person(newPerson);
+    if (person.getId().isNull())
+    {
+        // ID is generated up-front so that widgets can reference the person
+        // (e.g. to build a picture file name) while the dialog is open.
+        person.setId(FTree::generateId());
+    }
+
+    this->personEditWidget = new PersonEditWidget(person);
     mainLayout->addWidget(this->personEditWidget);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox;
@@ -47,10 +55,6 @@ int PersonAddDialog::exec()
     {
         RToolInput toolInput;
         FPerson person = this->personEditWidget->getPerson();
-        if (person.getId().isNull())
-        {
-            person.setId(FTree::generateId());
-        }
         this->newPersonId = person.getId();
         toolInput.addAction(FToolAction::addPerson(this->familyTree,person));
         RToolTask *toolTask = new RToolTask(toolInput);
