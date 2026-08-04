@@ -114,15 +114,15 @@ void MainWindow::createMenus()
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE_AS));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_CLOSE));
-    menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
+    menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_IMPORT));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_COMPARE));
-    menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
+    menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_STORE_IMAGES_IN_TREE));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_STORE_IMAGES_IN_DATA_DIR));
-    menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
+    menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_SETTINGS));
-    menuFile->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
+    menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));
     menubar->addAction(menuFile->menuAction());
 
@@ -164,18 +164,12 @@ void MainWindow::createToolBars()
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE));
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE_AS));
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_CLOSE));
-
     mainToolBar->addSeparator();
-
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_IMPORT));
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_COMPARE));
-
     mainToolBar->addSeparator();
-
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));
-
     mainToolBar->addSeparator();
-
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
@@ -185,7 +179,7 @@ void MainWindow::createToolBars()
     mainToolBar->addWidget(spacer);
 
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_SETTINGS));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_SEPARATOR));
+    mainToolBar->addSeparator();
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_HELP));
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_ABOUT));
 
