@@ -16,7 +16,7 @@
 #include "application.h"
 #include "image_button.h"
 
-const qsizetype ImageButton::maxTreeDataSize = 1024 * 1024;
+const qsizetype ImageButton::maxTreeDataSize = 256 * 1024; // 256 KB
 
 ImageButton::ImageButton(const QImage &image, const QUuid &personId, uint maxWidth, uint maxHeight, QWidget *parent)
     : QPushButton(parent)
