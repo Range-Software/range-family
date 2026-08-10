@@ -130,6 +130,7 @@ void MainWindow::createMenus()
     menuCloud->setTitle(QApplication::translate("MainWindow", "Cloud"));
     menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_SESSION_MANAGER));
     menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
+    menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_QUERY));
     menubar->addAction(menuCloud->menuAction());
 
     QMenu *menuAi = new QMenu(menubar);
@@ -171,8 +172,9 @@ void MainWindow::createToolBars()
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));
     mainToolBar->addSeparator();
     mainToolBar->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
+    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_CLOUD_QUERY));
+    // mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
+    // mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
 
     QWidget* spacer = new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

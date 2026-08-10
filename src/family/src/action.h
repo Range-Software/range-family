@@ -60,6 +60,7 @@ class Action : public RAction
             ACTION_FILE_STORE_IMAGES_IN_DATA_DIR,
             ACTION_CLOUD_SESSION_MANAGER,
             ACTION_CLOUD_FILE_MANAGER,
+            ACTION_CLOUD_QUERY,
             ACTION_AI_SETTINGS_MANAGER,
             ACTION_AI_CHAT,
             ACTION_N_TYPES
@@ -164,6 +165,9 @@ class Action : public RAction
 
         //! Cloud file manager.
         void onCloudFileManager();
+
+        //! Cloud query.
+        void onCloudQuery();
 
         //! AI settings manager.
         void onAiSettingsManager();

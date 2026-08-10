@@ -176,6 +176,7 @@ qt_add_resources(family icons-cloud
         pixmaps/range-access_rights.svg
         pixmaps/range-download.svg
         pixmaps/range-file_manager.svg
+        pixmaps/range-ai_query.svg
         pixmaps/range-refresh.svg
         pixmaps/range-remove.svg
         pixmaps/range-session_manager.svg

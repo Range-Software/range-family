@@ -12,6 +12,7 @@
 #include <rgl_application_settings_dialog.h>
 #include <rgl_ai_agent_settings_manager_dialog.h>
 #include <rgl_cloud_file_manager_dialog.h>
+#include <rgl_cloud_ai_query_dialog.h>
 #include <rgl_cloud_session_dialog.h>
 #include <rgl_help_dialog.h>
 #include <rgl_message_box.h>
@@ -57,27 +58,28 @@ QString Action::getName(Type type)
 {
     switch (type)
     {
-        case ACTION_APPLICATION_SETTINGS:       return "application-settings";
-        case ACTION_APPLICATION_UPDATE:         return "application-update";
-        case ACTION_APPLICATION_ABOUT:          return "application-about";
-        case ACTION_APPLICATION_ABOUT_QT:       return "application-about_qt";
-        case ACTION_APPLICATION_LICENSE:        return "application-license";
-        case ACTION_APPLICATION_RELEASE_NOTES:  return "application-release_notes";
-        case ACTION_APPLICATION_HELP:           return "application-help";
-        case ACTION_APPLICATION_QUIT:           return "application-quit";
-        case ACTION_FILE_NEW:                   return "file-new";
-        case ACTION_FILE_OPEN:                  return "file-open";
-        case ACTION_FILE_IMPORT:                return "file-import";
-        case ACTION_FILE_COMPARE:               return "file-compare";
-        case ACTION_FILE_SAVE:                  return "file-save";
-        case ACTION_FILE_SAVE_AS:               return "file-save_as";
-        case ACTION_FILE_CLOSE:                 return "file-close";
-        case ACTION_FILE_STORE_IMAGES_IN_TREE:  return "file-store_images_in_tree";
+        case ACTION_APPLICATION_SETTINGS:          return "application-settings";
+        case ACTION_APPLICATION_UPDATE:            return "application-update";
+        case ACTION_APPLICATION_ABOUT:             return "application-about";
+        case ACTION_APPLICATION_ABOUT_QT:          return "application-about_qt";
+        case ACTION_APPLICATION_LICENSE:           return "application-license";
+        case ACTION_APPLICATION_RELEASE_NOTES:     return "application-release_notes";
+        case ACTION_APPLICATION_HELP:              return "application-help";
+        case ACTION_APPLICATION_QUIT:              return "application-quit";
+        case ACTION_FILE_NEW:                      return "file-new";
+        case ACTION_FILE_OPEN:                     return "file-open";
+        case ACTION_FILE_IMPORT:                   return "file-import";
+        case ACTION_FILE_COMPARE:                  return "file-compare";
+        case ACTION_FILE_SAVE:                     return "file-save";
+        case ACTION_FILE_SAVE_AS:                  return "file-save_as";
+        case ACTION_FILE_CLOSE:                    return "file-close";
+        case ACTION_FILE_STORE_IMAGES_IN_TREE:     return "file-store_images_in_tree";
         case ACTION_FILE_STORE_IMAGES_IN_DATA_DIR: return "file-store_images_in_data_dir";
-        case ACTION_CLOUD_SESSION_MANAGER:      return "cloud-session_manager";
-        case ACTION_CLOUD_FILE_MANAGER:         return "cloud-file_manager";
-        case ACTION_AI_SETTINGS_MANAGER:        return "ai-settings-manager";
-        case ACTION_AI_CHAT:                    return "ai-chat";
+        case ACTION_CLOUD_SESSION_MANAGER:         return "cloud-session_manager";
+        case ACTION_CLOUD_FILE_MANAGER:            return "cloud-file_manager";
+        case ACTION_CLOUD_QUERY:                   return "cloud-query";
+        case ACTION_AI_SETTINGS_MANAGER:           return "ai-settings-manager";
+        case ACTION_AI_CHAT:                       return "ai-chat";
         default: return QString();
     }
 }
@@ -123,6 +125,7 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_DATA_DIR, tr("Store all images in data directory"), "", "", ":/icons/file/pixmaps/range-export.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInDataDir));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_SESSION_MANAGER, tr("Cloud session manager"), "", "", ":/icons/cloud/pixmaps/range-session_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudSessionManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
+    Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_QUERY, tr("Cloud query"), "", "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudQuery));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_SETTINGS_MANAGER, tr("AI settings manager"), "", "", ":/icons/ai/pixmaps/range-ai_settings_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onAiSettingsManager));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_CHAT, tr("AI chat"), "", "", ":/icons/ai/pixmaps/range-ai_chat.svg", static_cast<PointerToMemberTrigger>(&Action::onAiChat));
 
@@ -552,6 +555,16 @@ void Action::onCloudFileManager()
                                                    false,
                                                    Application::instance()->getMainWindow());
     cloudFileManagerDialog.exec();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onCloudQuery()
+{
+    R_LOG_TRACE_IN;
+    RCloudAiQueryDialog cloudQueryDialog(Application::instance()->getCloudConnectionHandler(),
+                                       Application::instance()->getApplicationSettings(),
+                                       Application::instance()->getMainWindow());
+    cloudQueryDialog.exec();
     R_LOG_TRACE_OUT;
 }
 

@@ -1,4 +1,4 @@
-## Version 1.1.1
+## Version 1.2.0
 
 ### Improvements
 
@@ -16,6 +16,11 @@
   to move it, together with its image files, to the data directory.
 - Documented the picture `url` field and the rest of the picture object in the
   family tree JSON file specification, in both English and Slovak
+- New "Cloud query" action, available from the Cloud menu and the main toolbar,
+  asks a question which is answered by an AI service through Range Cloud. No AI
+  agent has to be configured, only the language of the answer is selected.
+- "AI settings manager" and "AI chat" were removed from the main toolbar. Both
+  remain available from the AI menu.
 - Family tool accepts both `.json` and `.xml` family tree files. Until now it
   could only read `.xml`, even though it was able to write both. An
   unsupported file type is now reported as such instead of failing as a
@@ -24,11 +29,11 @@
 ### Submodules
 
 - range-ai-lib @ v1.0.0
-- range-base-lib @ v1.0.0
+- range-base-lib @ v1.1.0
 - range-build-tools @ v1.0.0
-- range-cloud-lib @ v1.0.0
+- range-cloud-lib @ v1.1.0
 - range-family-lib @ v1.1.0
-- range-gui-lib @ v1.0.0
+- range-gui-lib @ v1.1.0
 
 ---
 
