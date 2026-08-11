@@ -5,20 +5,23 @@
 
 class AiChatWidget : public RAiChatWidget
 {
+
     Q_OBJECT
 
-    QString systemPrompt;
+    public:
 
-protected:
+        QString systemPrompt;
 
-    QString buildPrompt(const QString &language) const override;
+    protected:
 
-public:
+        QString buildPrompt(const QString &language) const override;
 
-    //! Constructor.
-    explicit AiChatWidget(RAgentSettingsManager *aiAgentSettingsManager,
-                          const RApplicationSettings *applicationSettings,
-                          QWidget *parent = nullptr);
+    public:
+
+        //! Constructor.
+        explicit AiChatWidget(RAgentSettingsManager *aiAgentSettingsManager,
+                              const RApplicationSettings *applicationSettings,
+                              QWidget *parent = nullptr);
 
 };
 

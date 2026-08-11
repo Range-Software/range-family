@@ -8,6 +8,7 @@
 
 class AiChatDialog : public QDialog
 {
+
     Q_OBJECT
 
     public:

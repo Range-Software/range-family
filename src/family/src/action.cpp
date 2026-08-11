@@ -12,7 +12,6 @@
 #include <rgl_application_settings_dialog.h>
 #include <rgl_ai_agent_settings_manager_dialog.h>
 #include <rgl_cloud_file_manager_dialog.h>
-#include <rgl_cloud_ai_query_dialog.h>
 #include <rgl_cloud_session_dialog.h>
 #include <rgl_help_dialog.h>
 #include <rgl_message_box.h>
@@ -23,6 +22,7 @@
 #include "application.h"
 #include "action.h"
 #include "ai_chat_dialog.h"
+#include "cloud_ai_query_dialog.h"
 #include "image_button.h"
 #include "tree_diff_dialog.h"
 
@@ -561,9 +561,9 @@ void Action::onCloudFileManager()
 void Action::onCloudQuery()
 {
     R_LOG_TRACE_IN;
-    RCloudAiQueryDialog cloudQueryDialog(Application::instance()->getCloudConnectionHandler(),
-                                       Application::instance()->getApplicationSettings(),
-                                       Application::instance()->getMainWindow());
+    CloudAiQueryDialog cloudQueryDialog(Application::instance()->getCloudConnectionHandler(),
+                                        Application::instance()->getApplicationSettings(),
+                                        Application::instance()->getMainWindow());
     cloudQueryDialog.exec();
     R_LOG_TRACE_OUT;
 }
