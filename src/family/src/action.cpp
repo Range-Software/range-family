@@ -26,6 +26,8 @@
 #include "image_button.h"
 #include "tree_diff_dialog.h"
 
+QPointer<CloudAiQueryDialog> Action::cloudAiQueryDialog;
+
 Action::Action(RAction::Definition definition, QObject *parent)
     : RAction{definition,parent}
 {
@@ -77,7 +79,7 @@ QString Action::getName(Type type)
         case ACTION_FILE_STORE_IMAGES_IN_DATA_DIR: return "file-store_images_in_data_dir";
         case ACTION_CLOUD_SESSION_MANAGER:         return "cloud-session_manager";
         case ACTION_CLOUD_FILE_MANAGER:            return "cloud-file_manager";
-        case ACTION_CLOUD_QUERY:                   return "cloud-query";
+        case ACTION_CLOUD_AI_QUERY:                   return "cloud-query";
         case ACTION_AI_SETTINGS_MANAGER:           return "ai-settings-manager";
         case ACTION_AI_CHAT:                       return "ai-chat";
         default: return QString();
@@ -125,7 +127,7 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_DATA_DIR, tr("Store all images in data directory"), "", "", ":/icons/file/pixmaps/range-export.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInDataDir));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_SESSION_MANAGER, tr("Cloud session manager"), "", "", ":/icons/cloud/pixmaps/range-session_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudSessionManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
-    Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_QUERY, tr("Cloud query"), "", "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudQuery));
+    Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_AI_QUERY, tr("Cloud AI query"), "", "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudAiQuery));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_SETTINGS_MANAGER, tr("AI settings manager"), "", "", ":/icons/ai/pixmaps/range-ai_settings_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onAiSettingsManager));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_CHAT, tr("AI chat"), "", "", ":/icons/ai/pixmaps/range-ai_chat.svg", static_cast<PointerToMemberTrigger>(&Action::onAiChat));
 
@@ -558,13 +560,23 @@ void Action::onCloudFileManager()
     R_LOG_TRACE_OUT;
 }
 
-void Action::onCloudQuery()
+void Action::onCloudAiQuery()
 {
     R_LOG_TRACE_IN;
-    CloudAiQueryDialog cloudQueryDialog(Application::instance()->getCloudConnectionHandler(),
-                                        Application::instance()->getApplicationSettings(),
-                                        Application::instance()->getMainWindow());
-    cloudQueryDialog.exec();
+    if (Action::cloudAiQueryDialog.isNull())
+    {
+        Action::cloudAiQueryDialog = new CloudAiQueryDialog(Application::instance()->getCloudConnectionHandler(),
+                                                            Application::instance()->getApplicationSettings(),
+                                                            Application::instance()->getMainWindow());
+        Action::cloudAiQueryDialog->show();
+    }
+    else
+    {
+        // Dialog is already opened. Bring it to the front instead of opening another one.
+        Action::cloudAiQueryDialog->showNormal();
+        Action::cloudAiQueryDialog->raise();
+        Action::cloudAiQueryDialog->activateWindow();
+    }
     R_LOG_TRACE_OUT;
 }
 

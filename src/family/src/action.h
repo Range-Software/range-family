@@ -2,10 +2,13 @@
 #define ACTION_H
 
 #include <QAction>
+#include <QPointer>
 
 #include <rcl_cloud_session_manager.h>
 
 #include <rgl_action.h>
+
+class CloudAiQueryDialog;
 
 #define ACTION_GROUP_ALL (             \
     Action::ACTION_GROUP_APPLICATION | \
@@ -60,13 +63,16 @@ class Action : public RAction
             ACTION_FILE_STORE_IMAGES_IN_DATA_DIR,
             ACTION_CLOUD_SESSION_MANAGER,
             ACTION_CLOUD_FILE_MANAGER,
-            ACTION_CLOUD_QUERY,
+            ACTION_CLOUD_AI_QUERY,
             ACTION_AI_SETTINGS_MANAGER,
             ACTION_AI_CHAT,
             ACTION_N_TYPES
         };
 
     private:
+
+        //! Cloud AI query dialog. Only one such dialog can be opened at a time.
+        static QPointer<CloudAiQueryDialog> cloudAiQueryDialog;
 
         //! Constructor.
         explicit Action(Definition definition, QObject *parent = nullptr);
@@ -167,7 +173,7 @@ class Action : public RAction
         void onCloudFileManager();
 
         //! Cloud query.
-        void onCloudQuery();
+        void onCloudAiQuery();
 
         //! AI settings manager.
         void onAiSettingsManager();

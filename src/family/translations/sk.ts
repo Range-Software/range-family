@@ -4,211 +4,216 @@
 <context>
     <name>Action</name>
     <message>
-        <location filename="../src/action.cpp" line="168"/>
+        <location filename="../src/action.cpp" line="173"/>
         <source>Open tree</source>
         <translation>Otvor strom</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="190"/>
+        <location filename="../src/action.cpp" line="195"/>
         <source>The current family tree contains unsaved changes.</source>
         <translation>Aktuálny rodinný strom obsahuje neuložené zmeny.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="192"/>
+        <location filename="../src/action.cpp" line="197"/>
         <source>Would you like to save it first?</source>
         <translation>Uložiť zmeny?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="193"/>
+        <location filename="../src/action.cpp" line="198"/>
         <source>Save current tree</source>
         <translation>Uložiť aktuálnu strom</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="201"/>
+        <location filename="../src/action.cpp" line="206"/>
         <source>Import tree</source>
         <translation>Importovať strom</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="285"/>
+        <location filename="../src/action.cpp" line="290"/>
         <source>Close tree?</source>
         <translation>Zatvoriť strom?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="286"/>
+        <location filename="../src/action.cpp" line="291"/>
         <source>Are you sure you want to close current family tree?</source>
         <translation>Nozaj zatvoriť otvorený rodinný strom?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="113"/>
-        <location filename="../src/action.cpp" line="441"/>
+        <location filename="../src/action.cpp" line="117"/>
+        <location filename="../src/action.cpp" line="446"/>
         <source>Help</source>
         <translation>Pomocník</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="107"/>
+        <location filename="../src/action.cpp" line="111"/>
         <source>Application settings</source>
         <translation>Nastavenia aplikácie</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="108"/>
+        <location filename="../src/action.cpp" line="112"/>
         <source>Check for update</source>
         <translation>Overiť aktualizáciu</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="109"/>
-        <location filename="../src/action.cpp" line="474"/>
+        <location filename="../src/action.cpp" line="113"/>
+        <location filename="../src/action.cpp" line="479"/>
         <source>About</source>
         <translation>O aplikácii</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="110"/>
-        <location filename="../src/action.cpp" line="489"/>
+        <location filename="../src/action.cpp" line="114"/>
+        <location filename="../src/action.cpp" line="494"/>
         <source>About Qt</source>
         <translation>O knižnici Qt</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="111"/>
-        <location filename="../src/action.cpp" line="508"/>
+        <location filename="../src/action.cpp" line="115"/>
+        <location filename="../src/action.cpp" line="513"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="112"/>
+        <location filename="../src/action.cpp" line="116"/>
         <source>Release notes</source>
         <translation>Poznámky k vydaniu</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="114"/>
+        <location filename="../src/action.cpp" line="118"/>
         <source>Quit</source>
         <translation>Skončiť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="115"/>
+        <location filename="../src/action.cpp" line="119"/>
         <source>New</source>
         <translation>Nový</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="116"/>
+        <location filename="../src/action.cpp" line="120"/>
         <source>Open</source>
         <translation>Otvoriť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="117"/>
+        <location filename="../src/action.cpp" line="121"/>
         <source>Import</source>
         <translation>Importovať</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="118"/>
+        <location filename="../src/action.cpp" line="122"/>
         <source>Compare</source>
         <translation>Porovnať</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="119"/>
+        <location filename="../src/action.cpp" line="123"/>
         <source>Save</source>
         <translation>Uložiť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="120"/>
+        <location filename="../src/action.cpp" line="124"/>
         <source>Save as</source>
         <translation>Uložiť ako</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="121"/>
+        <location filename="../src/action.cpp" line="125"/>
         <source>Close</source>
         <translation>Zatvoriť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="122"/>
+        <location filename="../src/action.cpp" line="126"/>
         <source>Store all images in family tree</source>
         <translation>Uložiť všetky obrázky v rodinnom strome</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="123"/>
+        <location filename="../src/action.cpp" line="127"/>
         <source>Store all images in data directory</source>
         <translation>Uložiť všetky obrázky v dátovom adresári</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="124"/>
+        <location filename="../src/action.cpp" line="128"/>
         <source>Cloud session manager</source>
         <translation>Cloud správca relácií</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="125"/>
+        <location filename="../src/action.cpp" line="129"/>
         <source>Cloud file manager</source>
         <translation>Cloud súborový manažér</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="126"/>
+        <location filename="../src/action.cpp" line="130"/>
+        <source>Cloud AI query</source>
+        <translation>Cloud AI dopyt</translation>
+    </message>
+    <message>
+        <location filename="../src/action.cpp" line="131"/>
         <source>AI settings manager</source>
         <translation>Manažér AI nastavení</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="127"/>
+        <location filename="../src/action.cpp" line="132"/>
         <source>AI chat</source>
         <translation>AI chat</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="304"/>
+        <location filename="../src/action.cpp" line="309"/>
         <source>All images which are stored in the data directory will be moved into the family tree.</source>
         <translation>Všetky obrázky uložené v dátovom adresári budú presunuté do rodinného stromu.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="306"/>
+        <location filename="../src/action.cpp" line="311"/>
         <source>An image stored within the family tree is reduced to occupy a maximum of %1 MB.</source>
         <translation>Obrázok uložený v rodokmeni bude zmenšený tak, aby zaberal maximálne %1 MB.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="309"/>
-        <location filename="../src/action.cpp" line="384"/>
+        <location filename="../src/action.cpp" line="314"/>
+        <location filename="../src/action.cpp" line="389"/>
         <source>Would you like to continue?</source>
         <translation>Chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="311"/>
-        <location filename="../src/action.cpp" line="355"/>
+        <location filename="../src/action.cpp" line="316"/>
+        <location filename="../src/action.cpp" line="360"/>
         <source>Store images in family tree</source>
         <translation>Uloženie obrázkov v rodinnom strome</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="356"/>
+        <location filename="../src/action.cpp" line="361"/>
         <source>Number of images moved into the family tree: %1</source>
         <translation>Počet obrázkov presunutých do rodinného stromu: %1</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="358"/>
-        <location filename="../src/action.cpp" line="427"/>
+        <location filename="../src/action.cpp" line="363"/>
+        <location filename="../src/action.cpp" line="432"/>
         <source>The family tree must be saved for the change to take effect.</source>
         <translation>Aby sa zmena prejavila, rodinný strom musí byť uložený.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="375"/>
-        <location filename="../src/action.cpp" line="386"/>
-        <location filename="../src/action.cpp" line="424"/>
+        <location filename="../src/action.cpp" line="380"/>
+        <location filename="../src/action.cpp" line="391"/>
+        <location filename="../src/action.cpp" line="429"/>
         <source>Store images in data directory</source>
         <translation>Uloženie obrázkov v dátovom adresári</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="376"/>
+        <location filename="../src/action.cpp" line="381"/>
         <source>The family tree must be saved to a file before images can be stored as separate files.</source>
         <translation>Rodinný strom musí byť uložený do súboru predtým, ako je možné uložiť obrázky ako samostatné súbory.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="381"/>
+        <location filename="../src/action.cpp" line="386"/>
         <source>All images which are stored in the family tree will be moved into the data directory &quot;%1&quot;.</source>
         <translation>Všetky obrázky uložené v rodinnom strome budú presunuté do dátového adresára &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="425"/>
+        <location filename="../src/action.cpp" line="430"/>
         <source>Number of images moved into the data directory: %1</source>
         <translation>Počet obrázkov presunutých do dátového adresára: %1</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="438"/>
+        <location filename="../src/action.cpp" line="443"/>
         <source>General</source>
         <translation>Obecné</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="439"/>
+        <location filename="../src/action.cpp" line="444"/>
         <source>Tutorials</source>
         <translation>Návody</translation>
     </message>
@@ -320,6 +325,52 @@
         <location filename="../src/central_widget.cpp" line="114"/>
         <source>Notice</source>
         <translation>Upozornenie</translation>
+    </message>
+</context>
+<context>
+    <name>CloudAiQueryDialog</name>
+    <message>
+        <location filename="../src/cloud_ai_query_dialog.cpp" line="13"/>
+        <source>Cloud AI query</source>
+        <translation>Cloud AI dopyt</translation>
+    </message>
+</context>
+<context>
+    <name>CloudAiQueryWidget</name>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="35"/>
+        <source>The family tree has not been saved yet. The answer will not take it into account.</source>
+        <translation>Rodinný strom zatiaľ nebol uložený. Odpoveď ho nebude brať do úvahy.</translation>
+    </message>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="44"/>
+        <source>The family tree file is not stored in the data directory and is therefore not synchronized to Cloud. The answer will not take it into account.</source>
+        <translation>Súbor rodinného stromu nie je uložený v dátovom adresári, a preto nie je synchronizovaný do Cloudu. Odpoveď ho nebude brať do úvahy.</translation>
+    </message>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="50"/>
+        <source>Synchronization of the data directory with Cloud is turned off. The answer will not take the family tree into account.</source>
+        <translation>Synchronizácia dátového adresára s Cloudom je vypnutá. Odpoveď nebude brať rodinný strom do úvahy.</translation>
+    </message>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="58"/>
+        <source>The family tree file has not been synchronized to Cloud yet. The answer will not take it into account.</source>
+        <translation>Súbor rodinného stromu ešte nebol synchronizovaný do Cloudu. Odpoveď ho nebude brať do úvahy.</translation>
+    </message>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="72"/>
+        <source>The family tree file stored in Cloud differs from the opened one. The answer is based on the version stored in Cloud.</source>
+        <translation>Súbor rodinného stromu uložený v Cloude sa líši od otvoreného. Odpoveď vychádza z verzie uloženej v Cloude.</translation>
+    </message>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="76"/>
+        <source>The family tree contains unsaved changes which are not stored in Cloud. The answer is based on the version stored in Cloud.</source>
+        <translation>Rodinný strom obsahuje neuložené zmeny, ktoré nie sú uložené v Cloude. Odpoveď vychádza z verzie uloženej v Cloude.</translation>
+    </message>
+    <message>
+        <location filename="../src/cloud_ai_query_widget.cpp" line="99"/>
+        <source>The family tree has changed. Previous questions and answers are no longer taken into account.</source>
+        <translation>Rodinný strom sa zmenil. Predchádzajúce otázky a odpovede sa už nebudú brať do úvahy.</translation>
     </message>
 </context>
 <context>
@@ -529,22 +580,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="136"/>
+        <location filename="../src/main_window.cpp" line="137"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="142"/>
+        <location filename="../src/main_window.cpp" line="143"/>
         <source>Help</source>
         <translation>Pomocník</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="159"/>
+        <location filename="../src/main_window.cpp" line="160"/>
         <source>Main toolbar</source>
         <translation>Hlavný panel nástrojov</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="286"/>
+        <location filename="../src/main_window.cpp" line="282"/>
         <source>The current family tree contains unsaved changes.</source>
         <translation>Aktuálny rodinný strom obsahuje neuložené zmeny.</translation>
     </message>
@@ -831,37 +882,37 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/action.cpp" line="38"/>
+        <location filename="../src/action.cpp" line="41"/>
         <source>Application</source>
         <translation>Aplikácia</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="40"/>
+        <location filename="../src/action.cpp" line="43"/>
         <source>File</source>
         <translation>Súbor</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="42"/>
+        <location filename="../src/action.cpp" line="45"/>
         <source>View</source>
         <translation>Zobraziť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="44"/>
+        <location filename="../src/action.cpp" line="47"/>
         <source>Edit</source>
         <translation>Upraviť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="46"/>
+        <location filename="../src/action.cpp" line="49"/>
         <source>Debug</source>
         <translation>Ladiť</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="48"/>
+        <location filename="../src/action.cpp" line="51"/>
         <source>Cloud</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="50"/>
+        <location filename="../src/action.cpp" line="53"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>
