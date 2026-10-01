@@ -20,19 +20,19 @@ jobs:
             arch: x86_64
             qt_host: linux
             qt_arch: linux_gcc_64
-            qt_version: '6.11.1'
+            qt_version: '6.12.0'
           - os: macos-latest
             arch: arm64
             qt_host: mac
             qt_arch: clang_64
-            qt_version: '6.11.1'
+            qt_version: '6.12.0'
           - os: windows-latest
             arch: x64
             qt_host: windows
             qt_arch: win64_msvc2022_64
-            qt_version: '6.11.1'
-            # Qt 6.11 split the Windows desktop repo into per-toolchain folders
-            # (qt6_6111/qt6_6111_msvc2022_64 instead of qt6_6111/qt6_6111).
+            qt_version: '6.12.0'
+            # Qt 6.12 split the Windows desktop repo into per-toolchain folders
+            # (qt6_6120/qt6_6111_msvc2022_64 instead of qt6_6120/qt6_6120).
             # Released aqtinstall 3.3.0 still requests the old path and 404s.
             # Fixed by aqtinstall PR #1000, unreleased as of 2026-07; drop this
             # once a release after 3.3.0 ships. See miurahr/aqtinstall#1007.
@@ -314,14 +314,14 @@ jobs:
             fileOs=$(echo $fileInfo | cut -d'-' -f3)
             fileArch=$(echo $fileInfo | cut -d'-' -f4 | cut -d'.' -f1)
             echo "Uploading: $fileName"
-            curl -X PUT --upload-file $f -o $HOME/response.json --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass 12345678 --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-replace/?resource-name=$fileName
+            curl -X PUT --upload-file $f -o $HOME/response.json --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass "$RANGE_CLOUD_KEY_PASSWORD" --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-replace/?resource-name=$fileName
             fileId=$(jq -r '.upload.id' $HOME/response.json)
             echo "Updating file access mode: $fileName : 644"
-            curl -X POST -d "{\"user\":6,\"group\":4,\"other\":4}" --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass 12345678 --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-update-access-mode/?resource-id=$fileId
+            curl -X POST -d "{\"user\":6,\"group\":4,\"other\":4}" --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass "$RANGE_CLOUD_KEY_PASSWORD" --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-update-access-mode/?resource-id=$fileId
             echo "Updating file version: $fileName : $fileVersion"
-            curl -X POST -d "$fileVersion" --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass 12345678 --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-update-version/?resource-id=$fileId
+            curl -X POST -d "$fileVersion" --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass "$RANGE_CLOUD_KEY_PASSWORD" --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-update-version/?resource-id=$fileId
             echo "Updating file tags: $fileName : $REPO_NAME,$fileOs,$fileArch"
-            curl -X POST -d "$REPO_NAME,$fileOs,$fileArch" --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass 12345678 --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-update-tags/?resource-id=$fileId
+            curl -X POST -d "$REPO_NAME,$fileOs,$fileArch" --key $HOME/.private_keys/range_cloud_key.pem --key-type PEM --pass "$RANGE_CLOUD_KEY_PASSWORD" --cert $HOME/.private_keys/range_cloud_cert.pem  https://range-software.com:4012/file-update-tags/?resource-id=$fileId
           done
         env:
           RANGE_CLOUD_KEY_PASSWORD: ${{ secrets.RANGE_CLOUD_KEY_PASSWORD }}
