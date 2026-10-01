@@ -1,4 +1,12 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25)
+
+# Minimum macOS version - macOS 26 (Tahoe) is the last release running on Intel
+# processors. Set before project() so every library and the application are
+# built for the same version; an explicit -DCMAKE_OSX_DEPLOYMENT_TARGET wins.
+if(NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "Minimum macOS version" FORCE)
+endif()
+
 project(RangeFamily)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -18,25 +26,80 @@ endif()
 
 set(BUILD_SHARED_LIBS OFF)
 
-find_package(Qt6 6.10 REQUIRED COMPONENTS Core Concurrent HttpServer Network Widgets LinguistTools)
+find_package(Qt6 6.12 REQUIRED COMPONENTS Core Concurrent HttpServer Network Widgets LinguistTools)
 qt_standard_project_setup()
 
-add_library(common_defines INTERFACE)
-target_compile_definitions(common_defines
-    INTERFACE
-        VERSION="${PROJECT_VERSION}"
-        YEAR=${PROJECT_YEAR}
-        PACKAGENAME="${PROJECT_PACKAGE_NAME}"
-        NAME="${PROJECT_HUMAN_REL_NAME}"
-        SHORTNAME="${PROJECT_SHORT_NAME}"
-        FAMILYNAME="${PROJECT_FAMILY_NAME}"
-        TITLE="${PROJECT_TITLE}"
-        DESCRIPTION="${PROJECT_DESCRIPTION}"
-        AUTHOR="${PROJECT_AUTHOR}"
-        EMAIL="${PROJECT_EMAIL}"
-        WWW="${PROJECT_WWW}"
-        WWWDOMAIN="${PROJECT_WWW_DOMAIN}"
+# Unit tests (opt-in). Configure with -DRANGE_BUILD_TESTS=ON and run `ctest`.
+option(RANGE_BUILD_TESTS "Build unit tests" OFF)
+if(RANGE_BUILD_TESTS)
+    enable_testing()
+endif()
+
+# Store builds (opt-in). Configure with -DRANGE_STORE_BUILD=ON to produce a
+# submission ready artifact: a sandboxed, App Store signed .pkg on macOS and an
+# MSIX package on Windows. Both stores forbid an application from installing
+# software updates itself, so STORE_BUILD also removes the built-in updater.
+option(RANGE_STORE_BUILD "Build for Apple App Store / Microsoft Store submission" OFF)
+
+# --- Apple App Store ---------------------------------------------------------
+set(MACOS_BUNDLE_IDENTIFIER "com.range-software.family" CACHE STRING
+    "CFBundleIdentifier; must match the application record in App Store Connect")
+set(MACOS_APP_CATEGORY "public.app-category.lifestyle" CACHE STRING
+    "LSApplicationCategoryType of the application bundle")
+set(MACOS_APP_STORE_APP_CERT "" CACHE STRING
+    "Signing identity for the bundle, '3rd Party Mac Developer Application: ...'")
+set(MACOS_APP_STORE_INSTALLER_CERT "" CACHE STRING
+    "Signing identity for the package, '3rd Party Mac Developer Installer: ...'")
+set(MACOS_PROVISION_PROFILE "" CACHE FILEPATH
+    "Mac App Store provisioning profile embedded into the bundle")
+
+# --- Microsoft Store ---------------------------------------------------------
+set(MSIX_IDENTITY_NAME "RangeSoftware.RangeFamily" CACHE STRING
+    "MSIX Identity/Name; must match the name reserved in Partner Center")
+set(MSIX_PUBLISHER "CN=Range Software" CACHE STRING
+    "MSIX Identity/Publisher; must match the publisher ID shown in Partner Center")
+set(MSIX_PUBLISHER_DISPLAY_NAME "${PROJECT_FAMILY_NAME}" CACHE STRING
+    "Publisher name shown in the Microsoft Store")
+set(MSIX_APPLICATION_ID "RangeFamily" CACHE STRING
+    "MSIX Application/Id; letters and digits only")
+
+# Project metadata goes to a generated UTF-8 header instead of -D flags. Non-ASCII
+# text on the compiler command line (the author name) is re-encoded through the
+# console code page by some Windows generators (MinGW Makefiles), which garbles it.
+file(CONFIGURE
+    OUTPUT "${CMAKE_BINARY_DIR}/generated/range_vendor.h"
+    CONTENT [[
+#ifndef RANGE_VENDOR_H
+#define RANGE_VENDOR_H
+
+#define VERSION "@PROJECT_VERSION@"
+#define YEAR @PROJECT_YEAR@
+#define PACKAGENAME "@PROJECT_PACKAGE_NAME@"
+#define NAME "@PROJECT_HUMAN_REL_NAME@"
+#define SHORTNAME "@PROJECT_SHORT_NAME@"
+#define FAMILYNAME "@PROJECT_FAMILY_NAME@"
+#define TITLE "@PROJECT_TITLE@"
+#define DESCRIPTION "@PROJECT_DESCRIPTION@"
+#define AUTHOR "@PROJECT_AUTHOR@"
+#define EMAIL "@PROJECT_EMAIL@"
+#define WWW "@PROJECT_WWW@"
+#define WWWDOMAIN "@PROJECT_WWW_DOMAIN@"
+
+#endif // RANGE_VENDOR_H
+]]
+    @ONLY
 )
+
+add_library(common_defines INTERFACE)
+target_include_directories(common_defines INTERFACE "${CMAKE_BINARY_DIR}/generated")
+if(MSVC)
+    # Read sources and the generated header as UTF-8 regardless of the system code page.
+    target_compile_options(common_defines INTERFACE /utf-8)
+endif()
+
+if(RANGE_STORE_BUILD)
+    target_compile_definitions(common_defines INTERFACE STORE_BUILD)
+endif()
 
 function(set_debug_suffix_if_needed target_name)
     if(CMAKE_CONFIGURATION_TYPES)  # Multi-config (e.g. Visual Studio, Xcode)
@@ -61,16 +124,19 @@ foreach(tgt IN LISTS all_targets)
     add_subdirectory(${tgt})
     set_debug_suffix_if_needed(${tgt})
     if(EXISTS "${CMAKE_SOURCE_DIR}/${tgt}/doc/RELEASE_NOTES.md")
+        # The copy carries the target name, because several targets can share
+        # one output directory (family and family-tool both land in the build root)
+        # and a plain RELEASE_NOTES.md would be overwritten by the last one.
         add_custom_target(copy-release-notes-${tgt} ALL
             COMMAND ${CMAKE_COMMAND} -E copy
                     "${CMAKE_SOURCE_DIR}/${tgt}/doc/RELEASE_NOTES.md"
-                    "$<TARGET_FILE_DIR:${tgt}>/RELEASE_NOTES.md"
+                    "$<TARGET_FILE_DIR:${tgt}>/RELEASE_NOTES_${tgt}.md"
             DEPENDS ${tgt}
             COMMENT "Copying RELEASE_NOTES.md for ${tgt}"
             VERBATIM
         )
         if(NOT APPLE)
-            install(FILES "$<TARGET_FILE_DIR:${tgt}>/RELEASE_NOTES.md"
+            install(FILES "${CMAKE_SOURCE_DIR}/${tgt}/doc/RELEASE_NOTES.md"
                     DESTINATION doc
                     RENAME "RELEASE_NOTES_${tgt}.md"
                     COMPONENT Application)
@@ -80,9 +146,13 @@ foreach(tgt IN LISTS all_targets)
 endforeach()
 
 # Generate RELEASE_NOTES.json (all platforms)
+# Chapters are listed in reverse all_targets order, so the top level
+# applications come first and the foundational libraries last.
 if(_release_notes_targets)
+    set(_rn_json_targets ${_release_notes_targets})
+    list(REVERSE _rn_json_targets)
     set(_rn_json_chapters "")
-    foreach(_rn_tgt IN LISTS _release_notes_targets)
+    foreach(_rn_tgt IN LISTS _rn_json_targets)
         if(_rn_json_chapters)
             string(APPEND _rn_json_chapters ",\n")
         endif()
@@ -243,7 +313,13 @@ elseif(APPLE)
     endif()
 
     # Explicit sign with Hardened Runtime -------------------------------------
-    if(DEFINED CODESIGN_ID)
+    # A store build is signed by the 'mac-app-store' target with the App Store
+    # identity instead; signing the same bundle twice would leave whichever of
+    # the two ran last, which is not something to leave to build order.
+    if(DEFINED CODESIGN_ID AND RANGE_STORE_BUILD)
+        message(WARNING "CODESIGN_ID is ignored because RANGE_STORE_BUILD is ON; the bundle is signed for the Apple App Store")
+    endif()
+    if(DEFINED CODESIGN_ID AND NOT RANGE_STORE_BUILD)
         add_custom_target(codesign ALL
             COMMAND /bin/echo "Signing with: ${CODESIGN_ID}"
             COMMAND /bin/chmod -R u+w "${APP_DIR_NEW}"
@@ -301,7 +377,6 @@ if(WIN32)
     if(MINGW)
         get_filename_component(_mingw_bin_dir "${CMAKE_CXX_COMPILER}" DIRECTORY)
         foreach(_dll IN ITEMS
-                libgomp-1.dll
                 libgcc_s_seh-1.dll
                 libstdc++-6.dll
                 libwinpthread-1.dll)
@@ -497,6 +572,108 @@ if(WIN32)
         message(STATUS "Inno Setup found: ${ISCC_EXECUTABLE} — installer .exe will be created by the 'package' target")
     else()
         message(STATUS "Inno Setup (iscc.exe) not found; installer .exe will not be created. Install from https://jrsoftware.org/isinfo.php")
+    endif()
+endif()
+
+# Store packaging -------------------------------------------------------------
+# Neither store takes the artifacts the `package` target produces: the Apple App
+# Store wants a sandboxed bundle wrapped in a signed .pkg, the Microsoft Store an
+# MSIX package. Both are built by their own target, so an ordinary release build
+# is left untouched.
+
+if(RANGE_STORE_BUILD AND APPLE)
+    set(_mac_store_dir "${CMAKE_BINARY_DIR}/packaging/macos")
+
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/range-build-tools/packaging/macos/app.entitlements.in
+        ${_mac_store_dir}/app.entitlements
+        COPYONLY
+    )
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/range-build-tools/packaging/macos/helper.entitlements.in
+        ${_mac_store_dir}/helper.entitlements
+        COPYONLY
+    )
+
+    set(_mac_store_args
+        --app-bundle=${APP_DIR_NEW}
+        --app-entitlements=${_mac_store_dir}/app.entitlements
+        --helper-entitlements=${_mac_store_dir}/helper.entitlements
+        --app-cert=${MACOS_APP_STORE_APP_CERT}
+    )
+    if(MACOS_PROVISION_PROFILE)
+        list(APPEND _mac_store_args --provision-profile=${MACOS_PROVISION_PROFILE})
+    endif()
+    if(MACOS_APP_STORE_INSTALLER_CERT)
+        list(APPEND _mac_store_args
+            --installer-cert=${MACOS_APP_STORE_INSTALLER_CERT}
+            --pkg=${CMAKE_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.pkg
+        )
+    endif()
+
+    if(MACOS_APP_STORE_APP_CERT)
+        # Deliberately not part of ALL: signing needs the store certificates,
+        # which a plain developer build does not have.
+        add_custom_target(mac-app-store
+            COMMAND ${CMAKE_SOURCE_DIR}/range-build-tools/mac_app_store.sh ${_mac_store_args}
+            DEPENDS gen-dsstore
+            COMMENT "Signing the bundle for the Apple App Store"
+            VERBATIM
+        )
+        message(STATUS "Apple App Store packaging enabled — build the 'mac-app-store' target")
+    else()
+        message(WARNING "RANGE_STORE_BUILD is ON but MACOS_APP_STORE_APP_CERT is empty; the 'mac-app-store' target is not available")
+    endif()
+endif()
+
+if(RANGE_STORE_BUILD AND WIN32)
+    find_program(MAKEAPPX_EXECUTABLE
+        NAMES makeappx
+        PATHS
+            "$ENV{ProgramFiles\(x86\)}/Windows Kits/10/bin"
+            "$ENV{ProgramFiles}/Windows Kits/10/bin"
+        PATH_SUFFIXES
+            x64 arm64
+        DOC "MSIX packaging tool (makeappx.exe) from the Windows SDK"
+    )
+
+    # MSIX versions are always four components and the Store reserves the last
+    # one, which has to stay zero in an uploaded package.
+    set(MSIX_PACKAGE_VERSION "${PROJECT_VERSION}.0")
+    set(MSIX_EXECUTABLE_NAME "${PROJECT_TARGET_NAME}${DEBUG_EXT}")
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(ARM64|arm64|aarch64)$")
+        set(MSIX_ARCHITECTURE "arm64")
+    else()
+        set(MSIX_ARCHITECTURE "x64")
+    endif()
+
+    set(_msix_staging_dir "${CMAKE_BINARY_DIR}/msix-staging")
+    set(_msix_package "${CMAKE_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.msix")
+
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/range-build-tools/packaging/windows/AppxManifest.xml.in
+        ${CMAKE_BINARY_DIR}/packaging/windows/AppxManifest.xml
+        @ONLY
+    )
+
+    if(MAKEAPPX_EXECUTABLE)
+        add_custom_target(msix
+            COMMAND ${CMAKE_COMMAND} -E rm -rf ${_msix_staging_dir}
+            COMMAND ${CMAKE_COMMAND} --install ${CMAKE_BINARY_DIR} --prefix ${_msix_staging_dir}
+            COMMAND ${CMAKE_COMMAND} -E copy
+                    ${CMAKE_BINARY_DIR}/packaging/windows/AppxManifest.xml
+                    ${_msix_staging_dir}/AppxManifest.xml
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    ${CMAKE_SOURCE_DIR}/${PROJECT_TARGET_NAME}/pixmaps/msix
+                    ${_msix_staging_dir}/assets
+            COMMAND ${MAKEAPPX_EXECUTABLE} pack /o /d ${_msix_staging_dir} /p ${_msix_package}
+            DEPENDS deploy-qt
+            COMMENT "Packing MSIX for the Microsoft Store"
+            VERBATIM
+        )
+        message(STATUS "Microsoft Store packaging enabled — build the 'msix' target")
+    else()
+        message(WARNING "RANGE_STORE_BUILD is ON but makeappx.exe was not found; install the Windows SDK. The 'msix' target is not available")
     endif()
 endif()
 

@@ -6,6 +6,8 @@
 #include <QTreeView>
 #include <QHeaderView>
 
+#include <rgl_icon.h>
+
 #include "persons_list_edit_widget.h"
 
 PersonsListEditWidget::PersonsListEditWidget(const FTree *familyTree,
@@ -17,7 +19,7 @@ PersonsListEditWidget::PersonsListEditWidget(const FTree *familyTree,
     , personsList(personsList)
     , excludeList(excludeList)
 {
-    QIcon addIcon(":/icons/action/pixmaps/range-add.svg");
+    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setContentsMargins(0,0,0,0);

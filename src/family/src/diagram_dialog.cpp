@@ -5,6 +5,8 @@
 
 #include <rbl_logger.h>
 
+#include <rgl_icon.h>
+
 #include "diagram_dialog.h"
 
 DiagramDialog::DiagramDialog(FTree *familyTree, const QUuid &itemId, QWidget *parent)
@@ -13,7 +15,7 @@ DiagramDialog::DiagramDialog(FTree *familyTree, const QUuid &itemId, QWidget *pa
     , itemId{itemId}
 {
     R_LOG_TRACE_IN;
-    QIcon closeIcon(":/icons/action/pixmaps/range-close.svg");
+    QIcon closeIcon = RIcon::fromFile(":/icons/action/pixmaps/range-close.svg");
 
     this->setWindowTitle(this->itemId);
     this->setModal(false);

@@ -3,6 +3,7 @@
 #include <QPushButton>
 
 #include <rgl_message_box.h>
+#include <rgl_icon.h>
 
 #include "tree_diff_dialog.h"
 #include "tree_diff_widget.h"
@@ -11,7 +12,7 @@ TreeDiffDialog::TreeDiffDialog(const QString &aFileName, const QString &bFileNam
     : QDialog{parent}
     , bTreeSaved{true}
 {
-    QIcon closeIcon(":/icons/action/pixmaps/range-close.svg");
+    QIcon closeIcon = RIcon::fromFile(":/icons/action/pixmaps/range-close.svg");
 
     this->setWindowTitle(tr("Family tree differences"));
 

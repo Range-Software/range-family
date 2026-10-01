@@ -13,6 +13,7 @@
 #include <rbl_error.h>
 #include <rgl_file_chooser_button.h>
 #include <rgl_message_box.h>
+#include <rgl_icon.h>
 
 #include "application.h"
 #include "tree_diff_widget.h"
@@ -47,9 +48,9 @@ TreeDiffWidget::TreeDiffWidget(const QString &aFileName, const QString &bFileNam
         RLogger::info("Number of imported relations: %u\n",this->nImportedRelations);
     }
 
-    QIcon addIcon(":/icons/action/pixmaps/range-add.svg");
-    QIcon removeIcon(":/icons/action/pixmaps/range-remove.svg");
-    QIcon iconUpdate(":/icons/action/pixmaps/range-edit.svg");
+    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
+    QIcon removeIcon = RIcon::fromFile(":/icons/action/pixmaps/range-remove.svg");
+    QIcon iconUpdate = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     this->setLayout(mainLayout);
@@ -189,9 +190,9 @@ QWidget *TreeDiffWidget::createTreeWidget(FTreeDiff::Side side)
 
 void TreeDiffWidget::populateTreeWidget(QTreeWidget *treeWidget, FTreeDiff::Side side)
 {
-    QIcon iconAdd(":/icons/action/pixmaps/range-add.svg");
-    QIcon iconRemove(":/icons/action/pixmaps/range-remove.svg");
-    QIcon iconUpdate(":/icons/action/pixmaps/range-edit.svg");
+    QIcon iconAdd = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
+    QIcon iconRemove = RIcon::fromFile(":/icons/action/pixmaps/range-remove.svg");
+    QIcon iconUpdate = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     treeWidget->clear();
 

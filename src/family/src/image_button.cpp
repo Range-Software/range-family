@@ -13,6 +13,8 @@
 
 #include <rfl_tree.h>
 
+#include <rgl_icon.h>
+
 #include "application.h"
 #include "image_button.h"
 
@@ -29,7 +31,7 @@ ImageButton::ImageButton(const QImage &image, const QUuid &personId, uint maxWid
     int buttonIconSize = this->style()->pixelMetric(QStyle::PM_TitleBarButtonIconSize);
 
     this->clearButton = new QToolButton(this);
-    this->clearButton->setIcon(QIcon(":/icons/action/pixmaps/range-clear.svg"));
+    this->clearButton->setIcon(RIcon::fromFile(":/icons/action/pixmaps/range-clear.svg"));
     this->clearButton->setIconSize(QSize(buttonIconSize,buttonIconSize));
     this->clearButton->setFixedSize(buttonSize,buttonSize);
     this->clearButton->setAutoRaise(true);

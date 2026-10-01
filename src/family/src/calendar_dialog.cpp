@@ -3,14 +3,16 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 
+#include <rgl_icon.h>
+
 #include "calendar_dialog.h"
 
 CalendarDialog::CalendarDialog(const QDate &date, QWidget *parent)
     : QDialog(parent)
     , date(date)
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon okIcon(":/icons/action/pixmaps/range-add.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon okIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
 
     this->setWindowTitle(tr("Set date"));
 

@@ -19,7 +19,9 @@
 #include <rgl_message_box.h>
 #include <rgl_progress_handler.h>
 #include <rgl_progress_bar.h>
+#include <rgl_icon.h>
 
+#include "application.h"
 #include "main_window.h"
 #include "action.h"
 #include "central_widget.h"
@@ -47,7 +49,7 @@ MainWindow::MainWindow(Session *session,
     this->applyShortcutsToActions();
 
     this->setWindowTitle(RVendor::name() + " :: " + tr("Family tree manager"));
-    this->setWindowIcon(QIcon(":/icons/logos/pixmaps/range-family.svg"));
+    this->setWindowIcon(RIcon::fromFile(Application::windowIconFile()));
 
     int toolbarIconSize = this->applicationSettings->getToolbarIconSize();
     this->setIconSize(QSize(toolbarIconSize,toolbarIconSize));
@@ -142,7 +144,14 @@ void MainWindow::createMenus()
     QMenu *menuHelp = new QMenu(menubar);
     menuHelp->setTitle(QApplication::translate("MainWindow", "Help"));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_HELP));
+#ifdef STORE_BUILD
+    // Both the Apple App Store and the Microsoft Store forbid an application from
+    // downloading and installing its own updates. Hidden as well, so a shortcut
+    // assigned to the action cannot trigger it.
+    this->actionList->getAction(Action::ACTION_APPLICATION_UPDATE)->setVisible(false);
+#else
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_UPDATE));
+#endif
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_ABOUT));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_ABOUT_QT));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_LICENSE));

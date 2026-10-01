@@ -9,14 +9,16 @@
 
 #include <rfl_tool_action.h>
 
+#include <rgl_icon.h>
+
 #include "person_add_dialog.h"
 
 PersonAddDialog::PersonAddDialog(FTree *familyTree, const FPerson &newPerson, QWidget *parent)
     : QDialog(parent)
     , familyTree(familyTree)
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon addIcon(":/icons/action/pixmaps/range-add.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
 
     this->setWindowTitle(tr("Add person"));
 

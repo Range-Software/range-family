@@ -22,6 +22,15 @@ Application *Application::instance() noexcept
     return qobject_cast<Application*>(RApplication::instance());
 }
 
+QString Application::windowIconFile()
+{
+#ifdef Q_OS_WIN
+    return QString(":/icons/logos/pixmaps/range-family-windows.svg");
+#else
+    return QString(":/icons/logos/pixmaps/range-family.svg");
+#endif
+}
+
 const Session *Application::getSession() const
 {
     return this->session;

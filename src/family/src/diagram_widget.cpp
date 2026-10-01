@@ -7,6 +7,7 @@
 #include <rbl_logger.h>
 
 #include <rgl_application.h>
+#include <rgl_icon.h>
 
 #include "diagram_widget.h"
 #include "scale_control_widget.h"
@@ -24,7 +25,7 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     mainLayout->addWidget(toolBar);
 
-    QAction *exportAction = new QAction(QIcon(":/icons/file/pixmaps/range-import.svg"),tr("Export tree"));
+    QAction *exportAction = new QAction(RIcon::fromFile(":/icons/file/pixmaps/range-import.svg"),tr("Export tree"));
     toolBar->addAction(exportAction);
 
     QWidget* spacer = new QWidget();

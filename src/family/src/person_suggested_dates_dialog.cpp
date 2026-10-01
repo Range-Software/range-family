@@ -10,6 +10,8 @@
 
 #include <rfl_tool_action.h>
 
+#include <rgl_icon.h>
+
 #include "person_suggested_dates_dialog.h"
 
 PersonSuggestedDatesDialog::PersonSuggestedDatesDialog(FTree *familyTree, const FPerson &rPerson, QWidget *parent)
@@ -17,8 +19,8 @@ PersonSuggestedDatesDialog::PersonSuggestedDatesDialog(FTree *familyTree, const 
     , familyTree(familyTree)
     , person(rPerson)
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon editIcon(":/icons/action/pixmaps/range-edit.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon editIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     this->setWindowTitle(tr("Suggested person birth and death dates"));
     this->setModal(true);

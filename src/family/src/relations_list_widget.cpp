@@ -7,6 +7,7 @@
 #include <rfl_tool_action.h>
 
 #include <rgl_message_box.h>
+#include <rgl_icon.h>
 
 #include "diagram_dialog.h"
 #include "relation_add_dialog.h"
@@ -17,9 +18,9 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
     : QWidget(parent)
     , familyTree(familyTree)
 {
-    QIcon addIcon(":/icons/action/pixmaps/range-add.svg");
-    QIcon editIcon(":/icons/action/pixmaps/range-edit.svg");
-    QIcon removeIcon(":/icons/action/pixmaps/range-remove.svg");
+    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
+    QIcon editIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
+    QIcon removeIcon = RIcon::fromFile(":/icons/action/pixmaps/range-remove.svg");
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     this->setLayout(mainLayout);

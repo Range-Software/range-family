@@ -9,6 +9,8 @@
 
 #include <rfl_tool_action.h>
 
+#include <rgl_icon.h>
+
 #include "person_edit_dialog.h"
 
 PersonEditDialog::PersonEditDialog(FTree *familyTree, const FPerson &person, QWidget *parent)
@@ -16,8 +18,8 @@ PersonEditDialog::PersonEditDialog(FTree *familyTree, const FPerson &person, QWi
     , familyTree(familyTree)
     , person(person)
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon editIcon(":/icons/action/pixmaps/range-edit.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon editIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     this->setWindowTitle(tr("Edit person"));
 

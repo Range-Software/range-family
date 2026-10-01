@@ -1,3 +1,42 @@
+## Version 1.3.0
+
+### Improvements
+
+- Redesigned all icons in one clean, light style shared with Range FEA: a 24 px
+  grid, uniform line width and a common color palette where each color carries
+  one meaning (green add/confirm, red remove/cancel, amber edit, blue files and
+  navigation, violet AI). Icons used for the same purpose in Range FEA are reused.
+- "About", "License" and "Release notes" have their own icons instead of the
+  application logo.
+- Every icon has a dark variant which is used while a dark color scheme is
+  active. Icons already shown switch as soon as the color scheme changes.
+- The Windows application icon fills the whole icon area, so it no longer looks
+  smaller than other Windows applications. Its small sizes are drawn with
+  heavier lines to stay readable. macOS keeps its own icon.
+- New macOS application setting to draw the menu bar inside the application
+  window instead of the system menu bar. It takes effect after a restart.
+- New `--reset-settings` command line option resets all application settings
+  to their default values. It replaces `--reset-defaults`.
+- Links in help pages and release notes work: links to other help pages open
+  them, links to headings scroll to them and web or e-mail links open in the
+  default external application.
+- The release notes dialog opens on the first topic instead of an empty view
+  and always keeps one topic selected.
+- Builds for the Apple App Store and Microsoft Store do not check for software
+  updates: the automatic check, its application setting and the "Check for
+  update" action are left out.
+
+### Submodules
+
+- range-ai-lib @ v1.1.0
+- range-base-lib @ v1.1.0
+- range-build-tools @ v1.0.0
+- range-cloud-lib @ v1.1.0
+- range-family-lib @ v1.1.0
+- range-gui-lib @ v1.1.0
+
+---
+
 ## Version 1.2.0
 
 ### Improvements

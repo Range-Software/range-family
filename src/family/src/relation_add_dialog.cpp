@@ -9,14 +9,16 @@
 
 #include <rfl_tool_action.h>
 
+#include <rgl_icon.h>
+
 #include "relation_add_dialog.h"
 
 RelationAddDialog::RelationAddDialog(FTree *familyTree, const FRelation &newRelation, QWidget *parent)
     : QDialog(parent)
     , familyTree(familyTree)
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon addIcon(":/icons/action/pixmaps/range-add.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
 
     this->setWindowTitle(tr("Add relation"));
 

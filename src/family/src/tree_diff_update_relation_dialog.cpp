@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QJsonDocument>
 
+#include <rgl_icon.h>
+
 #include "tree_diff_update_relation_dialog.h"
 
 TreeDiffUpdateRelationDialog::TreeDiffUpdateRelationDialog(const FRelation &aRelation, const FRelation &bRelation, QWidget *parent)
@@ -14,8 +16,8 @@ TreeDiffUpdateRelationDialog::TreeDiffUpdateRelationDialog(const FRelation &aRel
     , bRelation{bRelation}
     , uRelation{bRelation}
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon updateIcon(":/icons/action/pixmaps/range-edit.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon updateIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     this->setWindowTitle(tr("Update relation"));
 

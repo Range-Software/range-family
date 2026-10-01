@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QJsonDocument>
 
+#include <rgl_icon.h>
+
 #include "tree_diff_update_person_dialog.h"
 
 TreeDiffUpdatePersonDialog::TreeDiffUpdatePersonDialog(const FPerson &aPerson, const FPerson &bPerson, QWidget *parent)
@@ -14,8 +16,8 @@ TreeDiffUpdatePersonDialog::TreeDiffUpdatePersonDialog(const FPerson &aPerson, c
     , bPerson{bPerson}
     , uPerson{bPerson}
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon updateIcon(":/icons/action/pixmaps/range-edit.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon updateIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     this->setWindowTitle(tr("Update person"));
 

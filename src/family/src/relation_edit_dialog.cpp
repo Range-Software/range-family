@@ -9,6 +9,8 @@
 
 #include <rfl_tool_action.h>
 
+#include <rgl_icon.h>
+
 #include "relation_edit_dialog.h"
 
 RelationEditDialog::RelationEditDialog(FTree *familyTree, const FRelation &relation, QWidget *parent)
@@ -16,8 +18,8 @@ RelationEditDialog::RelationEditDialog(FTree *familyTree, const FRelation &relat
     , familyTree(familyTree)
     , relation(relation)
 {
-    QIcon cancelIcon(":/icons/action/pixmaps/range-cancel.svg");
-    QIcon editIcon(":/icons/action/pixmaps/range-edit.svg");
+    QIcon cancelIcon = RIcon::fromFile(":/icons/action/pixmaps/range-cancel.svg");
+    QIcon editIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
 
     this->setWindowTitle(tr("Edit relation"));
 
