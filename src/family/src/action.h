@@ -49,8 +49,14 @@ class Action : public RAction
             ACTION_APPLICATION_ABOUT,
             ACTION_APPLICATION_ABOUT_QT,
             ACTION_APPLICATION_LICENSE,
+            ACTION_APPLICATION_PRIVACY_POLICY,
             ACTION_APPLICATION_RELEASE_NOTES,
             ACTION_APPLICATION_HELP,
+            ACTION_APPLICATION_FOLDER_CERT,
+            ACTION_APPLICATION_FOLDER_DATA,
+            ACTION_APPLICATION_FOLDER_DOC,
+            ACTION_APPLICATION_FOLDER_LOG,
+            ACTION_APPLICATION_FOLDER_TMP,
             ACTION_APPLICATION_QUIT,
             ACTION_FILE_NEW,
             ACTION_FILE_OPEN,
@@ -113,6 +119,9 @@ class Action : public RAction
                            PointerToMemberToggle toggleSlot,
                            QAction::MenuRole menuRole = QAction::NoRole);
 
+        //! Open given folder in the platform file browser.
+        static void openFolder(const QString &dirPath);
+
     public slots:
 
         //! New file.
@@ -163,8 +172,26 @@ class Action : public RAction
         //! License.
         void onLicense();
 
+        //! Privacy policy.
+        void onPrivacyPolicy();
+
         //! Release notes.
         void onReleaseNotes();
+
+        //! Open certificates folder.
+        void onFolderCert();
+
+        //! Open data folder.
+        void onFolderData();
+
+        //! Open documents folder.
+        void onFolderDoc();
+
+        //! Open log folder.
+        void onFolderLog();
+
+        //! Open temporary files folder.
+        void onFolderTmp();
 
         //! Open cloud session manager.
         void onCloudSessionManager();

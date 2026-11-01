@@ -123,6 +123,16 @@ void MainWindow::createMenus()
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_STORE_IMAGES_IN_TREE));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_STORE_IMAGES_IN_DATA_DIR));
     menuFile->addSeparator();
+    QMenu *menuFileFolders = new QMenu(menuFile);
+    menuFileFolders->setTitle(tr("Folders"));
+    menuFileFolders->setIcon(RIcon::fromFile(":/icons/file/pixmaps/range-open.svg"));
+    menuFileFolders->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_FOLDER_CERT));
+    menuFileFolders->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_FOLDER_DATA));
+    menuFileFolders->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_FOLDER_DOC));
+    menuFileFolders->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_FOLDER_LOG));
+    menuFileFolders->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_FOLDER_TMP));
+    menuFile->addAction(menuFileFolders->menuAction());
+    menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_SETTINGS));
     menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));
@@ -155,6 +165,7 @@ void MainWindow::createMenus()
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_ABOUT));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_ABOUT_QT));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_LICENSE));
+    menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_PRIVACY_POLICY));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_RELEASE_NOTES));
     menubar->addAction(menuHelp->menuAction());
     R_LOG_TRACE_OUT;

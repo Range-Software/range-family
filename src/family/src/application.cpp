@@ -57,6 +57,32 @@ void Application::initialize()
     QObject::connect(this->session,&Session::treeFileLoaded,this,&Application::onTreeFileLoaded);
     QObject::connect(this->session,&Session::treeFileChanged,this,&Application::onTreeFileChanged);
     QObject::connect(this->session,&Session::treeFileRemoved,this,&Application::onTreeFileRemoved);
+
+#ifdef STORE_BUILD
+    // A store installs every version into a folder of its own (a versioned
+    // directory under WindowsApps for MSIX), so a path stored by the previous
+    // version points into a folder which no longer exists. These locations all
+    // belong to the package itself, so they are reset to the defaults without
+    // asking instead of being reported as an unusual configuration.
+    this->applicationSettings->setHelpDir(this->applicationSettings->findHelpDir());
+    this->applicationSettings->setOpensslToolPath(RApplicationSettings::getDefaultOpensslToolPath());
+    this->applicationSettings->setOpensslConfPath(this->applicationSettings->findOpensslConfPath());
+#else
+    // Check help directory
+    if (this->applicationSettings->findHelpDir() != this->applicationSettings->getHelpDir())
+    {
+        QString messageStr = tr("Default and configured help directories differ") + ":"
+                           + QString("<ul>")
+                           + "<li><tt>" + this->applicationSettings->findHelpDir() + "</tt></li>"
+                           + "<li><tt>" + this->applicationSettings->getHelpDir() + "</tt></li>"
+                           + QString("</ul>")
+                           + "<strong>" + tr("Would you like to set it to default?") + "</strong>";
+        if (RMessageBox::question(this->mainWindow,tr("Unusual configuration"),messageStr) == RMessageBox::Yes)
+        {
+            this->applicationSettings->setHelpDir(this->applicationSettings->findHelpDir());
+        }
+    }
+#endif
 }
 
 void Application::finalize()

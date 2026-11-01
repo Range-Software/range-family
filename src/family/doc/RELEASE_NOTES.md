@@ -25,15 +25,55 @@
 - Builds for the Apple App Store and Microsoft Store do not check for software
   updates: the automatic check, its application setting and the "Check for
   update" action are left out.
+- On macOS the private key and the certificate signing request for Cloud are
+  generated with the Apple Security framework instead of the `openssl` tool, and
+  so is the text shown by the private key view. The `openssl` tool is no longer
+  bundled with the application, only the OpenSSL libraries used for TLS
+  connections. The paths of the OpenSSL tool and its configuration are hidden in
+  the application settings. Configure with `-DRANGE_NATIVE_KEY_TOOL=OFF` to keep
+  using the `openssl` tool.
+- New "Folders" submenu in the File menu opens the application folders -
+  "Certificates", "Data", "Documents", "Logs" and "Temporary files" - in the file
+  browser of the operating system (Finder on macOS, File Explorer on Windows, the
+  file manager on Linux). In the Apple App Store version these folders are kept
+  inside the application container, where they are otherwise hard to reach.
+- New "Privacy policy" action in the Help menu shows the privacy policy, which is
+  now installed together with the license and the release notes.
+- Builds for the Apple App Store and Microsoft Store produce a submission ready
+  artifact: a sandboxed bundle signed for the App Store and wrapped in a `.pkg`,
+  and an MSIX package. Both are built by their own target, so an ordinary release
+  build is left untouched. Each upload takes a build number, so resubmitting the
+  same release after a rejection is accepted.
+- Confirmation messages of the Cloud file manager name the affected file: Cloud
+  files with their path and identifier, downloaded files with their local file
+  name.
+- The software manager lists only versions newer than the one being run, unless
+  "show all" is checked.
+- The user interface is translated to Czech, German, Spanish, French, Italian,
+  Polish and Ukrainian in addition to English and Slovak, and all of them are
+  offered in the language selection of the application settings. A language
+  change takes effect after a restart.
+
+### Bug fixes
+
+- The Apple App Store version could not write to its folders. They were kept in
+  `Documents/Range Software/Family`, which the App Sandbox does not allow to be
+  written to. The sandboxed version now keeps them in
+  `Library/Application Support/Range Software/Family` inside its container
+  (`~/Library/Containers/com.range-software.family/Data`); other versions keep
+  using the Documents folder. Use "File > Folders" to find them.
+- Certificate signing requests generated on macOS store subject fields with
+  characters outside ASCII, such as `Žilina`, correctly. The `openssl` tool used
+  before stored them in a mangled form (`Å½ilina`).
 
 ### Submodules
 
 - range-ai-lib @ v1.1.0
-- range-base-lib @ v1.1.0
-- range-build-tools @ v1.0.0
-- range-cloud-lib @ v1.1.0
-- range-family-lib @ v1.1.0
-- range-gui-lib @ v1.1.0
+- range-base-lib @ v1.2.0
+- range-build-tools @ v1.1.0
+- range-cloud-lib @ v1.2.0
+- range-family-lib @ v1.2.0
+- range-gui-lib @ v1.3.0
 
 ---
 

@@ -13,6 +13,7 @@
 #include <rgl_ai_agent_settings_manager_dialog.h>
 #include <rgl_cloud_file_manager_dialog.h>
 #include <rgl_cloud_session_dialog.h>
+#include <rgl_desktop_services.h>
 #include <rgl_help_dialog.h>
 #include <rgl_message_box.h>
 #include <rgl_release_notes_dialog.h>
@@ -65,8 +66,14 @@ QString Action::getName(Type type)
         case ACTION_APPLICATION_ABOUT:             return "application-about";
         case ACTION_APPLICATION_ABOUT_QT:          return "application-about_qt";
         case ACTION_APPLICATION_LICENSE:           return "application-license";
+        case ACTION_APPLICATION_PRIVACY_POLICY:    return "application-privacy_policy";
         case ACTION_APPLICATION_RELEASE_NOTES:     return "application-release_notes";
         case ACTION_APPLICATION_HELP:              return "application-help";
+        case ACTION_APPLICATION_FOLDER_CERT:       return "application-folder_cert";
+        case ACTION_APPLICATION_FOLDER_DATA:       return "application-folder_data";
+        case ACTION_APPLICATION_FOLDER_DOC:        return "application-folder_doc";
+        case ACTION_APPLICATION_FOLDER_LOG:        return "application-folder_log";
+        case ACTION_APPLICATION_FOLDER_TMP:        return "application-folder_tmp";
         case ACTION_APPLICATION_QUIT:              return "application-quit";
         case ACTION_FILE_NEW:                      return "file-new";
         case ACTION_FILE_OPEN:                     return "file-open";
@@ -113,7 +120,13 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_ABOUT, tr("About"), "", "F1", ":/icons/application/pixmaps/range-about.svg", static_cast<PointerToMemberTrigger>(&Action::onAbout), QAction::AboutRole);
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_ABOUT_QT, tr("About Qt"), "", "", ":/icons/application/pixmaps/range-qt.svg", static_cast<PointerToMemberTrigger>(&Action::onAboutQt), QAction::AboutQtRole);
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_LICENSE, tr("License"), "", "", ":/icons/application/pixmaps/range-license.svg", static_cast<PointerToMemberTrigger>(&Action::onLicense));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_PRIVACY_POLICY, tr("Privacy policy"), "", "", ":/icons/application/pixmaps/range-privacy_policy.svg", static_cast<PointerToMemberTrigger>(&Action::onPrivacyPolicy));
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_RELEASE_NOTES, tr("Release notes"), "", "", ":/icons/application/pixmaps/range-release_notes.svg", static_cast<PointerToMemberTrigger>(&Action::onReleaseNotes));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_FOLDER_CERT, tr("Certificates"), tr("Open certificates folder in file browser."), "", ":/icons/file/pixmaps/range-open.svg", static_cast<PointerToMemberTrigger>(&Action::onFolderCert));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_FOLDER_DATA, tr("Data"), tr("Open data folder in file browser."), "", ":/icons/file/pixmaps/range-open.svg", static_cast<PointerToMemberTrigger>(&Action::onFolderData));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_FOLDER_DOC, tr("Documents"), tr("Open documents folder in file browser."), "", ":/icons/file/pixmaps/range-open.svg", static_cast<PointerToMemberTrigger>(&Action::onFolderDoc));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_FOLDER_LOG, tr("Logs"), tr("Open log folder in file browser."), "", ":/icons/file/pixmaps/range-open.svg", static_cast<PointerToMemberTrigger>(&Action::onFolderLog));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_FOLDER_TMP, tr("Temporary files"), tr("Open temporary files folder in file browser."), "", ":/icons/file/pixmaps/range-open.svg", static_cast<PointerToMemberTrigger>(&Action::onFolderTmp));
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_HELP, tr("Help"), "", "Ctrl+H", ":/icons/application/pixmaps/range-help.svg", static_cast<PointerToMemberTrigger>(&Action::onHelp));
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_QUIT, tr("Quit"), "", "Q", ":/icons/application/pixmaps/range-quit.svg", static_cast<PointerToMemberTrigger>(&Action::onQuit), QAction::QuitRole);
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_NEW, tr("New"), "", "Ctrl+N", ":/icons/file/pixmaps/range-new.svg", static_cast<PointerToMemberTrigger>(&Action::onFileNew));
@@ -527,6 +540,38 @@ void Action::onLicense()
     R_LOG_TRACE_OUT;
 }
 
+void Action::onPrivacyPolicy()
+{
+    R_LOG_TRACE_IN;
+    QString privacyPolicyFileName(Application::instance()->getApplicationSettings()->findPrivacyPolicyFileName());
+
+    try
+    {
+        QFile file(privacyPolicyFileName);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            throw RError(RError::Type::OpenFile,R_ERROR_REF,"Failed to open the file \'%s\'.",privacyPolicyFileName.toUtf8().constData());
+        }
+        QString privacyPolicyText(file.readAll());
+        file.close();
+
+        RTextBrowserDialog textBrowserDialog(tr("Privacy policy"),
+                                            privacyPolicyFileName,
+                                            privacyPolicyText,
+                                            Application::instance()->getMainWindow());
+        textBrowserDialog.exec();
+    }
+    catch (const RError &rError)
+    {
+        RLogger::error("Failed to display privacy policy from file \'%s\'. %s\n",privacyPolicyFileName.toUtf8().constData(),rError.getMessage().toUtf8().constData());
+    }
+    catch (...)
+    {
+        RLogger::error("Failed to display privacy policy from file \'%s\'.\n",privacyPolicyFileName.toUtf8().constData());
+    }
+    R_LOG_TRACE_OUT;
+}
+
 void Action::onReleaseNotes()
 {
     R_LOG_TRACE_IN;
@@ -596,5 +641,50 @@ void Action::onAiChat()
                                                   Application::instance()->getApplicationSettings(),
                                                   Application::instance()->getMainWindow());
     aiChatDialog->show();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::openFolder(const QString &dirPath)
+{
+    if (!RDesktopServices::openDirectory(dirPath))
+    {
+        RMessageBox::warning(Application::instance()->getMainWindow(),
+                             tr("Failed to open folder"),
+                             tr("Failed to open folder") + ": <tt>" + dirPath + "</tt>");
+    }
+}
+
+void Action::onFolderCert()
+{
+    R_LOG_TRACE_IN;
+    Action::openFolder(RApplicationSettings::getCertDir());
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onFolderData()
+{
+    R_LOG_TRACE_IN;
+    Action::openFolder(RApplicationSettings::getDataDir());
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onFolderDoc()
+{
+    R_LOG_TRACE_IN;
+    Action::openFolder(RApplicationSettings::getDocDir());
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onFolderLog()
+{
+    R_LOG_TRACE_IN;
+    Action::openFolder(RApplicationSettings::getLogDir());
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onFolderTmp()
+{
+    R_LOG_TRACE_IN;
+    Action::openFolder(RApplicationSettings::getTmpDir());
     R_LOG_TRACE_OUT;
 }

@@ -116,6 +116,9 @@ I.about = circ(12, 12, 8.75, C.blue, C.blueL) + P('M12 11v5.5', C.blue) + dot(12
 I.update = circ(12, 12, 8.75, C.green, C.greenL) + arrow(12, 7, 12, 16.5, C.green);
 I.license = G.doc() + P('M8.5 7h4M8.5 10h7', C.ink, 'none', thin)
   + P('M13.6 17.2l-1 4.3 2.9-1.4 2.9 1.4-1-4.3', C.amber, C.amberL) + circ(15.5, 15, 3, C.amber, C.amberL);
+I.privacy_policy = G.doc() + P('M8.5 7h4M8.5 10h7', C.ink, 'none', thin)
+  + P('M15.5 11.75l3.5 1.25v2.75c0 2.6-1.6 4.4-3.5 5.25c-1.9-0.85-3.5-2.65-3.5-5.25v-2.75z', C.amber, C.amberL)
+  + P('M14 16.3l1.1 1.1 2.2-2.4', C.amber, 'none', ' stroke-width="1.25"');
 I.release_notes = G.doc() + [10, 13.5, 17].map(y => dot(9, y, 1, C.blue)).join('')
   + P('M11.25 10h4.5M11.25 13.5h4.5M11.25 17h3', C.ink, 'none', thin);
 
