@@ -53,6 +53,16 @@
   Polish and Ukrainian in addition to English and Slovak, and all of them are
   offered in the language selection of the application settings. A language
   change takes effect after a restart.
+- New "Verification" setting of the Cloud host in the Cloud session manager.
+  "Full verification" (default) checks that the host certificate is issued by a
+  trusted certificate authority and matches the host name. "Trusted certificate
+  only (skip host name)" is meant for a server reached by its IP address: set its
+  certificate authority as the session's host "Certificate" and the host name is
+  not checked. "No verification" accepts any certificate and does not guarantee
+  the identity of the host.
+- Cloud requests are faster. A request completes as soon as the reply arrives,
+  where it used to wait up to an extra second, and connections to the Cloud are
+  kept open and reused between requests instead of being opened for each one.
 
 ### Bug fixes
 
@@ -65,15 +75,20 @@
 - Certificate signing requests generated on macOS store subject fields with
   characters outside ASCII, such as `Žilina`, correctly. The `openssl` tool used
   before stored them in a mangled form (`Å½ilina`).
+- The Cloud host certificate was not verified, so a connection to a host
+  presenting a certificate from an untrusted authority or for another host name
+  was accepted and only reported as SSL errors in the log. Such connections are
+  now refused. A session whose host uses a private certificate authority needs
+  that authority set as its host "Certificate", or its "Verification" relaxed.
 
 ### Submodules
 
 - range-ai-lib @ v1.1.0
 - range-base-lib @ v1.2.0
 - range-build-tools @ v1.1.0
-- range-cloud-lib @ v1.2.0
+- range-cloud-lib @ v1.3.0
 - range-family-lib @ v1.2.0
-- range-gui-lib @ v1.3.0
+- range-gui-lib @ v1.3.1
 
 ---
 
