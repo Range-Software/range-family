@@ -38,7 +38,6 @@ class RelationsListWidget : public QWidget
         QPushButton *relationRemoveButton;
         RTreeWidget *treeWidget;
         ScrollBarWithMarkers *scrollBarWithMarkers;
-        QAction *showTreeAction;
 
     public:
 
@@ -79,15 +78,6 @@ class RelationsListWidget : public QWidget
         //! On item double-clicked.
         void onItemDoubleClicked(QTreeWidgetItem *item, int);
 
-        //! Relation add button clicked.
-        void onRelationAddButtonClicked();
-
-        //! Relation edit button clicked.
-        void onRelationEditButtonClicked();
-
-        //! Relation remove button clicked.
-        void onRelationRemoveButtonClicked();
-
         //! Add relation.
         void addRelation(const FRelation &relation);
 
@@ -103,10 +93,25 @@ class RelationsListWidget : public QWidget
         //! File loaded.
         void onFileLoaded(const QString &);
 
-        //! Show family tree diagram of selected relation.
-        void onShowDiagramDialog();
 
         void relationDiagramSelectionChanged(const QList<QUuid> &);
+
+    public slots:
+
+        //! Add new relation.
+        void addNewRelation();
+
+        //! Edit selected relations.
+        void editSelectedRelations();
+
+        //! Remove selected relations.
+        void removeSelectedRelations();
+
+        //! Show family tree diagram of selected relations.
+        void showSelectedRelationsDiagram();
+
+        //! Enable actions and buttons which can be used with the current selection.
+        void updateActionsAvailability();
 
     signals:
 

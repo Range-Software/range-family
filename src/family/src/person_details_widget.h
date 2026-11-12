@@ -17,8 +17,6 @@ class PersonDetailsWidget : public QWidget
         const FTree *tree;
         QList<QUuid> personsIds;
 
-        bool darkMode;
-
         RHtmlViewer *htmlViewer;
 
     public:
@@ -44,6 +42,9 @@ class PersonDetailsWidget : public QWidget
 
         //! Person changed.
         void onPersonChanged(const FPerson &person);
+
+        //! Application style or color scheme has been applied.
+        void onStyleApplied();
 
 };
 

@@ -63,8 +63,34 @@
 - Cloud requests are faster. A request completes as soon as the reply arrives,
   where it used to wait up to an extra second, and connections to the Cloud are
   kept open and reused between requests instead of being opened for each one.
+- New optional ribbon layout shows commands on the pages "Family tree",
+  "Persons", "Relations" and "Cloud and AI" instead of menus and tool bars. The
+  "File" menu, "Save", Cloud, application settings and help stay in the line with
+  the page tabs. Switch it with "Ribbon layout" in the File menu or on the
+  application tool bar. "Compact ribbon" shows it in less vertical space, with
+  smaller buttons and no group titles. Both choices, the selected page and the
+  collapsed state are remembered.
+- Tool bars are reorganized into "File", "Family tree", "Persons and relations"
+  and "Application" tool bars, each of which can be moved or hidden on its own.
+  Related commands share one drop-down button: "Save" and "Save as", storing of
+  images, and adding, editing and removing of persons and of relations. "Quit"
+  and "About" are no longer on a tool bar. The new arrangement is applied once
+  to existing installations.
+- Adding, editing and removing of persons and relations, "Show family tree",
+  "Set selected person as active", "Merge selected persons" and "Suggest birth
+  and death dates" are application actions: they are found in the new "Edit"
+  menu, on the tool bar and the ribbon, can be given keyboard shortcuts in the
+  application settings and have help pages.
 
 ### Bug fixes
+
+- Changing the style or the color scheme while the application runs shrank the
+  tool bar icons to the default size of the style. Tool bars now keep the icon
+  size set in the application settings.
+- After the color scheme changed, the person details kept the colors of the
+  previous scheme, the labels of the "Editor" and "Output" tabs kept the previous
+  text color, so a dark scheme left them white on a light background, and text
+  already printed to the application output kept the previous colors.
 
 - The Apple App Store version could not write to its folders. They were kept in
   `Documents/Range Software/Family`, which the App Sandbox does not allow to be
@@ -83,9 +109,9 @@
 
 ### Submodules
 
-- range-ai-lib @ v1.1.0
-- range-base-lib @ v1.2.0
-- range-build-tools @ v1.1.0
+- range-ai-lib @ v1.2.0
+- range-base-lib @ v1.2.1
+- range-build-tools @ v1.1.1
 - range-cloud-lib @ v1.3.0
 - range-family-lib @ v1.2.0
 - range-gui-lib @ v1.3.1

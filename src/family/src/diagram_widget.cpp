@@ -4,6 +4,7 @@
 #include <QAction>
 #include <QFileDialog>
 
+#include <rbl_error.h>
 #include <rbl_logger.h>
 
 #include <rgl_application.h>
@@ -53,6 +54,9 @@ DiagramWidget::DiagramWidget(FTree *familyTree, const QUuid &itemId, QWidget *pa
     QObject::connect(this->view,&DiagramView::scaleChanged,scaleControl,&ScaleControlWidget::setScale);
 
     QObject::connect(scaleControl,&ScaleControlWidget::factorChanged,this,&DiagramWidget::onScaleFactorChanged);
+
+    // Items of the diagram choose their colors for the color scheme while they are painted.
+    QObject::connect(RApplication::instance(),&RApplication::styleApplied,this,&DiagramWidget::onStyleApplied);
 
     R_LOG_TRACE_OUT;
 }
@@ -141,5 +145,13 @@ void DiagramWidget::onScaleFactorChanged(double factor)
 {
     R_LOG_TRACE_IN;
     this->view->zoom(factor,QGraphicsView::AnchorViewCenter);
+    R_LOG_TRACE_OUT;
+}
+
+void DiagramWidget::onStyleApplied()
+{
+    R_LOG_TRACE_IN;
+    this->scene->update();
+    this->view->viewport()->update();
     R_LOG_TRACE_OUT;
 }

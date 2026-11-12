@@ -68,7 +68,58 @@
         {
             "title": "Close",
             "file": "action_Close.md"
+        },
+        {
+            "title": "Rozloženie s pásom kariet",
+            "file": "action_application-ribbon_layout.md"
+        },
+        {
+            "title": "Kompaktný pás kariet",
+            "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Pridať osobu",
+            "file": "action_edit-person_add.md"
+        },
+        {
+            "title": "Upraviť vybrané osoby",
+            "file": "action_edit-person_edit.md"
+        },
+        {
+            "title": "Odstrániť vybrané osoby",
+            "file": "action_edit-person_remove.md"
+        },
+        {
+            "title": "Zobraziť rodinný strom vybraných osôb",
+            "file": "action_edit-person_show_tree.md"
+        },
+        {
+            "title": "Nastaviť vybranú osobu ako aktívnu",
+            "file": "action_edit-person_set_active.md"
+        },
+        {
+            "title": "Zlúčiť vybrané osoby",
+            "file": "action_edit-person_merge.md"
+        },
+        {
+            "title": "Odhadnúť dátum narodenia a úmrtia",
+            "file": "action_edit-person_suggest_dates.md"
+        },
+        {
+            "title": "Pridať vzťah",
+            "file": "action_edit-relation_add.md"
+        },
+        {
+            "title": "Upraviť vybrané vzťahy",
+            "file": "action_edit-relation_edit.md"
+        },
+        {
+            "title": "Odstrániť vybrané vzťahy",
+            "file": "action_edit-relation_remove.md"
+        },
+        {
+            "title": "Zobraziť rodinný strom vybraných vzťahov",
+            "file": "action_edit-relation_show_tree.md"
         }
     ]
 }
-

@@ -45,6 +45,9 @@ class DiagramWidget : public QWidget
 
         void onScaleFactorChanged(double factor);
 
+        //! Application style or color scheme has been applied.
+        void onStyleApplied();
+
     signals:
 
         void itemIdChanged(const QUuid &itemId);

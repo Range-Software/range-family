@@ -45,6 +45,8 @@ class Action : public RAction
         {
             ACTION_SEPARATOR = 0,
             ACTION_APPLICATION_SETTINGS,
+            ACTION_APPLICATION_RIBBON_LAYOUT,
+            ACTION_APPLICATION_RIBBON_COMPACT,
             ACTION_APPLICATION_UPDATE,
             ACTION_APPLICATION_ABOUT,
             ACTION_APPLICATION_ABOUT_QT,
@@ -67,6 +69,17 @@ class Action : public RAction
             ACTION_FILE_CLOSE,
             ACTION_FILE_STORE_IMAGES_IN_TREE,
             ACTION_FILE_STORE_IMAGES_IN_DATA_DIR,
+            ACTION_EDIT_PERSON_ADD,
+            ACTION_EDIT_PERSON_EDIT,
+            ACTION_EDIT_PERSON_REMOVE,
+            ACTION_EDIT_PERSON_SHOW_TREE,
+            ACTION_EDIT_PERSON_SET_ACTIVE,
+            ACTION_EDIT_PERSON_MERGE,
+            ACTION_EDIT_PERSON_SUGGEST_DATES,
+            ACTION_EDIT_RELATION_ADD,
+            ACTION_EDIT_RELATION_EDIT,
+            ACTION_EDIT_RELATION_REMOVE,
+            ACTION_EDIT_RELATION_SHOW_TREE,
             ACTION_CLOUD_SESSION_MANAGER,
             ACTION_CLOUD_FILE_MANAGER,
             ACTION_CLOUD_AI_QUERY,
@@ -151,6 +164,39 @@ class Action : public RAction
         //! Move all images stored in the family tree into the data directory.
         void onFileStoreImagesInDataDir();
 
+        //! Add new person.
+        void onEditPersonAdd();
+
+        //! Edit selected persons.
+        void onEditPersonEdit();
+
+        //! Remove selected persons.
+        void onEditPersonRemove();
+
+        //! Show family tree diagram of selected persons.
+        void onEditPersonShowTree();
+
+        //! Set selected person as active.
+        void onEditPersonSetActive();
+
+        //! Merge selected persons.
+        void onEditPersonMerge();
+
+        //! Suggest birth and death dates of selected persons.
+        void onEditPersonSuggestDates();
+
+        //! Add new relation.
+        void onEditRelationAdd();
+
+        //! Edit selected relations.
+        void onEditRelationEdit();
+
+        //! Remove selected relations.
+        void onEditRelationRemove();
+
+        //! Show family tree diagram of selected relations.
+        void onEditRelationShowTree();
+
         //! Help center.
         void onHelp();
 
@@ -159,6 +205,12 @@ class Action : public RAction
 
         //! Application settings.
         void onApplicationSettings();
+
+        //! Switch between ribbon layout and layout with menus and tool bars.
+        void onApplicationRibbonLayout(bool checked);
+
+        //! Switch between compact and regular ribbon.
+        void onApplicationRibbonCompact(bool checked);
 
         //! Check for update.
         void onUpdate();

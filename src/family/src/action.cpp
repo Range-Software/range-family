@@ -24,7 +24,9 @@
 #include "action.h"
 #include "ai_chat_dialog.h"
 #include "cloud_ai_query_dialog.h"
+#include "editor_widget.h"
 #include "image_button.h"
+#include "main_window.h"
 #include "tree_diff_dialog.h"
 
 QPointer<CloudAiQueryDialog> Action::cloudAiQueryDialog;
@@ -62,6 +64,8 @@ QString Action::getName(Type type)
     switch (type)
     {
         case ACTION_APPLICATION_SETTINGS:          return "application-settings";
+        case ACTION_APPLICATION_RIBBON_LAYOUT:     return "application-ribbon_layout";
+        case ACTION_APPLICATION_RIBBON_COMPACT:    return "application-ribbon_compact";
         case ACTION_APPLICATION_UPDATE:            return "application-update";
         case ACTION_APPLICATION_ABOUT:             return "application-about";
         case ACTION_APPLICATION_ABOUT_QT:          return "application-about_qt";
@@ -84,6 +88,17 @@ QString Action::getName(Type type)
         case ACTION_FILE_CLOSE:                    return "file-close";
         case ACTION_FILE_STORE_IMAGES_IN_TREE:     return "file-store_images_in_tree";
         case ACTION_FILE_STORE_IMAGES_IN_DATA_DIR: return "file-store_images_in_data_dir";
+        case ACTION_EDIT_PERSON_ADD:               return "edit-person_add";
+        case ACTION_EDIT_PERSON_EDIT:              return "edit-person_edit";
+        case ACTION_EDIT_PERSON_REMOVE:            return "edit-person_remove";
+        case ACTION_EDIT_PERSON_SHOW_TREE:         return "edit-person_show_tree";
+        case ACTION_EDIT_PERSON_SET_ACTIVE:        return "edit-person_set_active";
+        case ACTION_EDIT_PERSON_MERGE:             return "edit-person_merge";
+        case ACTION_EDIT_PERSON_SUGGEST_DATES:     return "edit-person_suggest_dates";
+        case ACTION_EDIT_RELATION_ADD:             return "edit-relation_add";
+        case ACTION_EDIT_RELATION_EDIT:            return "edit-relation_edit";
+        case ACTION_EDIT_RELATION_REMOVE:          return "edit-relation_remove";
+        case ACTION_EDIT_RELATION_SHOW_TREE:       return "edit-relation_show_tree";
         case ACTION_CLOUD_SESSION_MANAGER:         return "cloud-session_manager";
         case ACTION_CLOUD_FILE_MANAGER:            return "cloud-file_manager";
         case ACTION_CLOUD_AI_QUERY:                   return "cloud-query";
@@ -116,6 +131,8 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
 
     actionDef[ACTION_SEPARATOR] = RAction::definition();
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_SETTINGS, tr("Application settings"), "", "Ctrl+A", ":/icons/application/pixmaps/range-settings.svg", static_cast<PointerToMemberTrigger>(&Action::onApplicationSettings), QAction::PreferencesRole);
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_RIBBON_LAYOUT, tr("Ribbon layout"), tr("Show commands in a ribbon instead of menus and tool bars."), "", ":/icons/application/pixmaps/range-ribbon_layout.svg", static_cast<PointerToMemberToggle>(&Action::onApplicationRibbonLayout));
+    Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_RIBBON_COMPACT, tr("Compact ribbon"), tr("Show the ribbon in less vertical space, with smaller buttons and no group titles."), "", ":/icons/application/pixmaps/range-ribbon_compact.svg", static_cast<PointerToMemberToggle>(&Action::onApplicationRibbonCompact));
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_UPDATE, tr("Check for update"), "", "", ":/icons/application/pixmaps/range-update.svg", static_cast<PointerToMemberTrigger>(&Action::onUpdate));
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_ABOUT, tr("About"), "", "F1", ":/icons/application/pixmaps/range-about.svg", static_cast<PointerToMemberTrigger>(&Action::onAbout), QAction::AboutRole);
     Action::regDef(actionDef, ACTION_GROUP_APPLICATION, ACTION_APPLICATION_ABOUT_QT, tr("About Qt"), "", "", ":/icons/application/pixmaps/range-qt.svg", static_cast<PointerToMemberTrigger>(&Action::onAboutQt), QAction::AboutQtRole);
@@ -138,6 +155,17 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_CLOSE, tr("Close"), "", "Ctrl+W", ":/icons/file/pixmaps/range-close.svg", static_cast<PointerToMemberTrigger>(&Action::onFileClose));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_TREE, tr("Store all images in family tree"), "", "", ":/icons/file/pixmaps/range-import.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInTree));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_DATA_DIR, tr("Store all images in data directory"), "", "", ":/icons/file/pixmaps/range-export.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInDataDir));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_ADD, tr("Add person"), tr("Add a new person to the family tree."), "", ":/icons/family/pixmaps/range-person_add.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonAdd));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_EDIT, tr("Edit selected persons"), tr("Edit persons selected in the list of persons."), "", ":/icons/family/pixmaps/range-person_edit.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonEdit));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_REMOVE, tr("Remove selected persons"), tr("Remove persons selected in the list of persons from the family tree."), "", ":/icons/family/pixmaps/range-person_remove.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonRemove));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_SHOW_TREE, tr("Show family tree of selected persons"), tr("Show a diagram of the family tree around each person selected in the list of persons."), "", ":/icons/family/pixmaps/range-family_tree.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonShowTree));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_SET_ACTIVE, tr("Set selected person as active"), tr("Set the person selected in the list of persons as the active person."), "", ":/icons/family/pixmaps/range-person_active.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonSetActive));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_MERGE, tr("Merge selected persons"), tr("Merge persons selected in the list of persons into one person."), "", ":/icons/family/pixmaps/range-persons_merge.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonMerge));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_SUGGEST_DATES, tr("Suggest birth and death dates"), tr("Suggest birth and death dates of selected persons from dates of their relatives."), "", ":/icons/family/pixmaps/range-suggest_dates.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonSuggestDates));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_RELATION_ADD, tr("Add relation"), tr("Add a new relation to the family tree."), "", ":/icons/family/pixmaps/range-relation_add.svg", static_cast<PointerToMemberTrigger>(&Action::onEditRelationAdd));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_RELATION_EDIT, tr("Edit selected relations"), tr("Edit relations selected in the list of relations."), "", ":/icons/family/pixmaps/range-relation_edit.svg", static_cast<PointerToMemberTrigger>(&Action::onEditRelationEdit));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_RELATION_REMOVE, tr("Remove selected relations"), tr("Remove relations selected in the list of relations from the family tree."), "", ":/icons/family/pixmaps/range-relation_remove.svg", static_cast<PointerToMemberTrigger>(&Action::onEditRelationRemove));
+    Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_RELATION_SHOW_TREE, tr("Show family tree of selected relations"), tr("Show a diagram of the family tree around each relation selected in the list of relations."), "", ":/icons/family/pixmaps/range-family_tree.svg", static_cast<PointerToMemberTrigger>(&Action::onEditRelationShowTree));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_SESSION_MANAGER, tr("Cloud session manager"), "", "", ":/icons/cloud/pixmaps/range-session_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudSessionManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_AI_QUERY, tr("Cloud AI query"), "", "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudAiQuery));
@@ -447,6 +475,83 @@ void Action::onFileStoreImagesInDataDir()
     R_LOG_TRACE_OUT;
 }
 
+void Action::onEditPersonAdd()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->addNewPerson();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditPersonEdit()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->editSelectedPersons();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditPersonRemove()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->removeSelectedPersons();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditPersonShowTree()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->showSelectedPersonsDiagram();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditPersonSetActive()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->setSelectedPersonActive();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditPersonMerge()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->mergeSelectedPersons();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditPersonSuggestDates()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getPersonsList()->suggestSelectedPersonsDates();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditRelationAdd()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getRelationsList()->addNewRelation();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditRelationEdit()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getRelationsList()->editSelectedRelations();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditRelationRemove()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getRelationsList()->removeSelectedRelations();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onEditRelationShowTree()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->getEditor()->getRelationsList()->showSelectedRelationsDiagram();
+    R_LOG_TRACE_OUT;
+}
+
 void Action::onHelp()
 {
     R_LOG_TRACE_IN;
@@ -475,6 +580,20 @@ void Action::onApplicationSettings()
     R_LOG_TRACE_IN;
     RApplicationSettingsDialog applicationSettingsDialog(Application::instance()->getApplicationSettings(),Application::instance()->getMainWindow());
     applicationSettingsDialog.exec();
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onApplicationRibbonLayout(bool checked)
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->setRibbonLayout(checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onApplicationRibbonCompact(bool checked)
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->setRibbonCompact(checked);
     R_LOG_TRACE_OUT;
 }
 

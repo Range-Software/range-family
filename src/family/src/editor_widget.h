@@ -29,6 +29,12 @@ class EditorWidget : public QWidget
         //! Constructor
         explicit EditorWidget(Session *session, QWidget *parent = nullptr);
 
+        //! Return persons list.
+        PersonsListWidget *getPersonsList() const;
+
+        //! Return relations list.
+        RelationsListWidget *getRelationsList() const;
+
     public slots:
 
         //! Persons list selection changed.

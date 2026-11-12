@@ -2,6 +2,8 @@
 #include <QGuiApplication>
 #include <QStyleHints>
 
+#include <rgl_application.h>
+
 #include "person_details_widget.h"
 
 #define _FP_TR(qstr) qApp->translate("FPerson",qstr.toUtf8().constData())
@@ -9,7 +11,6 @@
 PersonDetailsWidget::PersonDetailsWidget(const FTree *tree, QWidget *parent)
     : QWidget(parent)
     , tree(tree)
-    , darkMode{QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark}
 {
     QVBoxLayout *mainLayout = new QVBoxLayout;
     this->setLayout(mainLayout);
@@ -18,6 +19,8 @@ PersonDetailsWidget::PersonDetailsWidget(const FTree *tree, QWidget *parent)
     mainLayout->addWidget(this->htmlViewer);
 
     QObject::connect(tree,&FTree::personChanged,this,&PersonDetailsWidget::onPersonChanged);
+    // Colors of the generated page are chosen for the color scheme, so the page has to be generated again.
+    QObject::connect(RApplication::instance(),&RApplication::styleApplied,this,&PersonDetailsWidget::onStyleApplied);
 }
 
 void PersonDetailsWidget::setPersons(const QList<QUuid> &personsIds)
@@ -152,6 +155,8 @@ QString PersonDetailsWidget::generateMarkdown() const
 
 QString PersonDetailsWidget::generateHtml() const
 {
+    const bool darkMode = (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark);
+
     QString content;
 
     content += "<!DOCTYPE html>";
@@ -160,11 +165,11 @@ QString PersonDetailsWidget::generateHtml() const
     content += "<title>" + tr("Person details") + "</title>";
     content += "<style type=\"text/css\">";
     content += "table, th, td {\
-                    border: 1px solid " + QString(this->darkMode ? "gray" : "darkgrey") + "; \
+                    border: 1px solid " + QString(darkMode ? "gray" : "darkgrey") + "; \
                     border-collapse: collapse; \
-                    background: " + QString(this->darkMode ? "#323232" : "whitesmoke") + "; \
+                    background: " + QString(darkMode ? "#323232" : "whitesmoke") + "; \
                     text-align: left; \
-                    color: " + QString(this->darkMode ? "white" : "black") + "; \
+                    color: " + QString(darkMode ? "white" : "black") + "; \
                 }";
     content += "</style>";
     content += "</head>";
@@ -174,7 +179,7 @@ QString PersonDetailsWidget::generateHtml() const
     {
         FPerson person = this->tree->findPerson(personId);
         content += "<table width=\"100%\">";
-        content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + QString(this->darkMode ? "#161616" : "lightgrey") + ";\">" + person.getName().toString() + "</th></tr>";
+        content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + QString(darkMode ? "#161616" : "lightgrey") + ";\">" + person.getName().toString() + "</th></tr>";
         content += "<tr><th>" + tr("Sex")  + "</th><td width=\"80%\">" + _FP_TR(FPerson::sexKeyToDesc(person.getSex())) + "</td></tr>";
         QString bornDateString = QLocale().toString(person.getBirth().getDate().toDate());
         QString bornPlaceString = person.getBirth().getPlace().getAddress().toString();
@@ -193,7 +198,7 @@ QString PersonDetailsWidget::generateHtml() const
             foreach (QUuid relationId, childRelations) {
                 FRelation relation = this->tree->findRelation(relationId);
 
-                content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + QString(this->darkMode ? "#242424" : "#E8E8E8") + ";\">" + tr("Parents and siblings") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]</th></tr>";
+                content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + QString(darkMode ? "#242424" : "#E8E8E8") + ";\">" + tr("Parents and siblings") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]</th></tr>";
                 content += "<tr><th>" + tr("Parents") + "</th>";
                 content += "<td>";
                 content += "<ul>";
@@ -231,7 +236,7 @@ QString PersonDetailsWidget::generateHtml() const
             foreach (QUuid relationId, partnerRelations) {
                 FRelation relation = this->tree->findRelation(relationId);
 
-                content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + QString(this->darkMode ? "#242424" : "#E8E8E8") + ";\">" + tr("Partner and children") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]</th></tr>";
+                content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + QString(darkMode ? "#242424" : "#E8E8E8") + ";\">" + tr("Partner and children") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]</th></tr>";
                 content += "<tr><th>" + tr("Partner") + "</th>";
                 content += "<td>";
                 content += "<ul>";
@@ -303,4 +308,9 @@ void PersonDetailsWidget::onPersonChanged(const FPerson &person)
     {
         this->populate();
     }
+}
+
+void PersonDetailsWidget::onStyleApplied()
+{
+    this->populate();
 }

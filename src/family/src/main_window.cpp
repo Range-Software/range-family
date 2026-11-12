@@ -4,9 +4,11 @@
 #include <QMenu>
 #include <QGridLayout>
 #include <QStatusBar>
+#include <QSignalBlocker>
 #include <QSplitter>
 #include <QScrollBar>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 
 #include <rbl_error.h>
 #include <rbl_logger.h>
@@ -20,11 +22,16 @@
 #include <rgl_progress_handler.h>
 #include <rgl_progress_bar.h>
 #include <rgl_icon.h>
+#include <rgl_ribbon_bar.h>
+#include <rgl_split_tool_button.h>
 
 #include "application.h"
 #include "main_window.h"
 #include "action.h"
 #include "central_widget.h"
+
+//! Version of tool bar arrangement. Increase it when tool bars change, to place them anew for existing users.
+static constexpr int toolBarsVersion = 2;
 
 MainWindow::MainWindow(Session *session,
                        RCloudSessionManager *cloudSession,
@@ -59,13 +66,55 @@ MainWindow::MainWindow(Session *session,
 
     this->createMenus();
     this->createToolBars();
+    this->createRibbon();
     this->createStatusBar();
 
-    CentralWidget *centralWidget = new CentralWidget(this->session);
-    this->setCentralWidget(centralWidget);
+    // Shortcut of an action works only while a widget holding the action is visible,
+    // which buttons on other pages of the ribbon are not.
+    for (uint i=0;i<this->actionList->getNActions();i++)
+    {
+        RAction *action = this->actionList->getAction(i);
+        if (action && !action->isSeparator())
+        {
+            this->addAction(action);
+        }
+    }
+
+    this->centralWidget = new CentralWidget(this->session);
+    this->setCentralWidget(this->centralWidget);
 
     this->restoreGeometry(this->applicationSettings->value("mainWindow/geometry").toByteArray());
     this->restoreState(this->applicationSettings->value("mainWindow/windowState").toByteArray());
+
+    // Stored state knows only tool bars of the time it was saved.
+    if (this->applicationSettings->value("mainWindow/toolBarsVersion",1).toInt() != toolBarsVersion)
+    {
+        this->placeToolBars();
+        this->applicationSettings->setValue("mainWindow/toolBarsVersion",toolBarsVersion);
+    }
+
+    for (RSplitToolButton *button : std::as_const(this->toolBarSplitButtons))
+    {
+        button->setLastUsedPosition(this->applicationSettings->value("mainWindow/" + button->objectName(),0).toInt());
+    }
+
+    // Must follow restoring of the state, which brings back visibility of tool bars.
+    const bool ribbonLayout = this->applicationSettings->value("mainWindow/ribbonLayout",false).toBool();
+    {
+        const QSignalBlocker ribbonLayoutActionBlocker(this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_LAYOUT));
+        this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_LAYOUT)->setChecked(ribbonLayout);
+    }
+    this->setRibbonLayout(ribbonLayout);
+
+    const bool ribbonCompact = this->applicationSettings->value("mainWindow/ribbonCompact",false).toBool();
+    {
+        const QSignalBlocker ribbonCompactActionBlocker(this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_COMPACT));
+        this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_COMPACT)->setChecked(ribbonCompact);
+    }
+    this->ribbonBar->setCompact(ribbonCompact);
+
+    this->ribbonBar->setCollapsed(this->applicationSettings->value("mainWindow/ribbonCollapsed",false).toBool());
+    this->ribbonBar->setCurrentPage(this->applicationSettings->value("mainWindow/ribbonPage",0).toInt());
 
     // Toolbar icon size changed signal
     QObject::connect(this->applicationSettings,&RApplicationSettings::toolbarIconSizeChanged,this,&MainWindow::onToolbarIconSizeChanged);
@@ -91,6 +140,43 @@ MainWindow::MainWindow(Session *session,
     R_LOG_TRACE_OUT;
 }
 
+EditorWidget *MainWindow::getEditor() const
+{
+    R_LOG_TRACE;
+    return this->centralWidget->getEditor();
+}
+
+void MainWindow::setRibbonLayout(bool ribbonLayout)
+{
+    R_LOG_TRACE_IN;
+    this->classicMenuBar->setVisible(!ribbonLayout);
+    this->ribbonBar->setVisible(ribbonLayout);
+
+    for (QToolBar *toolBar : std::as_const(this->toolBars))
+    {
+        toolBar->setVisible(!ribbonLayout);
+        // Otherwise context menu could bring tool bars back to the ribbon layout.
+        toolBar->toggleViewAction()->setVisible(!ribbonLayout);
+    }
+
+    this->applicationSettings->setValue("mainWindow/ribbonLayout",ribbonLayout);
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::setRibbonCompact(bool ribbonCompact)
+{
+    R_LOG_TRACE_IN;
+    this->ribbonBar->setCompact(ribbonCompact);
+    this->applicationSettings->setValue("mainWindow/ribbonCompact",ribbonCompact);
+
+    // Asking for compact ribbon from the classic layout means asking for the ribbon as well.
+    if (ribbonCompact)
+    {
+        this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_LAYOUT)->setChecked(true);
+    }
+    R_LOG_TRACE_OUT;
+}
+
 void MainWindow::progressAutoHideEnable()
 {
     R_LOG_TRACE;
@@ -106,11 +192,31 @@ void MainWindow::progressAutoHideDisable()
 void MainWindow::createMenus()
 {
     R_LOG_TRACE_IN;
-    QMenuBar *menubar = new QMenuBar(this);
-    this->setMenuBar(menubar);
+    // Menu bar and ribbon share the place above the tool bars, only one of them is visible at a time.
+    QWidget *menuWidget = new QWidget(this);
+    QVBoxLayout *menuWidgetLayout = new QVBoxLayout(menuWidget);
+    menuWidgetLayout->setContentsMargins(0,0,0,0);
+    menuWidgetLayout->setSpacing(0);
+    this->setMenuWidget(menuWidget);
 
-    QMenu *menuFile = new QMenu(menubar);
-    menuFile->setTitle(QApplication::translate("MainWindow", "File"));
+    QMenuBar *menuBar = new QMenuBar(menuWidget);
+    menuBar->setNativeMenuBar(!this->applicationSettings->getDontUseNativeMenuBar());
+    menuWidgetLayout->addWidget(menuBar);
+    this->classicMenuBar = menuBar;
+
+    menuBar->addAction(this->createFileMenu(menuBar)->menuAction());
+    menuBar->addAction(this->createEditMenu(menuBar)->menuAction());
+    menuBar->addAction(this->createCloudMenu(menuBar)->menuAction());
+    menuBar->addAction(this->createAiMenu(menuBar)->menuAction());
+    menuBar->addAction(this->createHelpMenu(menuBar)->menuAction());
+    R_LOG_TRACE_OUT;
+}
+
+QMenu *MainWindow::createFileMenu(QWidget *parent)
+{
+    R_LOG_TRACE_IN;
+    QMenu *menuFile = new QMenu(parent);
+    menuFile->setTitle(tr("File"));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_NEW));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_OPEN));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE));
@@ -133,26 +239,64 @@ void MainWindow::createMenus()
     menuFileFolders->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_FOLDER_TMP));
     menuFile->addAction(menuFileFolders->menuAction());
     menuFile->addSeparator();
+    menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_LAYOUT));
+    menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_COMPACT));
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_SETTINGS));
     menuFile->addSeparator();
     menuFile->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));
-    menubar->addAction(menuFile->menuAction());
+    R_LOG_TRACE_OUT;
+    return menuFile;
+}
 
-    QMenu *menuCloud = new QMenu(menubar);
-    menuCloud->setTitle(QApplication::translate("MainWindow", "Cloud"));
+QMenu *MainWindow::createEditMenu(QWidget *parent)
+{
+    R_LOG_TRACE_IN;
+    QMenu *menuEdit = new QMenu(parent);
+    menuEdit->setTitle(tr("Edit"));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_ADD));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_EDIT));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_REMOVE));
+    menuEdit->addSeparator();
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_SHOW_TREE));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_SET_ACTIVE));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_MERGE));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_PERSON_SUGGEST_DATES));
+    menuEdit->addSeparator();
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_RELATION_ADD));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_RELATION_EDIT));
+    menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_RELATION_REMOVE));
+    R_LOG_TRACE_OUT;
+    return menuEdit;
+}
+
+QMenu *MainWindow::createCloudMenu(QWidget *parent)
+{
+    R_LOG_TRACE_IN;
+    QMenu *menuCloud = new QMenu(parent);
+    menuCloud->setTitle(tr("Cloud"));
     menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_SESSION_MANAGER));
     menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
     menuCloud->addAction(this->actionList->getAction(Action::ACTION_CLOUD_AI_QUERY));
-    menubar->addAction(menuCloud->menuAction());
+    R_LOG_TRACE_OUT;
+    return menuCloud;
+}
 
-    QMenu *menuAi = new QMenu(menubar);
-    menuAi->setTitle(QApplication::translate("MainWindow", "AI"));
+QMenu *MainWindow::createAiMenu(QWidget *parent)
+{
+    R_LOG_TRACE_IN;
+    QMenu *menuAi = new QMenu(parent);
+    menuAi->setTitle(tr("AI"));
     menuAi->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
     menuAi->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
-    menubar->addAction(menuAi->menuAction());
+    R_LOG_TRACE_OUT;
+    return menuAi;
+}
 
-    QMenu *menuHelp = new QMenu(menubar);
-    menuHelp->setTitle(QApplication::translate("MainWindow", "Help"));
+QMenu *MainWindow::createHelpMenu(QWidget *parent)
+{
+    R_LOG_TRACE_IN;
+    QMenu *menuHelp = new QMenu(parent);
+    menuHelp->setTitle(tr("Help"));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_HELP));
 #ifdef STORE_BUILD
     // Both the Apple App Store and the Microsoft Store forbid an application from
@@ -167,43 +311,180 @@ void MainWindow::createMenus()
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_LICENSE));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_PRIVACY_POLICY));
     menuHelp->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_RELEASE_NOTES));
-    menubar->addAction(menuHelp->menuAction());
     R_LOG_TRACE_OUT;
+    return menuHelp;
 }
 
 void MainWindow::createToolBars()
 {
     R_LOG_TRACE_IN;
 
-    QToolBar *mainToolBar = new QToolBar(this);
-    mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-    mainToolBar->setWindowTitle(tr("Main toolbar"));
-    this->addToolBar(Qt::TopToolBarArea, mainToolBar);
+    auto action = [this](Action::Type type) -> QAction* { return this->actionList->getAction(type); };
 
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_NEW));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_OPEN));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_SAVE_AS));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_CLOSE));
-    mainToolBar->addSeparator();
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_IMPORT));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_FILE_COMPARE));
-    mainToolBar->addSeparator();
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_QUIT));
-    mainToolBar->addSeparator();
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_CLOUD_FILE_MANAGER));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_CLOUD_AI_QUERY));
-    // mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_SETTINGS_MANAGER));
-    // mainToolBar->addAction(this->actionList->getAction(Action::ACTION_AI_CHAT));
+    QToolBar *fileToolBar = this->createToolBar("mainToolBar",tr("File toolbar"));
+    fileToolBar->addAction(action(Action::ACTION_FILE_NEW));
+    fileToolBar->addAction(action(Action::ACTION_FILE_OPEN));
+    this->addToolBarSplitButton(fileToolBar,"saveSplitButton",{action(Action::ACTION_FILE_SAVE),action(Action::ACTION_FILE_SAVE_AS)},false);
+    fileToolBar->addAction(action(Action::ACTION_FILE_CLOSE));
 
-    QWidget* spacer = new QWidget();
+    QToolBar *treeToolBar = this->createToolBar("treeToolBar",tr("Family tree toolbar"));
+    treeToolBar->addAction(action(Action::ACTION_FILE_IMPORT));
+    treeToolBar->addAction(action(Action::ACTION_FILE_COMPARE));
+    this->addToolBarSplitButton(treeToolBar,"storeImagesSplitButton",{action(Action::ACTION_FILE_STORE_IMAGES_IN_TREE),
+                                                                      action(Action::ACTION_FILE_STORE_IMAGES_IN_DATA_DIR)},true);
+
+    QToolBar *editToolBar = this->createToolBar("editToolBar",tr("Persons and relations toolbar"));
+    // Adding has to come before editing and removing, so these always start with adding.
+    this->addToolBarSplitButton(editToolBar,"personSplitButton",{action(Action::ACTION_EDIT_PERSON_ADD),
+                                                                 action(Action::ACTION_EDIT_PERSON_EDIT),
+                                                                 action(Action::ACTION_EDIT_PERSON_REMOVE)},false);
+    this->addToolBarSplitButton(editToolBar,"relationSplitButton",{action(Action::ACTION_EDIT_RELATION_ADD),
+                                                                   action(Action::ACTION_EDIT_RELATION_EDIT),
+                                                                   action(Action::ACTION_EDIT_RELATION_REMOVE)},false);
+    editToolBar->addSeparator();
+    editToolBar->addAction(action(Action::ACTION_EDIT_PERSON_SHOW_TREE));
+    editToolBar->addAction(action(Action::ACTION_EDIT_PERSON_SET_ACTIVE));
+    editToolBar->addAction(action(Action::ACTION_EDIT_PERSON_MERGE));
+    editToolBar->addAction(action(Action::ACTION_EDIT_PERSON_SUGGEST_DATES));
+
+    QToolBar *applicationToolBar = this->createToolBar("applicationToolBar",tr("Application toolbar"));
+
+    // Last tool bar of a row takes the remaining width, this pushes its buttons to the right edge of the window.
+    QWidget *spacer = new QWidget(applicationToolBar);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    mainToolBar->addWidget(spacer);
+    applicationToolBar->addWidget(spacer);
 
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_SETTINGS));
-    mainToolBar->addSeparator();
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_HELP));
-    mainToolBar->addAction(this->actionList->getAction(Action::ACTION_APPLICATION_ABOUT));
+    applicationToolBar->addAction(action(Action::ACTION_CLOUD_FILE_MANAGER));
+    applicationToolBar->addAction(action(Action::ACTION_CLOUD_AI_QUERY));
+    applicationToolBar->addSeparator();
+    applicationToolBar->addAction(action(Action::ACTION_APPLICATION_RIBBON_LAYOUT));
+    applicationToolBar->addAction(action(Action::ACTION_APPLICATION_SETTINGS));
+    applicationToolBar->addSeparator();
+    applicationToolBar->addAction(action(Action::ACTION_APPLICATION_HELP));
+
+    // Tool bars are placed in this order.
+    this->toolBars = { fileToolBar, treeToolBar, editToolBar, applicationToolBar };
+    this->placeToolBars();
+
+    R_LOG_TRACE_OUT;
+}
+
+QToolBar *MainWindow::createToolBar(const QString &name, const QString &title)
+{
+    R_LOG_TRACE;
+    QToolBar *toolBar = new QToolBar(this);
+    toolBar->setObjectName(name);
+    toolBar->setWindowTitle(title);
+    // An icon size the tool bar only inherits from the main window is replaced
+    // by the default one of the style whenever the style or color scheme
+    // changes. Set explicitly, it is kept.
+    toolBar->setIconSize(this->iconSize());
+    return toolBar;
+}
+
+void MainWindow::addToolBarSplitButton(QToolBar *toolBar, const QString &name, const QList<QAction*> &actions, bool rememberLastUsed)
+{
+    R_LOG_TRACE_IN;
+    RSplitToolButton *button = new RSplitToolButton(actions,rememberLastUsed,toolBar);
+    button->setObjectName(name);
+    button->setIconSize(toolBar->iconSize());
+    // Tool bar keeps in sync only buttons it has created itself.
+    QObject::connect(toolBar,&QToolBar::iconSizeChanged,button,&QToolButton::setIconSize);
+    toolBar->addWidget(button);
+    this->toolBarSplitButtons.append(button);
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::placeToolBars()
+{
+    R_LOG_TRACE_IN;
+    for (QToolBar *toolBar : std::as_const(this->toolBars))
+    {
+        this->removeToolBar(toolBar);
+    }
+    for (QToolBar *toolBar : std::as_const(this->toolBars))
+    {
+        this->addToolBar(Qt::TopToolBarArea,toolBar);
+        // Removing a tool bar hides it.
+        toolBar->show();
+    }
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::createRibbon()
+{
+    R_LOG_TRACE_IN;
+    this->ribbonBar = new RRibbonBar(this->menuWidget());
+    this->menuWidget()->layout()->addWidget(this->ribbonBar);
+    this->ribbonBar->setIconSize(this->applicationSettings->getToolbarIconSize());
+
+    auto action = [this](Action::Type type) -> QAction* { return this->actionList->getAction(type); };
+
+    // Line with tabs
+    this->ribbonBar->addLeadingMenu(tr("File"),this->createFileMenu(this->ribbonBar));
+    this->ribbonBar->addLeadingAction(action(Action::ACTION_FILE_SAVE));
+
+    this->ribbonBar->addTrailingMenu(tr("Cloud"),action(Action::ACTION_CLOUD_FILE_MANAGER)->icon(),this->createCloudMenu(this->ribbonBar));
+    this->ribbonBar->addTrailingAction(action(Action::ACTION_APPLICATION_RIBBON_LAYOUT));
+    this->ribbonBar->addTrailingAction(action(Action::ACTION_APPLICATION_RIBBON_COMPACT));
+    this->ribbonBar->addTrailingAction(action(Action::ACTION_APPLICATION_SETTINGS));
+    this->ribbonBar->addTrailingMenu(tr("Help"),action(Action::ACTION_APPLICATION_HELP)->icon(),this->createHelpMenu(this->ribbonBar));
+
+    RRibbonGroup *group = nullptr;
+
+    // Family tree
+    const int treePage = this->ribbonBar->addPage(tr("Family tree"));
+
+    group = this->ribbonBar->addGroup(treePage,tr("File"));
+    group->addLargeAction(action(Action::ACTION_FILE_NEW));
+    group->addLargeAction(action(Action::ACTION_FILE_OPEN));
+    group->addLargeSplitAction(action(Action::ACTION_FILE_SAVE),{action(Action::ACTION_FILE_SAVE),action(Action::ACTION_FILE_SAVE_AS)});
+    group->addLargeAction(action(Action::ACTION_FILE_CLOSE));
+
+    group = this->ribbonBar->addGroup(treePage,tr("Other family trees"));
+    group->addLargeAction(action(Action::ACTION_FILE_IMPORT));
+    group->addLargeAction(action(Action::ACTION_FILE_COMPARE));
+
+    group = this->ribbonBar->addGroup(treePage,tr("Images"));
+    group->addSmallAction(action(Action::ACTION_FILE_STORE_IMAGES_IN_TREE),tr("Store in family tree"));
+    group->addSmallAction(action(Action::ACTION_FILE_STORE_IMAGES_IN_DATA_DIR),tr("Store in data directory"));
+
+    // Persons
+    const int personsPage = this->ribbonBar->addPage(tr("Persons"));
+
+    group = this->ribbonBar->addGroup(personsPage,tr("Person"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_ADD),tr("Add"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_EDIT),tr("Edit"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_REMOVE),tr("Remove"));
+
+    group = this->ribbonBar->addGroup(personsPage,tr("Tools"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_SHOW_TREE),tr("Family tree"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_SET_ACTIVE),tr("Set as active"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_MERGE),tr("Merge"));
+    group->addLargeAction(action(Action::ACTION_EDIT_PERSON_SUGGEST_DATES),tr("Suggest dates"));
+
+    // Relations
+    const int relationsPage = this->ribbonBar->addPage(tr("Relations"));
+
+    group = this->ribbonBar->addGroup(relationsPage,tr("Relation"));
+    group->addLargeAction(action(Action::ACTION_EDIT_RELATION_ADD),tr("Add"));
+    group->addLargeAction(action(Action::ACTION_EDIT_RELATION_EDIT),tr("Edit"));
+    group->addLargeAction(action(Action::ACTION_EDIT_RELATION_REMOVE),tr("Remove"));
+
+    group = this->ribbonBar->addGroup(relationsPage,tr("Tools"));
+    group->addLargeAction(action(Action::ACTION_EDIT_RELATION_SHOW_TREE),tr("Family tree"));
+
+    // Cloud and AI
+    const int cloudPage = this->ribbonBar->addPage(tr("Cloud and AI"));
+
+    group = this->ribbonBar->addGroup(cloudPage,tr("Cloud"));
+    group->addLargeAction(action(Action::ACTION_CLOUD_SESSION_MANAGER),tr("Session manager"));
+    group->addLargeAction(action(Action::ACTION_CLOUD_FILE_MANAGER),tr("File manager"));
+    group->addLargeAction(action(Action::ACTION_CLOUD_AI_QUERY),tr("AI query"));
+
+    group = this->ribbonBar->addGroup(cloudPage,tr("AI"));
+    group->addLargeAction(action(Action::ACTION_AI_CHAT),tr("Chat"));
+    group->addLargeAction(action(Action::ACTION_AI_SETTINGS_MANAGER),tr("Settings manager"));
 
     R_LOG_TRACE_OUT;
 }
@@ -271,6 +552,15 @@ void MainWindow::writeSettings() const
     // Main window
     this->applicationSettings->setValue("mainWindow/geometry", this->saveGeometry());
     this->applicationSettings->setValue("mainWindow/windowState", this->saveState());
+    this->applicationSettings->setValue("mainWindow/ribbonCollapsed", this->ribbonBar->isCollapsed());
+    this->applicationSettings->setValue("mainWindow/ribbonPage", this->ribbonBar->getCurrentPage());
+    for (const RSplitToolButton *button : std::as_const(this->toolBarSplitButtons))
+    {
+        if (button->getRememberLastUsed())
+        {
+            this->applicationSettings->setValue("mainWindow/" + button->objectName(), button->getLastUsedPosition());
+        }
+    }
 
     // Shortcuts
     for (uint i=0;i<this->actionList->getNActions();i++)
@@ -358,6 +648,12 @@ void MainWindow::setDisabled(bool disabled)
     R_LOG_TRACE_IN;
     this->QWidget::setDisabled(disabled);
     this->actionList->setDisabled(disabled);
+    if (!disabled)
+    {
+        // Enabling the whole list has enabled also actions which need a selection.
+        this->centralWidget->getEditor()->getPersonsList()->updateActionsAvailability();
+        this->centralWidget->getEditor()->getRelationsList()->updateActionsAvailability();
+    }
     R_LOG_TRACE_OUT;
 }
 
@@ -383,4 +679,11 @@ void MainWindow::onToolbarIconSizeChanged(int toolbarIconSize)
 {
     R_LOG_TRACE;
     this->setIconSize(QSize(toolbarIconSize,toolbarIconSize));
+    // Tool bars have their icon size set explicitly, so they do not follow the
+    // main window.
+    for (QToolBar *toolBar : std::as_const(this->toolBars))
+    {
+        toolBar->setIconSize(QSize(toolbarIconSize,toolbarIconSize));
+    }
+    this->ribbonBar->setIconSize(toolbarIconSize);
 }

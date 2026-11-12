@@ -40,6 +40,9 @@ class CentralWidget : public QWidget
         //! Constructor.
         explicit CentralWidget(Session *session, QWidget *parent = nullptr);
 
+        //! Return editor widget.
+        EditorWidget *getEditor() const;
+
     private:
 
         //! Set text and icon for given tab.

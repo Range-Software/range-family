@@ -41,10 +41,6 @@ class PersonsListWidget : public QWidget
         QPushButton *personRemoveButton;
         RTreeWidget *treeWidget;
         ScrollBarWithMarkers *scrollBarWithMarkers;
-        QAction *showTreeAction;
-        QAction *setActivePersonAction;
-        QAction *mergePersonsAction;
-        QAction *suggestPersonBirthAndDeathDatesAction;
 
     public:
 
@@ -79,15 +75,6 @@ class PersonsListWidget : public QWidget
         //! On item double-clicked.
         void onItemDoubleClicked(QTreeWidgetItem *item, int);
 
-        //! Person add button clicked.
-        void onPersonAddButtonClicked();
-
-        //! Person edit button clicked.
-        void onPersonEditButtonClicked();
-
-        //! Person remove button clicked.
-        void onPersonRemoveButtonClicked();
-
         //! Add person.
         void addPerson(const FPerson &person);
 
@@ -100,21 +87,33 @@ class PersonsListWidget : public QWidget
         //! File loaded.
         void onFileLoaded(const QString &);
 
-        //! Show family tree diagram of selected persons.
-        void onShowDiagramDialog();
-
-        //! Set selected person as active.
-        void onSetActivePersonAction();
-
-        //! Merge selected persons.
-        void onMergePersonsAction();
-
-        //! Find selected person birth date.
-        void onSuggestPersonBirthAndDeathDatesAction();
-
         void personDiagramSelectionChanged(const QList<QUuid> &);
 
     public slots:
+
+        //! Add new person.
+        void addNewPerson();
+
+        //! Edit selected persons.
+        void editSelectedPersons();
+
+        //! Remove selected persons.
+        void removeSelectedPersons();
+
+        //! Show family tree diagram of selected persons.
+        void showSelectedPersonsDiagram();
+
+        //! Set selected person as active.
+        void setSelectedPersonActive();
+
+        //! Merge selected persons.
+        void mergeSelectedPersons();
+
+        //! Suggest birth and death dates of selected persons.
+        void suggestSelectedPersonsDates();
+
+        //! Enable actions and buttons which can be used with the current selection.
+        void updateActionsAvailability();
 
         //! Active person ID changed.
         void onActivePersonIdChanged(const QUuid &id);

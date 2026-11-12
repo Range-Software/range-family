@@ -9,6 +9,9 @@
 #include <rgl_message_box.h>
 #include <rgl_icon.h>
 
+#include <rgl_action_list.h>
+
+#include "action.h"
 #include "application.h"
 #include "diagram_dialog.h"
 #include "person_add_dialog.h"
@@ -64,34 +67,32 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
 
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    this->showTreeAction = this->addAction(PersonsListWidget::tr("Show family tree"));
-    QObject::connect(this->showTreeAction,&QAction::triggered,this,&PersonsListWidget::onShowDiagramDialog);
+    // Context menu offers actions the buttons below the list do not.
+    RActionList *actionList = Application::instance()->getActionList();
 
-    QAction *separator1Action = new QAction;
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_SHOW_TREE));
+
+    QAction *separator1Action = new QAction(this);
     separator1Action->setSeparator(true);
     this->addAction(separator1Action);
 
-    this->setActivePersonAction = this->addAction(PersonsListWidget::tr("Set selected person as active"));
-    QObject::connect(this->setActivePersonAction,&QAction::triggered,this,&PersonsListWidget::onSetActivePersonAction);
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_SET_ACTIVE));
 
-    QAction *separator2Action = new QAction;
+    QAction *separator2Action = new QAction(this);
     separator2Action->setSeparator(true);
     this->addAction(separator2Action);
 
-    this->mergePersonsAction = this->addAction(PersonsListWidget::tr("Merge selected persons"));
-    QObject::connect(this->mergePersonsAction,&QAction::triggered,this,&PersonsListWidget::onMergePersonsAction);
-
-    this->suggestPersonBirthAndDeathDatesAction = this->addAction(PersonsListWidget::tr("Suggest birth and death dates"));
-    QObject::connect(this->suggestPersonBirthAndDeathDatesAction,&QAction::triggered,this,&PersonsListWidget::onSuggestPersonBirthAndDeathDatesAction);
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_MERGE));
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_SUGGEST_DATES));
 
     this->onItemSelectionChanged();
 
     QObject::connect(this->treeWidget,&QTreeWidget::itemSelectionChanged,this,&PersonsListWidget::onItemSelectionChanged);
     QObject::connect(this->treeWidget,&QTreeWidget::itemDoubleClicked,this,&PersonsListWidget::onItemDoubleClicked);
 
-    QObject::connect(this->personAddButton,&QPushButton::clicked,this,&PersonsListWidget::onPersonAddButtonClicked);
-    QObject::connect(this->personEditButton,&QPushButton::clicked,this,&PersonsListWidget::onPersonEditButtonClicked);
-    QObject::connect(this->personRemoveButton,&QPushButton::clicked,this,&PersonsListWidget::onPersonRemoveButtonClicked);
+    QObject::connect(this->personAddButton,&QPushButton::clicked,this,&PersonsListWidget::addNewPerson);
+    QObject::connect(this->personEditButton,&QPushButton::clicked,this,&PersonsListWidget::editSelectedPersons);
+    QObject::connect(this->personRemoveButton,&QPushButton::clicked,this,&PersonsListWidget::removeSelectedPersons);
 
     QObject::connect(this->familyTree,&FTree::personAdded,this,&PersonsListWidget::addPerson);
     QObject::connect(this->familyTree,&FTree::personChanged,this,&PersonsListWidget::changePerson);
@@ -204,11 +205,7 @@ void PersonsListWidget::onItemSelectionChanged()
 {
     QList<QUuid> ids = this->getSelectedIds();
 
-    this->personEditButton->setEnabled(ids.count() > 0);
-    this->personRemoveButton->setEnabled(ids.count() > 0);
-    this->setActivePersonAction->setEnabled(ids.count() == 1);
-    this->mergePersonsAction->setEnabled(ids.count() > 1);
-    this->suggestPersonBirthAndDeathDatesAction->setEnabled(ids.count() > 0);
+    this->updateActionsAvailability();
 
     emit this->selectionChanged(ids);
 }
@@ -222,13 +219,13 @@ void PersonsListWidget::onItemDoubleClicked(QTreeWidgetItem *item, int)
     personEditDialog.exec();
 }
 
-void PersonsListWidget::onPersonAddButtonClicked()
+void PersonsListWidget::addNewPerson()
 {
     PersonAddDialog personAddDialog(this->familyTree,FPerson(),this);
     personAddDialog.exec();
 }
 
-void PersonsListWidget::onPersonEditButtonClicked()
+void PersonsListWidget::editSelectedPersons()
 {
     QList<QTreeWidgetItem*> selectedItems = this->treeWidget->selectedItems();
 
@@ -258,7 +255,7 @@ void PersonsListWidget::onPersonEditButtonClicked()
     }
 }
 
-void PersonsListWidget::onPersonRemoveButtonClicked()
+void PersonsListWidget::removeSelectedPersons()
 {
     QList<QTreeWidgetItem*> selectedItems = this->treeWidget->selectedItems();
 
@@ -328,7 +325,7 @@ void PersonsListWidget::onFileLoaded(const QString &)
     this->populate();
 }
 
-void PersonsListWidget::onShowDiagramDialog()
+void PersonsListWidget::showSelectedPersonsDiagram()
 {
     foreach (auto selectedId, this->getSelectedIds())
     {
@@ -338,7 +335,7 @@ void PersonsListWidget::onShowDiagramDialog()
     }
 }
 
-void PersonsListWidget::onSetActivePersonAction()
+void PersonsListWidget::setSelectedPersonActive()
 {
     QList<QUuid> selectedIds = this->getSelectedIds();
 
@@ -348,7 +345,7 @@ void PersonsListWidget::onSetActivePersonAction()
     }
 }
 
-void PersonsListWidget::onMergePersonsAction()
+void PersonsListWidget::mergeSelectedPersons()
 {
     QList<QUuid> selectedIds = this->getSelectedIds();
 
@@ -372,7 +369,7 @@ void PersonsListWidget::onMergePersonsAction()
     }
 }
 
-void PersonsListWidget::onSuggestPersonBirthAndDeathDatesAction()
+void PersonsListWidget::suggestSelectedPersonsDates()
 {
     foreach (auto selectedId, this->getSelectedIds())
     {
@@ -409,4 +406,20 @@ void PersonsListWidget::onActivePersonIdChanged(const QUuid &id)
     }
 
     this->scrollBarWithMarkers->setActiveMarkers(markerPositions);
+}
+
+void PersonsListWidget::updateActionsAvailability()
+{
+    int nSelected = this->treeWidget->selectedItems().count();
+
+    this->personEditButton->setEnabled(nSelected > 0);
+    this->personRemoveButton->setEnabled(nSelected > 0);
+
+    RActionList *actionList = Application::instance()->getActionList();
+    actionList->getAction(Action::ACTION_EDIT_PERSON_EDIT)->setEnabled(nSelected > 0);
+    actionList->getAction(Action::ACTION_EDIT_PERSON_REMOVE)->setEnabled(nSelected > 0);
+    actionList->getAction(Action::ACTION_EDIT_PERSON_SHOW_TREE)->setEnabled(nSelected > 0);
+    actionList->getAction(Action::ACTION_EDIT_PERSON_SET_ACTIVE)->setEnabled(nSelected == 1);
+    actionList->getAction(Action::ACTION_EDIT_PERSON_MERGE)->setEnabled(nSelected > 1);
+    actionList->getAction(Action::ACTION_EDIT_PERSON_SUGGEST_DATES)->setEnabled(nSelected > 0);
 }

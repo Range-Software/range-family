@@ -102,6 +102,17 @@ const G = {
   pencil: () => P('M14.75 4.25l5 5L9 20H4v-5z', C.amber, C.amberL) + P('M12.25 6.75l5 5', C.amber) + P('M4 15l5 5', C.amber, 'none', thin),
   bubble: () => P('M5.25 3.75h13.5a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5H11.5l-4.75 3.75v-3.75h-1.5a2.5 2.5 0 0 1-2.5-2.5v-8a2.5 2.5 0 0 1 2.5-2.5z', C.violet, C.violetL),
   aiChat: () => G.bubble() + sparkle(12, 10.25, 4.25, C.violet, C.violet),
+  // Person bust centered at x: head and shoulders.
+  person: (x = 12, s = C.blue, fill = C.blueL) => circ(x, 7.75, 3.75, s, fill)
+    + P(`M${x - 7} 20.25v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1.5z`, s, fill),
+  // Small person bust centered at x, used in pairs.
+  personSmall: (x, s = C.blue, fill = C.blueL) => circ(x, 11.5, 2.75, s, fill)
+    + P(`M${x - 4.75} 21.25v-1a3.75 3.75 0 0 1 3.75-3.75h2a3.75 3.75 0 0 1 3.75 3.75v1z`, s, fill),
+  // Two linked rings, the symbol of a relation.
+  rings: (s = C.amber, fill = C.amberL) => circ(8.75, 12, 5.5, s, fill) + circ(15.25, 12, 5.5, s),
+  // Window with a ribbon, tabs at y and a divider below them at h.
+  ribbon: (y, h) => rect(3.5, 4.5, 17, 15, 2, C.blue, C.blueXL) + P(`M3.5 ${h}H20.5`, C.blue)
+    + P(`M7.5 ${y}H9.5M11 ${y}H13M14.5 ${y}H16.5`, C.blue),
 };
 
 // ---- Icons ----
@@ -121,6 +132,8 @@ I.privacy_policy = G.doc() + P('M8.5 7h4M8.5 10h7', C.ink, 'none', thin)
   + P('M14 16.3l1.1 1.1 2.2-2.4', C.amber, 'none', ' stroke-width="1.25"');
 I.release_notes = G.doc() + [10, 13.5, 17].map(y => dot(9, y, 1, C.blue)).join('')
   + P('M11.25 10h4.5M11.25 13.5h4.5M11.25 17h3', C.ink, 'none', thin);
+I.ribbon_layout = G.ribbon(8, 11.5);
+I.ribbon_compact = G.ribbon(6.75, 9) + arrow(12, 16.75, 12, 12, C.blue, 2.6);
 
 // Action
 I.cancel = circ(12, 12, 8.75, C.red, C.redL) + P('M9 9l6 6M15 9l-6 6', C.red);
@@ -160,6 +173,25 @@ I.ai_query = withBadge(G.aiChat(), 'cloud');
 // AI
 I.ai_chat = G.aiChat();
 I.ai_settings_manager = withBadge(sparkle(10, 10, 7.25, C.violet, C.violetL) + sparkle(19, 4.75, 2.25, C.violet, C.violet), 'gear');
+
+// Family
+I.person_add = withBadge(G.person(10.5), 'plus');
+I.person_edit = withBadge(G.person(10.5), 'edit');
+I.person_remove = withBadge(G.person(10.5), 'remove');
+I.person_active = G.person(10.5)
+  + P('M18.5 2.75l1.15 2.45 2.6.35-1.9 1.85.5 2.6-2.35-1.3-2.35 1.3.5-2.6-1.9-1.85 2.6-.35z', C.amber, C.amberL, ' stroke-width="1.25"');
+I.persons_merge = G.personSmall(6.5, C.ink, C.paper) + G.personSmall(17.5, C.ink, C.paper)
+  + arrow(7, 2.75, 11, 6.75, C.blue, 2.2) + arrow(17, 2.75, 13, 6.75, C.blue, 2.2);
+I.relation_add = withBadge(G.rings(), 'plus');
+I.relation_edit = withBadge(G.rings(), 'edit');
+I.relation_remove = withBadge(G.rings(), 'remove');
+I.family_tree = P('M12 8.25v7.5M5.5 15.75V12h13v3.75', C.ink)
+  + rect(8.75, 3, 6.5, 5.25, 1.25, C.blue, C.blueL)
+  + rect(2.5, 15.75, 6, 5.25, 1.25, C.blue, C.blueL)
+  + rect(9, 15.75, 6, 5.25, 1.25, C.blue, C.blueL)
+  + rect(15.5, 15.75, 6, 5.25, 1.25, C.blue, C.blueL);
+I.suggest_dates = rect(3.75, 5.25, 16.5, 15, 1.5, C.ink, C.paper) + P('M3.75 9.75h16.5', C.ink) + P('M8 3.25v4M16 3.25v4', C.ink)
+  + sparkle(12, 15, 3.75, C.violet, C.violet);
 
 return I;
 }

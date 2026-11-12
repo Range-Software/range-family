@@ -177,6 +177,8 @@ family_add_icon_resources(icons-application "/icons/application"
         pixmaps/range-qt.svg
         pixmaps/range-quit.svg
         pixmaps/range-release_notes.svg
+        pixmaps/range-ribbon_compact.svg
+        pixmaps/range-ribbon_layout.svg
         pixmaps/range-settings.svg
         pixmaps/range-startup.svg
         pixmaps/range-update.svg
@@ -226,6 +228,19 @@ family_add_icon_resources(icons-cloud "/icons/cloud"
         pixmaps/range-upload.svg
         pixmaps/range-upload_replace.svg
         pixmaps/range-upload_update.svg
+)
+
+family_add_icon_resources(icons-family "/icons/family"
+        pixmaps/range-family_tree.svg
+        pixmaps/range-person_active.svg
+        pixmaps/range-person_add.svg
+        pixmaps/range-person_edit.svg
+        pixmaps/range-person_remove.svg
+        pixmaps/range-persons_merge.svg
+        pixmaps/range-relation_add.svg
+        pixmaps/range-relation_edit.svg
+        pixmaps/range-relation_remove.svg
+        pixmaps/range-suggest_dates.svg
 )
 
 family_add_icon_resources(icons-ai "/icons/ai"

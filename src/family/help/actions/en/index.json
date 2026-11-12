@@ -68,7 +68,58 @@
         {
             "title": "Close",
             "file": "action_Close.md"
+        },
+        {
+            "title": "Ribbon layout",
+            "file": "action_application-ribbon_layout.md"
+        },
+        {
+            "title": "Compact ribbon",
+            "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Add person",
+            "file": "action_edit-person_add.md"
+        },
+        {
+            "title": "Edit selected persons",
+            "file": "action_edit-person_edit.md"
+        },
+        {
+            "title": "Remove selected persons",
+            "file": "action_edit-person_remove.md"
+        },
+        {
+            "title": "Show family tree of selected persons",
+            "file": "action_edit-person_show_tree.md"
+        },
+        {
+            "title": "Set selected person as active",
+            "file": "action_edit-person_set_active.md"
+        },
+        {
+            "title": "Merge selected persons",
+            "file": "action_edit-person_merge.md"
+        },
+        {
+            "title": "Suggest birth and death dates",
+            "file": "action_edit-person_suggest_dates.md"
+        },
+        {
+            "title": "Add relation",
+            "file": "action_edit-relation_add.md"
+        },
+        {
+            "title": "Edit selected relations",
+            "file": "action_edit-relation_edit.md"
+        },
+        {
+            "title": "Remove selected relations",
+            "file": "action_edit-relation_remove.md"
+        },
+        {
+            "title": "Show family tree of selected relations",
+            "file": "action_edit-relation_show_tree.md"
         }
     ]
 }
-

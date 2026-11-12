@@ -32,6 +32,16 @@ EditorWidget::EditorWidget(Session *session, QWidget *parent)
     QObject::connect(this->session->getTree(),&FTree::relationChanged,this,&EditorWidget::onRelationChanged);
 }
 
+PersonsListWidget *EditorWidget::getPersonsList() const
+{
+    return this->personList;
+}
+
+RelationsListWidget *EditorWidget::getRelationsList() const
+{
+    return this->relationList;
+}
+
 void EditorWidget::onPersonsSelectionChanged(const QList<QUuid> &selectedPersonsIds)
 {
     QList<QUuid> relationsIds;

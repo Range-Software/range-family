@@ -9,6 +9,10 @@
 #include <rgl_message_box.h>
 #include <rgl_icon.h>
 
+#include <rgl_action_list.h>
+
+#include "action.h"
+#include "application.h"
 #include "diagram_dialog.h"
 #include "relation_add_dialog.h"
 #include "relation_edit_dialog.h"
@@ -60,17 +64,16 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
 
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    this->showTreeAction = this->addAction(RelationsListWidget::tr("Show family tree"));
-    QObject::connect(this->showTreeAction,&QAction::triggered,this,&RelationsListWidget::onShowDiagramDialog);
+    this->addAction(Application::instance()->getActionList()->getAction(Action::ACTION_EDIT_RELATION_SHOW_TREE));
 
     this->onItemSelectionChanged();
 
     QObject::connect(this->treeWidget,&QTreeWidget::itemSelectionChanged,this,&RelationsListWidget::onItemSelectionChanged);
     QObject::connect(this->treeWidget,&QTreeWidget::itemDoubleClicked,this,&RelationsListWidget::onItemDoubleClicked);
 
-    QObject::connect(this->relationAddButton,&QPushButton::clicked,this,&RelationsListWidget::onRelationAddButtonClicked);
-    QObject::connect(this->relationEditButton,&QPushButton::clicked,this,&RelationsListWidget::onRelationEditButtonClicked);
-    QObject::connect(this->relationRemoveButton,&QPushButton::clicked,this,&RelationsListWidget::onRelationRemoveButtonClicked);
+    QObject::connect(this->relationAddButton,&QPushButton::clicked,this,&RelationsListWidget::addNewRelation);
+    QObject::connect(this->relationEditButton,&QPushButton::clicked,this,&RelationsListWidget::editSelectedRelations);
+    QObject::connect(this->relationRemoveButton,&QPushButton::clicked,this,&RelationsListWidget::removeSelectedRelations);
 
     QObject::connect(this->familyTree,&FTree::relationAdded,this,&RelationsListWidget::addRelation);
     QObject::connect(this->familyTree,&FTree::relationChanged,this,&RelationsListWidget::changeRelation);
@@ -209,8 +212,7 @@ void RelationsListWidget::onItemSelectionChanged()
 {
     QList<QUuid> ids = this->getSelectedIds();
 
-    this->relationEditButton->setEnabled(ids.count() > 0);
-    this->relationRemoveButton->setEnabled(ids.count() > 0);
+    this->updateActionsAvailability();
 
     emit this->selectionChanged(ids);
 }
@@ -224,13 +226,13 @@ void RelationsListWidget::onItemDoubleClicked(QTreeWidgetItem *item, int)
     relationEditDialog.exec();
 }
 
-void RelationsListWidget::onRelationAddButtonClicked()
+void RelationsListWidget::addNewRelation()
 {
     RelationAddDialog relationAddDialog(this->familyTree,FRelation(),this);
     relationAddDialog.exec();
 }
 
-void RelationsListWidget::onRelationEditButtonClicked()
+void RelationsListWidget::editSelectedRelations()
 {
     QList<QTreeWidgetItem*> selectedItems = this->treeWidget->selectedItems();
 
@@ -260,7 +262,7 @@ void RelationsListWidget::onRelationEditButtonClicked()
     }
 }
 
-void RelationsListWidget::onRelationRemoveButtonClicked()
+void RelationsListWidget::removeSelectedRelations()
 {
     QList<QTreeWidgetItem*> selectedItems = this->treeWidget->selectedItems();
 
@@ -339,7 +341,7 @@ void RelationsListWidget::onFileLoaded(const QString &)
     this->populate();
 }
 
-void RelationsListWidget::onShowDiagramDialog()
+void RelationsListWidget::showSelectedRelationsDiagram()
 {
     foreach (auto selectedId, this->getSelectedIds())
     {
@@ -352,4 +354,17 @@ void RelationsListWidget::onShowDiagramDialog()
 void RelationsListWidget::relationDiagramSelectionChanged(const QList<QUuid> &)
 {
 
+}
+
+void RelationsListWidget::updateActionsAvailability()
+{
+    int nSelected = this->treeWidget->selectedItems().count();
+
+    this->relationEditButton->setEnabled(nSelected > 0);
+    this->relationRemoveButton->setEnabled(nSelected > 0);
+
+    RActionList *actionList = Application::instance()->getActionList();
+    actionList->getAction(Action::ACTION_EDIT_RELATION_EDIT)->setEnabled(nSelected > 0);
+    actionList->getAction(Action::ACTION_EDIT_RELATION_REMOVE)->setEnabled(nSelected > 0);
+    actionList->getAction(Action::ACTION_EDIT_RELATION_SHOW_TREE)->setEnabled(nSelected > 0);
 }

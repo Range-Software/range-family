@@ -13,7 +13,13 @@
 
 #include "session.h"
 
+class CentralWidget;
+class EditorWidget;
+class QMenu;
+class QMenuBar;
 class RProgressBar;
+class RRibbonBar;
+class RSplitToolButton;
 
 class MainWindow : public QMainWindow
 {
@@ -30,6 +36,16 @@ class MainWindow : public QMainWindow
         RApplicationSettings *applicationSettings;
         //! List of actions.
         RActionList *actionList;
+        //! Central widget.
+        CentralWidget *centralWidget;
+        //! List of tool bars in order of their default placement.
+        QList<QToolBar*> toolBars;
+        //! Drop-down buttons on tool bars.
+        QList<RSplitToolButton*> toolBarSplitButtons;
+        //! Menu bar shown in the layout with menus and tool bars.
+        QMenuBar *classicMenuBar;
+        //! Ribbon shown in the ribbon layout.
+        RRibbonBar *ribbonBar;
         //! Progress bar.
         RProgressBar* mainProgressBar;
         //! First run flag.
@@ -44,6 +60,15 @@ class MainWindow : public QMainWindow
                             RActionList *actionList,
                             QWidget *parent = nullptr);
 
+        //! Return editor with lists of persons and relations.
+        EditorWidget *getEditor() const;
+
+        //! Switch between ribbon layout and layout with menus and tool bars and remember the choice.
+        void setRibbonLayout(bool ribbonLayout);
+
+        //! Switch between compact and regular ribbon and remember the choice.
+        void setRibbonCompact(bool ribbonCompact);
+
         //! Enable progress-bar autohide.
         void progressAutoHideEnable();
 
@@ -55,8 +80,35 @@ class MainWindow : public QMainWindow
         //! Create all menu items.
         void createMenus();
 
+        //! Create file menu.
+        QMenu *createFileMenu(QWidget *parent);
+
+        //! Create menu of actions working with persons and relations.
+        QMenu *createEditMenu(QWidget *parent);
+
+        //! Create cloud menu.
+        QMenu *createCloudMenu(QWidget *parent);
+
+        //! Create AI menu.
+        QMenu *createAiMenu(QWidget *parent);
+
+        //! Create help menu.
+        QMenu *createHelpMenu(QWidget *parent);
+
         //! Create all tool bars.
         void createToolBars();
+
+        //! Create tool bar.
+        QToolBar *createToolBar(const QString &name, const QString &title);
+
+        //! Add drop-down button with given actions to given tool bar.
+        void addToolBarSplitButton(QToolBar *toolBar, const QString &name, const QList<QAction*> &actions, bool rememberLastUsed);
+
+        //! Place tool bars to their default positions.
+        void placeToolBars();
+
+        //! Create ribbon.
+        void createRibbon();
 
         //! Create status bar.
         void createStatusBar();

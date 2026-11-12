@@ -1,6 +1,7 @@
 #include <QDir>
 #include <QFileInfo>
 
+#include <rgl_cloud_connection_handler.h>
 #include <rgl_message_box.h>
 
 #include "application.h"

@@ -6,6 +6,8 @@
 #include <rcl_ai_query.h>
 #include <rcl_file_info.h>
 
+#include <rgl_cloud_file_manager.h>
+
 #include "application.h"
 #include "cloud_ai_query_widget.h"
 
