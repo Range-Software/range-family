@@ -13,8 +13,10 @@
 
 #include "session.h"
 
-class CentralWidget;
+class AiChatWidget;
 class EditorWidget;
+class OutputWidget;
+class QToolButton;
 class QMenu;
 class QMenuBar;
 class RProgressBar;
@@ -36,8 +38,26 @@ class MainWindow : public QMainWindow
         RApplicationSettings *applicationSettings;
         //! List of actions.
         RActionList *actionList;
-        //! Central widget.
-        CentralWidget *centralWidget;
+        //! Editor of the family tree, the central widget.
+        EditorWidget *editor;
+        //! Application output.
+        OutputWidget *outputWidget;
+        //! AI chat, null until it is shown for the first time.
+        AiChatWidget *aiChatWidget;
+        //! Dock with person details.
+        QDockWidget *detailsDock;
+        //! Dock with list of relations.
+        QDockWidget *relationsDock;
+        //! Dock with family tree diagram.
+        QDockWidget *diagramDock;
+        //! Dock with application output.
+        QDockWidget *outputDock;
+        //! Dock with AI chat.
+        QDockWidget *aiChatDock;
+        //! List of docks indexed by DockType.
+        QList<QDockWidget*> dockWidgets;
+        //! Status bar button telling about unseen warnings and errors in the output.
+        QToolButton *outputButton;
         //! List of tool bars in order of their default placement.
         QList<QToolBar*> toolBars;
         //! Drop-down buttons on tool bars.
@@ -53,6 +73,16 @@ class MainWindow : public QMainWindow
 
     public:
 
+        //! Docks, in order of the view menu.
+        enum DockType
+        {
+            DockPersonDetails = 0,
+            DockRelations,
+            DockFamilyTree,
+            DockOutput,
+            DockAiChat
+        };
+
         //! Constructor.
         explicit MainWindow(Session *session,
                             RCloudSessionManager *cloudSession,
@@ -62,6 +92,9 @@ class MainWindow : public QMainWindow
 
         //! Return editor with lists of persons and relations.
         EditorWidget *getEditor() const;
+
+        //! Show or hide given dock. Dock which gets shown is brought to the front of its tabs.
+        void setDockVisible(DockType dockType, bool visible);
 
         //! Switch between ribbon layout and layout with menus and tool bars and remember the choice.
         void setRibbonLayout(bool ribbonLayout);
@@ -85,6 +118,18 @@ class MainWindow : public QMainWindow
 
         //! Create menu of actions working with persons and relations.
         QMenu *createEditMenu(QWidget *parent);
+
+        //! Create menu showing and hiding docks.
+        QMenu *createViewMenu(QWidget *parent);
+
+        //! Create editor, output and docks and place them to their default positions.
+        void createDockWidgets();
+
+        //! Check actions of the view menu for docks which are shown.
+        void syncDockActions();
+
+        //! Create dock with given widget.
+        QDockWidget *createDockWidget(const QString &name, const QString &title, QWidget *widget);
 
         //! Create cloud menu.
         QMenu *createCloudMenu(QWidget *parent);
@@ -147,6 +192,18 @@ class MainWindow : public QMainWindow
 
         //! Finalize main progress.
         void onMainProgressFinalize(const QString &message);
+
+        //! Give docks their default sizes.
+        void resizeDockWidgets();
+
+        //! Number of warnings and errors not seen in the output has changed.
+        void onOutputUnseenChanged(int nWarnings, int nErrors);
+
+        //! Status bar button of the output has been clicked.
+        void onOutputButtonClicked();
+
+        //! AI chat dock has been shown or hidden.
+        void onAiChatDockVisibilityChanged(bool visible);
 
         //! Toolbar icon size has changed.
         void onToolbarIconSizeChanged(int toolbarIconSize);

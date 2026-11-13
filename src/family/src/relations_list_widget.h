@@ -2,13 +2,15 @@
 #define RELATIONS_LIST_WIDGET_H
 
 #include <QWidget>
-#include <QPushButton>
 
 #include <rfl_tree.h>
 
 #include <rgl_tree_widget.h>
 
+#include "pane_header_widget.h"
 #include "scroll_bar_with_markers.h"
+
+class QCheckBox;
 
 class RelationsListWidget : public QWidget
 {
@@ -33,9 +35,12 @@ class RelationsListWidget : public QWidget
             NumberOfColumns
         };
 
-        QPushButton *relationAddButton;
-        QPushButton *relationEditButton;
-        QPushButton *relationRemoveButton;
+        //! Header with title, filter and buttons.
+        PaneHeaderWidget *header;
+        //! Check box keeping highlighted relations visible regardless of the filter.
+        QCheckBox *keepHighlightedCheckBox;
+        //! Check box showing only highlighted relations.
+        QCheckBox *onlyHighlightedCheckBox;
         RTreeWidget *treeWidget;
         ScrollBarWithMarkers *scrollBarWithMarkers;
 
@@ -47,13 +52,19 @@ class RelationsListWidget : public QWidget
         //! Highlight relations.
         void highlightRelations(const QList<QUuid> &ids);
 
-        //! Return list of selected persons.
+        //! Select given relation only and scroll to it. Filter is removed if it hides the relation.
+        void selectRelation(const QUuid &id);
+
+        //! Return list of selected relations.
         QList<QUuid> getSelectedIds() const;
 
     private:
 
-        //! Populate list of persons.
+        //! Populate list of relations.
         void populate();
+
+        //! Place markers of highlighted relations on the scroll bar.
+        void updateMarkers();
 
         //! Return column name string.
         static QString getColumnName(ColumnType columnType);
@@ -93,6 +104,17 @@ class RelationsListWidget : public QWidget
         //! File loaded.
         void onFileLoaded(const QString &);
 
+        //! Show only relations matching the filter.
+        void applyFilter();
+
+        //! Check box keeping highlighted relations visible has been toggled.
+        void onKeepHighlightedToggled(bool checked);
+
+        //! Check box showing only highlighted relations has been toggled.
+        void onOnlyHighlightedToggled(bool checked);
+
+        //! Application style or color scheme has been applied.
+        void onStyleApplied();
 
         void relationDiagramSelectionChanged(const QList<QUuid> &);
 

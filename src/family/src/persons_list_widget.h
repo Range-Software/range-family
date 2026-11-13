@@ -2,13 +2,15 @@
 #define PERSONS_LIST_WIDGET_H
 
 #include <QWidget>
-#include <QPushButton>
 
 #include <rfl_tree.h>
 
 #include <rgl_tree_widget.h>
 
+#include "pane_header_widget.h"
 #include "scroll_bar_with_markers.h"
+
+class QCheckBox;
 
 class PersonsListWidget : public QWidget
 {
@@ -36,9 +38,12 @@ class PersonsListWidget : public QWidget
             NumberOfColumns
         };
 
-        QPushButton *personAddButton;
-        QPushButton *personEditButton;
-        QPushButton *personRemoveButton;
+        //! Header with title, filter and buttons.
+        PaneHeaderWidget *header;
+        //! Check box keeping highlighted persons visible regardless of the filter.
+        QCheckBox *keepHighlightedCheckBox;
+        //! ID of the active person.
+        QUuid activePersonId;
         RTreeWidget *treeWidget;
         ScrollBarWithMarkers *scrollBarWithMarkers;
 
@@ -50,6 +55,9 @@ class PersonsListWidget : public QWidget
         //! Highlight persons.
         void highlightPersons(const QList<QUuid> &ids);
 
+        //! Select given person only and scroll to it. Filter is removed if it hides the person.
+        void selectPerson(const QUuid &id);
+
         //! Return list of selected persons.
         QList<QUuid> getSelectedIds() const;
 
@@ -57,6 +65,9 @@ class PersonsListWidget : public QWidget
 
         //! Populate list of persons.
         void populate();
+
+        //! Place markers of highlighted and active persons on the scroll bar.
+        void updateMarkers();
 
         //! Return column name string.
         static QString getColumnName(ColumnType columnType);
@@ -86,6 +97,15 @@ class PersonsListWidget : public QWidget
 
         //! File loaded.
         void onFileLoaded(const QString &);
+
+        //! Show only persons matching the filter.
+        void applyFilter();
+
+        //! Check box keeping highlighted persons visible has been toggled.
+        void onKeepHighlightedToggled(bool checked);
+
+        //! Application style or color scheme has been applied.
+        void onStyleApplied();
 
         void personDiagramSelectionChanged(const QList<QUuid> &);
 

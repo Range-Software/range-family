@@ -5,8 +5,9 @@
 #include <QGridLayout>
 #include <QStatusBar>
 #include <QSignalBlocker>
-#include <QSplitter>
-#include <QScrollBar>
+#include <QStyle>
+#include <QTimer>
+#include <QToolButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
@@ -28,10 +29,25 @@
 #include "application.h"
 #include "main_window.h"
 #include "action.h"
-#include "central_widget.h"
+#include "ai_chat_widget.h"
+#include "editor_widget.h"
+#include "output_widget.h"
 
 //! Version of tool bar arrangement. Increase it when tool bars change, to place them anew for existing users.
 static constexpr int toolBarsVersion = 2;
+
+//! Actions showing and hiding docks, indexed by MainWindow::DockType.
+static const QList<Action::Type> dockActionTypes =
+{
+    Action::ACTION_VIEW_PERSON_DETAILS,
+    Action::ACTION_VIEW_RELATIONS,
+    Action::ACTION_VIEW_FAMILY_TREE,
+    Action::ACTION_VIEW_OUTPUT,
+    Action::ACTION_AI_CHAT
+};
+
+//! Version of the stored window state. Increase it when docks change, so a state which does not know them is not restored.
+static constexpr int windowStateVersion = 1;
 
 MainWindow::MainWindow(Session *session,
                        RCloudSessionManager *cloudSession,
@@ -43,6 +59,7 @@ MainWindow::MainWindow(Session *session,
     , cloudSession{cloudSession}
     , applicationSettings{applicationSettings}
     , actionList{actionList}
+    , aiChatWidget{nullptr}
     , isFirstRun{true}
 {
     R_LOG_TRACE_IN;
@@ -62,8 +79,10 @@ MainWindow::MainWindow(Session *session,
     this->setIconSize(QSize(toolbarIconSize,toolbarIconSize));
     this->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
-    this->setDockOptions(QMainWindow::ForceTabbedDocks);
+    // Docks can be placed side by side, stacked or tabbed.
+    this->setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
 
+    this->createDockWidgets();
     this->createMenus();
     this->createToolBars();
     this->createRibbon();
@@ -80,11 +99,13 @@ MainWindow::MainWindow(Session *session,
         }
     }
 
-    this->centralWidget = new CentralWidget(this->session);
-    this->setCentralWidget(this->centralWidget);
-
     this->restoreGeometry(this->applicationSettings->value("mainWindow/geometry").toByteArray());
-    this->restoreState(this->applicationSettings->value("mainWindow/windowState").toByteArray());
+    if (!this->restoreState(this->applicationSettings->value("mainWindow/windowState").toByteArray(),windowStateVersion))
+    {
+        // Sizes can be given to docks only after the window has got its own.
+        QTimer::singleShot(0,this,&MainWindow::resizeDockWidgets);
+    }
+    this->syncDockActions();
 
     // Stored state knows only tool bars of the time it was saved.
     if (this->applicationSettings->value("mainWindow/toolBarsVersion",1).toInt() != toolBarsVersion)
@@ -143,7 +164,33 @@ MainWindow::MainWindow(Session *session,
 EditorWidget *MainWindow::getEditor() const
 {
     R_LOG_TRACE;
-    return this->centralWidget->getEditor();
+    return this->editor;
+}
+
+void MainWindow::setDockVisible(DockType dockType, bool visible)
+{
+    R_LOG_TRACE_IN;
+    QDockWidget *dockWidget = this->dockWidgets.at(dockType);
+    // Nothing to do if the action only follows the dock.
+    if (dockWidget->isHidden() == visible)
+    {
+        if (visible)
+        {
+            dockWidget->show();
+            dockWidget->raise();
+        }
+        else if (dockType == DockAiChat && !this->tabifiedDockWidgets(dockWidget).isEmpty() && dockWidget->visibleRegion().isEmpty())
+        {
+            // AI chat is shown, but behind another tab. Bring it to the front instead of hiding it.
+            dockWidget->raise();
+            this->actionList->getAction(dockActionTypes.at(dockType))->setChecked(true);
+        }
+        else
+        {
+            dockWidget->hide();
+        }
+    }
+    R_LOG_TRACE_OUT;
 }
 
 void MainWindow::setRibbonLayout(bool ribbonLayout)
@@ -206,6 +253,7 @@ void MainWindow::createMenus()
 
     menuBar->addAction(this->createFileMenu(menuBar)->menuAction());
     menuBar->addAction(this->createEditMenu(menuBar)->menuAction());
+    menuBar->addAction(this->createViewMenu(menuBar)->menuAction());
     menuBar->addAction(this->createCloudMenu(menuBar)->menuAction());
     menuBar->addAction(this->createAiMenu(menuBar)->menuAction());
     menuBar->addAction(this->createHelpMenu(menuBar)->menuAction());
@@ -267,6 +315,95 @@ QMenu *MainWindow::createEditMenu(QWidget *parent)
     menuEdit->addAction(this->actionList->getAction(Action::ACTION_EDIT_RELATION_REMOVE));
     R_LOG_TRACE_OUT;
     return menuEdit;
+}
+
+QMenu *MainWindow::createViewMenu(QWidget *parent)
+{
+    R_LOG_TRACE_IN;
+    QMenu *menuView = new QMenu(parent);
+    menuView->setTitle(tr("View"));
+    for (Action::Type type : dockActionTypes)
+    {
+        menuView->addAction(this->actionList->getAction(type));
+    }
+    R_LOG_TRACE_OUT;
+    return menuView;
+}
+
+void MainWindow::createDockWidgets()
+{
+    R_LOG_TRACE_IN;
+    // Editor shows the list of persons and owns the views kept in sync with it.
+    this->editor = new EditorWidget(this->session);
+    this->setCentralWidget(this->editor);
+
+    this->outputWidget = new OutputWidget;
+
+    this->detailsDock = this->createDockWidget("detailsDock",tr("Person details"),this->editor->getPersonDetails());
+    this->relationsDock = this->createDockWidget("relationsDock",tr("Relations"),this->editor->getRelationsList());
+    this->diagramDock = this->createDockWidget("diagramDock",tr("Family tree"),this->editor->getDiagram());
+    this->outputDock = this->createDockWidget("outputDock",tr("Output"),this->outputWidget);
+    // AI chat is created when it is shown for the first time.
+    this->aiChatDock = this->createDockWidget("aiChatDock",tr("AI chat"),nullptr);
+
+    // Person details above relations on the right, family tree and output share the bottom.
+    this->addDockWidget(Qt::RightDockWidgetArea,this->detailsDock);
+    this->addDockWidget(Qt::RightDockWidgetArea,this->relationsDock);
+    this->addDockWidget(Qt::RightDockWidgetArea,this->aiChatDock);
+    this->tabifyDockWidget(this->detailsDock,this->aiChatDock);
+    this->addDockWidget(Qt::BottomDockWidgetArea,this->diagramDock);
+    this->addDockWidget(Qt::BottomDockWidgetArea,this->outputDock);
+    this->tabifyDockWidget(this->diagramDock,this->outputDock);
+    this->aiChatDock->hide();
+    this->detailsDock->raise();
+    this->diagramDock->raise();
+
+    // Actions of the view menu follow docks closed by their buttons or restored with the window state.
+    for (int i=0;i<this->dockWidgets.count();i++)
+    {
+        RAction *action = this->actionList->getAction(dockActionTypes.at(i));
+        QObject::connect(this->dockWidgets.at(i)->toggleViewAction(),&QAction::toggled,action,&QAction::setChecked);
+    }
+    this->syncDockActions();
+
+    QObject::connect(this->diagramDock,&QDockWidget::visibilityChanged,this->editor,&EditorWidget::updateDiagram);
+    QObject::connect(this->aiChatDock,&QDockWidget::visibilityChanged,this,&MainWindow::onAiChatDockVisibilityChanged);
+    R_LOG_TRACE_OUT;
+}
+
+QDockWidget *MainWindow::createDockWidget(const QString &name, const QString &title, QWidget *widget)
+{
+    R_LOG_TRACE;
+    QDockWidget *dockWidget = new QDockWidget(title,this);
+    dockWidget->setObjectName(name);
+    if (widget)
+    {
+        // Content of a dock touches its frame otherwise.
+        QWidget *container = new QWidget;
+        QVBoxLayout *containerLayout = new QVBoxLayout(container);
+        containerLayout->addWidget(widget);
+        dockWidget->setWidget(container);
+    }
+    this->dockWidgets.append(dockWidget);
+    return dockWidget;
+}
+
+void MainWindow::syncDockActions()
+{
+    R_LOG_TRACE_IN;
+    for (int i=0;i<this->dockWidgets.count();i++)
+    {
+        this->actionList->getAction(dockActionTypes.at(i))->setChecked(!this->dockWidgets.at(i)->isHidden());
+    }
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::resizeDockWidgets()
+{
+    R_LOG_TRACE_IN;
+    this->resizeDocks({this->detailsDock},{this->width() * 2 / 5},Qt::Horizontal);
+    this->resizeDocks({this->diagramDock},{this->height() / 3},Qt::Vertical);
+    R_LOG_TRACE_OUT;
 }
 
 QMenu *MainWindow::createCloudMenu(QWidget *parent)
@@ -422,6 +559,7 @@ void MainWindow::createRibbon()
 
     // Line with tabs
     this->ribbonBar->addLeadingMenu(tr("File"),this->createFileMenu(this->ribbonBar));
+    this->ribbonBar->addLeadingMenu(tr("View"),this->createViewMenu(this->ribbonBar));
     this->ribbonBar->addLeadingAction(action(Action::ACTION_FILE_SAVE));
 
     this->ribbonBar->addTrailingMenu(tr("Cloud"),action(Action::ACTION_CLOUD_FILE_MANAGER)->icon(),this->createCloudMenu(this->ribbonBar));
@@ -509,6 +647,17 @@ void MainWindow::createStatusBar()
     this->mainProgressBar = new RProgressBar(this);
     this->mainProgressBar->hide();
     progressBarLayout->addWidget(this->mainProgressBar);
+
+    // Tells about warnings and errors printed to the output while it is not visible.
+    this->outputButton = new QToolButton;
+    this->outputButton->setAutoRaise(true);
+    this->outputButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    this->outputButton->setToolTip(tr("Show application output"));
+    this->outputButton->hide();
+    statusbar->addPermanentWidget(this->outputButton);
+
+    QObject::connect(this->outputButton,&QToolButton::clicked,this,&MainWindow::onOutputButtonClicked);
+    QObject::connect(this->outputWidget,&OutputWidget::unseenChanged,this,&MainWindow::onOutputUnseenChanged);
     R_LOG_TRACE_OUT;
 }
 
@@ -551,7 +700,7 @@ void MainWindow::writeSettings() const
     R_LOG_TRACE_IN;
     // Main window
     this->applicationSettings->setValue("mainWindow/geometry", this->saveGeometry());
-    this->applicationSettings->setValue("mainWindow/windowState", this->saveState());
+    this->applicationSettings->setValue("mainWindow/windowState", this->saveState(windowStateVersion));
     this->applicationSettings->setValue("mainWindow/ribbonCollapsed", this->ribbonBar->isCollapsed());
     this->applicationSettings->setValue("mainWindow/ribbonPage", this->ribbonBar->getCurrentPage());
     for (const RSplitToolButton *button : std::as_const(this->toolBarSplitButtons))
@@ -651,8 +800,8 @@ void MainWindow::setDisabled(bool disabled)
     if (!disabled)
     {
         // Enabling the whole list has enabled also actions which need a selection.
-        this->centralWidget->getEditor()->getPersonsList()->updateActionsAvailability();
-        this->centralWidget->getEditor()->getRelationsList()->updateActionsAvailability();
+        this->editor->getPersonsList()->updateActionsAvailability();
+        this->editor->getRelationsList()->updateActionsAvailability();
     }
     R_LOG_TRACE_OUT;
 }
@@ -673,6 +822,42 @@ void MainWindow::onMainProgressFinalize(const QString &message)
 {
     R_LOG_TRACE;
     this->progressBarFinalize(this->mainProgressBar,message);
+}
+
+void MainWindow::onOutputUnseenChanged(int nWarnings, int nErrors)
+{
+    R_LOG_TRACE_IN;
+    if (nErrors > 0)
+    {
+        this->outputButton->setIcon(this->style()->standardIcon(QStyle::SP_MessageBoxCritical));
+        this->outputButton->setText(tr("Errors") + ": " + QLocale().toString(nErrors));
+    }
+    else if (nWarnings > 0)
+    {
+        this->outputButton->setIcon(this->style()->standardIcon(QStyle::SP_MessageBoxWarning));
+        this->outputButton->setText(tr("Warnings") + ": " + QLocale().toString(nWarnings));
+    }
+    this->outputButton->setVisible(nErrors > 0 || nWarnings > 0);
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::onOutputButtonClicked()
+{
+    R_LOG_TRACE_IN;
+    this->outputDock->show();
+    this->outputDock->raise();
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::onAiChatDockVisibilityChanged(bool visible)
+{
+    R_LOG_TRACE_IN;
+    if (visible && !this->aiChatWidget)
+    {
+        this->aiChatWidget = new AiChatWidget(Application::instance()->getAiAgentSettingsManager(),this->applicationSettings);
+        this->aiChatDock->setWidget(this->aiChatWidget);
+    }
+    R_LOG_TRACE_OUT;
 }
 
 void MainWindow::onToolbarIconSizeChanged(int toolbarIconSize)

@@ -3,16 +3,12 @@ qt_add_executable(family
     src/action.h
     src/address_edit_widget.cpp
     src/address_edit_widget.h
-    src/ai_chat_dialog.cpp
-    src/ai_chat_dialog.h
     src/ai_chat_widget.cpp
     src/ai_chat_widget.h
     src/application.cpp
     src/application.h
     src/calendar_dialog.cpp
     src/calendar_dialog.h
-    src/central_widget.cpp
-    src/central_widget.h
     src/date_edit_widget.cpp
     src/date_edit_widget.h
     src/diagram_dialog.cpp
@@ -46,6 +42,10 @@ qt_add_executable(family
     src/main_window.h
     src/name_edit_widget.cpp
     src/name_edit_widget.h
+    src/output_widget.cpp
+    src/output_widget.h
+    src/pane_header_widget.cpp
+    src/pane_header_widget.h
     src/person_add_dialog.cpp
     src/person_add_dialog.h
     src/person_details_widget.cpp
@@ -241,6 +241,12 @@ family_add_icon_resources(icons-family "/icons/family"
         pixmaps/range-relation_edit.svg
         pixmaps/range-relation_remove.svg
         pixmaps/range-suggest_dates.svg
+)
+
+family_add_icon_resources(icons-view "/icons/view"
+        pixmaps/range-view_output.svg
+        pixmaps/range-view_person_details.svg
+        pixmaps/range-view_relations.svg
 )
 
 family_add_icon_resources(icons-ai "/icons/ai"

@@ -120,6 +120,22 @@
         {
             "title": "Zobraziť rodinný strom vybraných vzťahov",
             "file": "action_edit-relation_show_tree.md"
+        },
+        {
+            "title": "Podrobnosti osoby",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Vzťahy",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Rodinný strom",
+            "file": "action_view-family_tree.md"
+        },
+        {
+            "title": "Výstup",
+            "file": "action_view-output.md"
         }
     ]
 }

@@ -81,6 +81,41 @@
   and death dates" are application actions: they are found in the new "Edit"
   menu, on the tool bar and the ribbon, can be given keyboard shortcuts in the
   application settings and have help pages.
+- The main window is rearranged into panels. The list of persons stays in the
+  middle, "Person details", "Relations", "Family tree", "Output" and "AI chat"
+  are panels which can be moved to another side of the window, stacked, tabbed,
+  detached into their own window or closed. The arrangement is remembered. The
+  new arrangement is applied once to existing installations.
+- New "View" menu shows and hides the panels. Its entries are application
+  actions: they can be given keyboard shortcuts in the application settings and
+  have help pages.
+- A diagram of the family tree is part of the main window. It follows the person
+  selected in the list of persons, and a double-click on a person or relation in
+  the diagram selects it in the lists. "Show family tree" still opens the diagram
+  in its own window.
+- Controls of the family tree diagram are drawn over its corners, "Export tree"
+  on the left and zoom on the right, so the diagram uses the whole height.
+- The application output is no longer a tab of the main window. While it is not
+  visible, the status bar shows the number of new warnings or errors, a click on
+  it shows the output.
+- AI chat is a panel of the main window instead of a window staying on top. "AI
+  chat" opens it, brings it to the front if it is behind another panel, and
+  closes it if it already is in front.
+- Lists of persons and relations have a filter, which shows only rows containing
+  all typed words. Ctrl+F moves to the filter of the list being used. The number
+  of rows, and of the shown ones while filtering, is displayed beside the filter.
+- New "Always show highlighted" option below both lists keeps persons of the
+  selected relations, and relations of the selected persons, visible even if they
+  do not match the filter. New "Only highlighted" option below the list of
+  relations shows only relations of the selected persons.
+- "Add", "Edit" and "Remove" buttons below the lists are replaced by small
+  buttons beside the filter, and the same commands are in the context menu of
+  each list.
+- Names of parents, siblings, partners and children in the person details are
+  links which select that person. The picture is shown at the top. Without a
+  selected person a hint is shown, and more than three selected persons are
+  shown as a summary of their names and dates.
+- Highlighted rows use a color which stays readable in the dark color scheme.
 
 ### Bug fixes
 

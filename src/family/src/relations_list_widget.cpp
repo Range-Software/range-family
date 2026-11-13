@@ -1,4 +1,6 @@
+#include <QCheckBox>
 #include <QHBoxLayout>
+#include <QShortcut>
 #include <QVBoxLayout>
 
 #include <rbl_job_manager.h>
@@ -22,12 +24,18 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
     : QWidget(parent)
     , familyTree(familyTree)
 {
-    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
-    QIcon editIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
-    QIcon removeIcon = RIcon::fromFile(":/icons/action/pixmaps/range-remove.svg");
+    RActionList *actionList = Application::instance()->getActionList();
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->setContentsMargins(0,0,0,0);
     this->setLayout(mainLayout);
+
+    // Title is shown by the dock holding the list.
+    this->header = new PaneHeaderWidget(QString());
+    this->header->addButton(actionList->getAction(Action::ACTION_EDIT_RELATION_ADD));
+    this->header->addButton(actionList->getAction(Action::ACTION_EDIT_RELATION_EDIT));
+    this->header->addButton(actionList->getAction(Action::ACTION_EDIT_RELATION_REMOVE));
+    mainLayout->addWidget(this->header);
 
     QList<RTreeWidget::ColumnInfoItem> columnInfo;
     for (int type=ColumnId;type<NumberOfColumns;type++)
@@ -48,32 +56,54 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
     this->scrollBarWithMarkers = new ScrollBarWithMarkers(Qt::Vertical, this->treeWidget);
     this->treeWidget->setVerticalScrollBar(this->scrollBarWithMarkers);
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
-    mainLayout->addLayout(buttonLayout);
+    RApplicationSettings *applicationSettings = Application::instance()->getApplicationSettings();
 
-    this->relationAddButton = new QPushButton(addIcon,tr("Add"));
-    buttonLayout->addWidget(this->relationAddButton);
+    QHBoxLayout *optionsLayout = new QHBoxLayout;
+    mainLayout->addLayout(optionsLayout);
 
-    this->relationEditButton = new QPushButton(editIcon,tr("Edit"));
-    buttonLayout->addWidget(this->relationEditButton);
+    this->keepHighlightedCheckBox = new QCheckBox(tr("Always show highlighted"));
+    this->keepHighlightedCheckBox->setToolTip(tr("Relations of selected persons stay visible even if they do not match the filter."));
+    this->keepHighlightedCheckBox->setChecked(applicationSettings->value("editor/relationsKeepHighlighted",true).toBool());
+    optionsLayout->addWidget(this->keepHighlightedCheckBox);
+    this->header->setKeepHighlighted(this->keepHighlightedCheckBox->isChecked());
 
-    this->relationRemoveButton = new QPushButton(removeIcon,tr("Remove"));
-    buttonLayout->addWidget(this->relationRemoveButton);
+    this->onlyHighlightedCheckBox = new QCheckBox(tr("Only highlighted"));
+    this->onlyHighlightedCheckBox->setToolTip(tr("Show only relations of selected persons. All relations are shown while no person is selected."));
+    this->onlyHighlightedCheckBox->setChecked(applicationSettings->value("editor/relationsOnlyHighlighted",false).toBool());
+    optionsLayout->addWidget(this->onlyHighlightedCheckBox);
+    this->header->setOnlyHighlighted(this->onlyHighlightedCheckBox->isChecked());
+
+    optionsLayout->addStretch(1);
 
     this->populate();
 
+    QShortcut *filterShortcut = new QShortcut(QKeySequence::Find,this);
+    filterShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    QObject::connect(filterShortcut,&QShortcut::activated,this->header,&PaneHeaderWidget::focusFilter);
+
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    this->addAction(Application::instance()->getActionList()->getAction(Action::ACTION_EDIT_RELATION_SHOW_TREE));
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_RELATION_ADD));
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_RELATION_EDIT));
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_RELATION_REMOVE));
+
+    QAction *separatorAction = new QAction(this);
+    separatorAction->setSeparator(true);
+    this->addAction(separatorAction);
+
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_RELATION_SHOW_TREE));
 
     this->onItemSelectionChanged();
 
     QObject::connect(this->treeWidget,&QTreeWidget::itemSelectionChanged,this,&RelationsListWidget::onItemSelectionChanged);
     QObject::connect(this->treeWidget,&QTreeWidget::itemDoubleClicked,this,&RelationsListWidget::onItemDoubleClicked);
 
-    QObject::connect(this->relationAddButton,&QPushButton::clicked,this,&RelationsListWidget::addNewRelation);
-    QObject::connect(this->relationEditButton,&QPushButton::clicked,this,&RelationsListWidget::editSelectedRelations);
-    QObject::connect(this->relationRemoveButton,&QPushButton::clicked,this,&RelationsListWidget::removeSelectedRelations);
+    QObject::connect(this->header,&PaneHeaderWidget::filterChanged,this,&RelationsListWidget::applyFilter);
+    QObject::connect(this->keepHighlightedCheckBox,&QCheckBox::toggled,this,&RelationsListWidget::onKeepHighlightedToggled);
+    QObject::connect(this->onlyHighlightedCheckBox,&QCheckBox::toggled,this,&RelationsListWidget::onOnlyHighlightedToggled);
+
+    // Highlighted items are colored for the color scheme.
+    QObject::connect(RApplication::instance(),&RApplication::styleApplied,this,&RelationsListWidget::onStyleApplied);
 
     QObject::connect(this->familyTree,&FTree::relationAdded,this,&RelationsListWidget::addRelation);
     QObject::connect(this->familyTree,&FTree::relationChanged,this,&RelationsListWidget::changeRelation);
@@ -86,26 +116,47 @@ RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
 
 void RelationsListWidget::highlightRelations(const QList<QUuid> &ids)
 {
-    int totalItems = this->treeWidget->topLevelItemCount();
-    QList<double> markerPositions;
-    int index = 0;
+    const QSet<QUuid> idsSet(ids.constBegin(),ids.constEnd());
 
-    QTreeWidgetItemIterator it(this->treeWidget);
-    while (*it)
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
     {
-        bool highlighted = ids.contains(QUuid((*it)->text(ColumnId)));
-        for (int column=0;column<NumberOfColumns;column++)
-        {
-            (*it)->setBackground(column,highlighted ? QBrush(Qt::yellow) : QBrush());
-            (*it)->setForeground(column,highlighted ? QBrush(Qt::black) : QBrush());
-        }
-        if (highlighted && totalItems > 0)
-            markerPositions.append(static_cast<double>(index) / totalItems);
-        ++it;
-        ++index;
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        PaneHeaderWidget::setItemHighlighted(item,idsSet.contains(item->data(ColumnId,Qt::UserRole).toUuid()));
     }
 
-    this->scrollBarWithMarkers->setMarkers(markerPositions);
+    // Highlighted items may be shown regardless of the filter, or be the only ones shown.
+    this->applyFilter();
+}
+
+void RelationsListWidget::selectRelation(const QUuid &id)
+{
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        if (item->data(ColumnId,Qt::UserRole).toUuid() != id)
+        {
+            continue;
+        }
+        if (item->isHidden())
+        {
+            this->header->clearFilter();
+        }
+        if (item->isHidden())
+        {
+            // Hidden by showing only highlighted relations.
+            return;
+        }
+        if (!item->isSelected() || this->treeWidget->selectedItems().count() != 1)
+        {
+            this->treeWidget->clearSelection();
+            item->setSelected(true);
+        }
+        this->treeWidget->setCurrentItem(item);
+        this->treeWidget->scrollToItem(item);
+        return;
+    }
 }
 
 QList<QUuid> RelationsListWidget::getSelectedIds() const
@@ -126,8 +177,10 @@ void RelationsListWidget::populate()
     foreach (const QUuid &relationId, this->familyTree->getRelations())
     {
         FRelation relation = this->familyTree->findRelation(relationId);
-        this->addRelation(relation);
+        QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
+        this->setTreeWidgetItemValues(item,relation);
     }
+    this->applyFilter();
 
     treeWidget->resizeColumnToContents(ColumnPartners);
     treeWidget->resizeColumnToContents(ColumnChildren);
@@ -295,6 +348,7 @@ void RelationsListWidget::addRelation(const FRelation &relation)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
     this->setTreeWidgetItemValues(item,relation);
+    this->applyFilter();
 }
 
 void RelationsListWidget::changeRelation(const FRelation &relation)
@@ -307,8 +361,65 @@ void RelationsListWidget::changeRelation(const FRelation &relation)
         if (relation.getId() == id)
         {
             RelationsListWidget::setTreeWidgetItemValues(this->treeWidget->topLevelItem(i),relation);
+            this->applyFilter();
             return;
         }
+    }
+}
+
+void RelationsListWidget::applyFilter()
+{
+    this->header->filterItems(this->treeWidget);
+    this->updateMarkers();
+}
+
+void RelationsListWidget::updateMarkers()
+{
+    // Scroll bar spans only items which are visible.
+    QList<QTreeWidgetItem*> visibleItems;
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        if (!item->isHidden())
+        {
+            visibleItems.append(item);
+        }
+    }
+
+    QList<double> markerPositions;
+    for (int i=0;i<visibleItems.count();i++)
+    {
+        if (PaneHeaderWidget::isItemHighlighted(visibleItems.at(i)))
+        {
+            markerPositions.append(static_cast<double>(i) / visibleItems.count());
+        }
+    }
+
+    this->scrollBarWithMarkers->setMarkers(markerPositions);
+}
+
+void RelationsListWidget::onKeepHighlightedToggled(bool checked)
+{
+    Application::instance()->getApplicationSettings()->setValue("editor/relationsKeepHighlighted",checked);
+    this->header->setKeepHighlighted(checked);
+    this->applyFilter();
+}
+
+void RelationsListWidget::onOnlyHighlightedToggled(bool checked)
+{
+    Application::instance()->getApplicationSettings()->setValue("editor/relationsOnlyHighlighted",checked);
+    this->header->setOnlyHighlighted(checked);
+    this->applyFilter();
+}
+
+void RelationsListWidget::onStyleApplied()
+{
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        PaneHeaderWidget::setItemHighlighted(item,PaneHeaderWidget::isItemHighlighted(item));
     }
 }
 
@@ -322,6 +433,7 @@ void RelationsListWidget::removeRelation(const QUuid &relationId)
         if (relationId == id)
         {
             delete this->treeWidget->takeTopLevelItem(i);
+            this->applyFilter();
             return;
         }
     }
@@ -359,9 +471,6 @@ void RelationsListWidget::relationDiagramSelectionChanged(const QList<QUuid> &)
 void RelationsListWidget::updateActionsAvailability()
 {
     int nSelected = this->treeWidget->selectedItems().count();
-
-    this->relationEditButton->setEnabled(nSelected > 0);
-    this->relationRemoveButton->setEnabled(nSelected > 0);
 
     RActionList *actionList = Application::instance()->getActionList();
     actionList->getAction(Action::ACTION_EDIT_RELATION_EDIT)->setEnabled(nSelected > 0);

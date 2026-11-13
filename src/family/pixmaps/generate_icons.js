@@ -135,6 +135,15 @@ I.release_notes = G.doc() + [10, 13.5, 17].map(y => dot(9, y, 1, C.blue)).join('
 I.ribbon_layout = G.ribbon(8, 11.5);
 I.ribbon_compact = G.ribbon(6.75, 9) + arrow(12, 16.75, 12, 12, C.blue, 2.6);
 
+// View
+I.view_person_details = rect(2.75, 4.75, 18.5, 14.5, 2, C.ink, C.paper) + circ(8.25, 10, 2.25, C.blue, C.blueL)
+  + P('M4.75 16.75v-.5a2.5 2.5 0 0 1 2.5-2.5h2a2.5 2.5 0 0 1 2.5 2.5v.5z', C.blue, C.blueL)
+  + P('M14.5 9.5h4M14.5 12.5h4M14.5 15.5h2.5', C.ink, 'none', thin);
+I.view_relations = circ(5.75, 7.25, 3, C.amber, C.amberL) + circ(9.25, 7.25, 3, C.amber)
+  + circ(5.75, 16.75, 3, C.amber, C.amberL) + circ(9.25, 16.75, 3, C.amber)
+  + P('M15 7.25h6M15 16.75h6', C.ink);
+I.view_output = rect(2.75, 4.75, 18.5, 14.5, 2, C.ink, C.paper) + P('M6.5 9.25l3 2.75-3 2.75', C.blue) + P('M12 15h5.5', C.ink);
+
 // Action
 I.cancel = circ(12, 12, 8.75, C.red, C.redL) + P('M9 9l6 6M15 9l-6 6', C.red);
 I.ok = circ(12, 12, 8.75, C.green, C.greenL) + P('M8 12.4l2.7 2.7 5.3-5.6', C.green);

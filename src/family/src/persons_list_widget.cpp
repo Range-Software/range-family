@@ -1,4 +1,5 @@
-#include <QHBoxLayout>
+#include <QCheckBox>
+#include <QShortcut>
 #include <QVBoxLayout>
 
 #include <rbl_job_manager.h>
@@ -25,12 +26,18 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
     : QWidget(parent)
     , familyTree(familyTree)
 {
-    QIcon addIcon = RIcon::fromFile(":/icons/action/pixmaps/range-add.svg");
-    QIcon editIcon = RIcon::fromFile(":/icons/action/pixmaps/range-edit.svg");
-    QIcon removeIcon = RIcon::fromFile(":/icons/action/pixmaps/range-remove.svg");
+    RActionList *actionList = Application::instance()->getActionList();
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->setContentsMargins(0,0,0,0);
     this->setLayout(mainLayout);
+
+    // Explicit scope, lupdate does not find the context of plain tr() in this constructor.
+    this->header = new PaneHeaderWidget(PersonsListWidget::tr("Persons"));
+    this->header->addButton(actionList->getAction(Action::ACTION_EDIT_PERSON_ADD));
+    this->header->addButton(actionList->getAction(Action::ACTION_EDIT_PERSON_EDIT));
+    this->header->addButton(actionList->getAction(Action::ACTION_EDIT_PERSON_REMOVE));
+    mainLayout->addWidget(this->header);
 
     QList<RTreeWidget::ColumnInfoItem> columnInfo;
     for (int type=ColumnId;type<NumberOfColumns;type++)
@@ -51,24 +58,27 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
     this->scrollBarWithMarkers = new ScrollBarWithMarkers(Qt::Vertical, this->treeWidget);
     this->treeWidget->setVerticalScrollBar(this->scrollBarWithMarkers);
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
-    mainLayout->addLayout(buttonLayout);
-
-    this->personAddButton = new QPushButton(addIcon,PersonsListWidget::tr("Add"));
-    buttonLayout->addWidget(this->personAddButton);
-
-    this->personEditButton = new QPushButton(editIcon,PersonsListWidget::tr("Edit"));
-    buttonLayout->addWidget(this->personEditButton);
-
-    this->personRemoveButton = new QPushButton(removeIcon,PersonsListWidget::tr("Remove"));
-    buttonLayout->addWidget(this->personRemoveButton);
+    this->keepHighlightedCheckBox = new QCheckBox(PersonsListWidget::tr("Always show highlighted"));
+    this->keepHighlightedCheckBox->setToolTip(PersonsListWidget::tr("Persons of selected relations stay visible even if they do not match the filter."));
+    this->keepHighlightedCheckBox->setChecked(Application::instance()->getApplicationSettings()->value("editor/personsKeepHighlighted",true).toBool());
+    mainLayout->addWidget(this->keepHighlightedCheckBox);
+    this->header->setKeepHighlighted(this->keepHighlightedCheckBox->isChecked());
 
     this->populate();
 
+    QShortcut *filterShortcut = new QShortcut(QKeySequence::Find,this);
+    filterShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    QObject::connect(filterShortcut,&QShortcut::activated,this->header,&PaneHeaderWidget::focusFilter);
+
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    // Context menu offers actions the buttons below the list do not.
-    RActionList *actionList = Application::instance()->getActionList();
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_ADD));
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_EDIT));
+    this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_REMOVE));
+
+    QAction *separator0Action = new QAction(this);
+    separator0Action->setSeparator(true);
+    this->addAction(separator0Action);
 
     this->addAction(actionList->getAction(Action::ACTION_EDIT_PERSON_SHOW_TREE));
 
@@ -90,9 +100,11 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
     QObject::connect(this->treeWidget,&QTreeWidget::itemSelectionChanged,this,&PersonsListWidget::onItemSelectionChanged);
     QObject::connect(this->treeWidget,&QTreeWidget::itemDoubleClicked,this,&PersonsListWidget::onItemDoubleClicked);
 
-    QObject::connect(this->personAddButton,&QPushButton::clicked,this,&PersonsListWidget::addNewPerson);
-    QObject::connect(this->personEditButton,&QPushButton::clicked,this,&PersonsListWidget::editSelectedPersons);
-    QObject::connect(this->personRemoveButton,&QPushButton::clicked,this,&PersonsListWidget::removeSelectedPersons);
+    QObject::connect(this->header,&PaneHeaderWidget::filterChanged,this,&PersonsListWidget::applyFilter);
+    QObject::connect(this->keepHighlightedCheckBox,&QCheckBox::toggled,this,&PersonsListWidget::onKeepHighlightedToggled);
+
+    // Highlighted items are colored for the color scheme.
+    QObject::connect(RApplication::instance(),&RApplication::styleApplied,this,&PersonsListWidget::onStyleApplied);
 
     QObject::connect(this->familyTree,&FTree::personAdded,this,&PersonsListWidget::addPerson);
     QObject::connect(this->familyTree,&FTree::personChanged,this,&PersonsListWidget::changePerson);
@@ -103,26 +115,42 @@ PersonsListWidget::PersonsListWidget(FTree *familyTree, QWidget *parent)
 
 void PersonsListWidget::highlightPersons(const QList<QUuid> &ids)
 {
-    int totalItems = this->treeWidget->topLevelItemCount();
-    QList<double> markerPositions;
-    int index = 0;
+    const QSet<QUuid> idsSet(ids.constBegin(),ids.constEnd());
 
-    QTreeWidgetItemIterator it(this->treeWidget);
-    while (*it)
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
     {
-        bool highlighted = ids.contains(QUuid((*it)->text(ColumnId)));
-        for (int column=0;column<NumberOfColumns;column++)
-        {
-            (*it)->setBackground(column,highlighted ? QBrush(Qt::yellow) : QBrush());
-            (*it)->setForeground(column,highlighted ? QBrush(Qt::black) : QBrush());
-        }
-        if (highlighted && totalItems > 0)
-            markerPositions.append(static_cast<double>(index) / totalItems);
-        ++it;
-        ++index;
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        PaneHeaderWidget::setItemHighlighted(item,idsSet.contains(item->data(ColumnId,Qt::UserRole).toUuid()));
     }
 
-    this->scrollBarWithMarkers->setMarkers(markerPositions);
+    // Highlighted items may be shown regardless of the filter.
+    this->applyFilter();
+}
+
+void PersonsListWidget::selectPerson(const QUuid &id)
+{
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        if (item->data(ColumnId,Qt::UserRole).toUuid() != id)
+        {
+            continue;
+        }
+        if (item->isHidden())
+        {
+            this->header->clearFilter();
+        }
+        if (!item->isSelected() || this->treeWidget->selectedItems().count() != 1)
+        {
+            this->treeWidget->clearSelection();
+            item->setSelected(true);
+        }
+        this->treeWidget->setCurrentItem(item);
+        this->treeWidget->scrollToItem(item);
+        return;
+    }
 }
 
 QList<QUuid> PersonsListWidget::getSelectedIds() const
@@ -143,8 +171,10 @@ void PersonsListWidget::populate()
     foreach (const QUuid &personId, this->familyTree->getPersons())
     {
         FPerson person = this->familyTree->findPerson(personId);
-        this->addPerson(person);
+        QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
+        PersonsListWidget::setTreeWidgetItemValues(item,person);
     }
+    this->applyFilter();
 
     treeWidget->resizeColumnToContents(ColumnFirstName);
     treeWidget->resizeColumnToContents(ColumnLastName);
@@ -288,6 +318,7 @@ void PersonsListWidget::addPerson(const FPerson &person)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
     PersonsListWidget::setTreeWidgetItemValues(item,person);
+    this->applyFilter();
 }
 
 void PersonsListWidget::changePerson(const FPerson &person)
@@ -300,8 +331,65 @@ void PersonsListWidget::changePerson(const FPerson &person)
         if (person.getId() == id)
         {
             PersonsListWidget::setTreeWidgetItemValues(this->treeWidget->topLevelItem(i),person);
+            this->applyFilter();
             return;
         }
+    }
+}
+
+void PersonsListWidget::applyFilter()
+{
+    this->header->filterItems(this->treeWidget);
+    this->updateMarkers();
+}
+
+void PersonsListWidget::updateMarkers()
+{
+    // Scroll bar spans only items which are visible.
+    QList<QTreeWidgetItem*> visibleItems;
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        if (!item->isHidden())
+        {
+            visibleItems.append(item);
+        }
+    }
+
+    QList<double> markerPositions;
+    QList<double> activeMarkerPositions;
+    for (int i=0;i<visibleItems.count();i++)
+    {
+        const double position = static_cast<double>(i) / visibleItems.count();
+        if (PaneHeaderWidget::isItemHighlighted(visibleItems.at(i)))
+        {
+            markerPositions.append(position);
+        }
+        if (visibleItems.at(i)->data(ColumnId,Qt::UserRole).toUuid() == this->activePersonId)
+        {
+            activeMarkerPositions.append(position);
+        }
+    }
+
+    this->scrollBarWithMarkers->setMarkers(markerPositions);
+    this->scrollBarWithMarkers->setActiveMarkers(activeMarkerPositions);
+}
+
+void PersonsListWidget::onKeepHighlightedToggled(bool checked)
+{
+    Application::instance()->getApplicationSettings()->setValue("editor/personsKeepHighlighted",checked);
+    this->header->setKeepHighlighted(checked);
+    this->applyFilter();
+}
+
+void PersonsListWidget::onStyleApplied()
+{
+    int nItems = this->treeWidget->topLevelItemCount();
+    for (int i=0;i<nItems;i++)
+    {
+        QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
+        PaneHeaderWidget::setItemHighlighted(item,PaneHeaderWidget::isItemHighlighted(item));
     }
 }
 
@@ -315,6 +403,7 @@ void PersonsListWidget::removePerson(const QUuid &personId)
         if (personId == id)
         {
             delete this->treeWidget->takeTopLevelItem(i);
+            this->applyFilter();
             return;
         }
     }
@@ -386,9 +475,9 @@ void PersonsListWidget::personDiagramSelectionChanged(const QList<QUuid> &)
 
 void PersonsListWidget::onActivePersonIdChanged(const QUuid &id)
 {
-    int nItems = this->treeWidget->topLevelItemCount();
-    QList<double> markerPositions;
+    this->activePersonId = id;
 
+    int nItems = this->treeWidget->topLevelItemCount();
     for (int i = 0; i < nItems; i++)
     {
         QTreeWidgetItem *item = this->treeWidget->topLevelItem(i);
@@ -399,21 +488,14 @@ void PersonsListWidget::onActivePersonIdChanged(const QUuid &id)
         {
             item->setFont(col, font);
         }
-        if (isActive && nItems > 0)
-        {
-            markerPositions.append(static_cast<double>(i) / nItems);
-        }
     }
 
-    this->scrollBarWithMarkers->setActiveMarkers(markerPositions);
+    this->updateMarkers();
 }
 
 void PersonsListWidget::updateActionsAvailability()
 {
     int nSelected = this->treeWidget->selectedItems().count();
-
-    this->personEditButton->setEnabled(nSelected > 0);
-    this->personRemoveButton->setEnabled(nSelected > 0);
 
     RActionList *actionList = Application::instance()->getActionList();
     actionList->getAction(Action::ACTION_EDIT_PERSON_EDIT)->setEnabled(nSelected > 0);

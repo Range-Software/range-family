@@ -11,12 +11,15 @@ ScaleControlWidget::ScaleControlWidget(QWidget *parent)
     , savedScaleValue{1.0}
 {
     QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setSpacing(5);
     this->setLayout(mainLayout);
 
     QLabel *scaleLabel = new QLabel(tr("Zoom") + ":");
     mainLayout->addWidget(scaleLabel);
 
     QPushButton *downButton = new QPushButton("-");
+    downButton->setAutoDefault(false);
     mainLayout->addWidget(downButton);
 
     this->scaleBox = new QDoubleSpinBox;
@@ -29,9 +32,11 @@ ScaleControlWidget::ScaleControlWidget(QWidget *parent)
     mainLayout->addWidget(this->scaleBox);
 
     QPushButton *upButton = new QPushButton("+");
+    upButton->setAutoDefault(false);
     mainLayout->addWidget(upButton);
 
     QPushButton *resetButton = new QPushButton(tr("Reset"));
+    resetButton->setAutoDefault(false);
     mainLayout->addWidget(resetButton);
 
     QObject::connect(downButton,&QPushButton::clicked,this,&ScaleControlWidget::onDownButtonClicked);

@@ -22,7 +22,6 @@
 
 #include "application.h"
 #include "action.h"
-#include "ai_chat_dialog.h"
 #include "cloud_ai_query_dialog.h"
 #include "editor_widget.h"
 #include "image_button.h"
@@ -88,6 +87,10 @@ QString Action::getName(Type type)
         case ACTION_FILE_CLOSE:                    return "file-close";
         case ACTION_FILE_STORE_IMAGES_IN_TREE:     return "file-store_images_in_tree";
         case ACTION_FILE_STORE_IMAGES_IN_DATA_DIR: return "file-store_images_in_data_dir";
+        case ACTION_VIEW_PERSON_DETAILS:           return "view-person_details";
+        case ACTION_VIEW_RELATIONS:                return "view-relations";
+        case ACTION_VIEW_FAMILY_TREE:              return "view-family_tree";
+        case ACTION_VIEW_OUTPUT:                   return "view-output";
         case ACTION_EDIT_PERSON_ADD:               return "edit-person_add";
         case ACTION_EDIT_PERSON_EDIT:              return "edit-person_edit";
         case ACTION_EDIT_PERSON_REMOVE:            return "edit-person_remove";
@@ -155,6 +158,10 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_CLOSE, tr("Close"), "", "Ctrl+W", ":/icons/file/pixmaps/range-close.svg", static_cast<PointerToMemberTrigger>(&Action::onFileClose));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_TREE, tr("Store all images in family tree"), "", "", ":/icons/file/pixmaps/range-import.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInTree));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_DATA_DIR, tr("Store all images in data directory"), "", "", ":/icons/file/pixmaps/range-export.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInDataDir));
+    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_PERSON_DETAILS, tr("Person details"), tr("Show or hide details of persons selected in the list of persons."), "", ":/icons/view/pixmaps/range-view_person_details.svg", static_cast<PointerToMemberToggle>(&Action::onViewPersonDetails));
+    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_RELATIONS, tr("Relations"), tr("Show or hide the list of relations."), "", ":/icons/view/pixmaps/range-view_relations.svg", static_cast<PointerToMemberToggle>(&Action::onViewRelations));
+    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_FAMILY_TREE, tr("Family tree"), tr("Show or hide a diagram of the family tree around the selected person."), "", ":/icons/family/pixmaps/range-family_tree.svg", static_cast<PointerToMemberToggle>(&Action::onViewFamilyTree));
+    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_OUTPUT, tr("Output"), tr("Show or hide the application output."), "", ":/icons/view/pixmaps/range-view_output.svg", static_cast<PointerToMemberToggle>(&Action::onViewOutput));
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_ADD, tr("Add person"), tr("Add a new person to the family tree."), "", ":/icons/family/pixmaps/range-person_add.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonAdd));
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_EDIT, tr("Edit selected persons"), tr("Edit persons selected in the list of persons."), "", ":/icons/family/pixmaps/range-person_edit.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonEdit));
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_REMOVE, tr("Remove selected persons"), tr("Remove persons selected in the list of persons from the family tree."), "", ":/icons/family/pixmaps/range-person_remove.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonRemove));
@@ -170,7 +177,7 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_AI_QUERY, tr("Cloud AI query"), "", "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudAiQuery));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_SETTINGS_MANAGER, tr("AI settings manager"), "", "", ":/icons/ai/pixmaps/range-ai_settings_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onAiSettingsManager));
-    Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_CHAT, tr("AI chat"), "", "", ":/icons/ai/pixmaps/range-ai_chat.svg", static_cast<PointerToMemberTrigger>(&Action::onAiChat));
+    Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_CHAT, tr("AI chat"), tr("Show or hide the AI chat."), "", ":/icons/ai/pixmaps/range-ai_chat.svg", static_cast<PointerToMemberToggle>(&Action::onAiChat));
 
     return actionDef;
 }
@@ -753,13 +760,49 @@ void Action::onAiSettingsManager()
     R_LOG_TRACE_OUT;
 }
 
-void Action::onAiChat()
+//! Show or hide given dock of the main window.
+//! Actions are toggled also while the main window is being constructed and restores its docks.
+static void setDockVisible(MainWindow::DockType dockType, bool visible)
+{
+    MainWindow *mainWindow = qobject_cast<MainWindow*>(Application::instance()->getMainWindow());
+    if (mainWindow)
+    {
+        mainWindow->setDockVisible(dockType,visible);
+    }
+}
+
+void Action::onAiChat(bool checked)
 {
     R_LOG_TRACE_IN;
-    AiChatDialog *aiChatDialog = new AiChatDialog(Application::instance()->getAiAgentSettingsManager(),
-                                                  Application::instance()->getApplicationSettings(),
-                                                  Application::instance()->getMainWindow());
-    aiChatDialog->show();
+    setDockVisible(MainWindow::DockAiChat,checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onViewPersonDetails(bool checked)
+{
+    R_LOG_TRACE_IN;
+    setDockVisible(MainWindow::DockPersonDetails,checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onViewRelations(bool checked)
+{
+    R_LOG_TRACE_IN;
+    setDockVisible(MainWindow::DockRelations,checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onViewFamilyTree(bool checked)
+{
+    R_LOG_TRACE_IN;
+    setDockVisible(MainWindow::DockFamilyTree,checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onViewOutput(bool checked)
+{
+    R_LOG_TRACE_IN;
+    setDockVisible(MainWindow::DockOutput,checked);
     R_LOG_TRACE_OUT;
 }
 

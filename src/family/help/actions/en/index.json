@@ -120,6 +120,22 @@
         {
             "title": "Show family tree of selected relations",
             "file": "action_edit-relation_show_tree.md"
+        },
+        {
+            "title": "Person details",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Relations",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Family tree",
+            "file": "action_view-family_tree.md"
+        },
+        {
+            "title": "Output",
+            "file": "action_view-output.md"
         }
     ]
 }
