@@ -50,9 +50,9 @@ void GraphicsPersonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QImage personImage;
 
     QString name = this->person.getName().toString();
-    QString date = QLocale().toString(this->person.getBirth().getDate().toDate(),QLocale::ShortFormat)
+    QString date = this->person.getBirth().getDate().toLocaleString(QLocale::ShortFormat)
                  + " – "
-                 + QLocale().toString(this->person.getDeath().getDate().toDate(),QLocale::ShortFormat);
+                 + this->person.getDeath().getDate().toLocaleString(QLocale::ShortFormat);
 
     QRect nameBoundingRect = fmName.boundingRect(name);
     QRect dateBoundingRect = fmDate.boundingRect(date);

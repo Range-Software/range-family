@@ -364,7 +364,7 @@ void DiagramView::onRemoveItem()
         QString question  = tr("Are you sure you want to remove the selected person?")
                           + "<p>"
                           + "<b>" + person.getName().toString() + "</b>"
-                          + " (" + QLocale().toString(person.getBirth().getDate().toDate()) + " - " + QLocale().toString(person.getDeath().getDate().toDate()) + ")"
+                          + " (" + person.getBirth().getDate().toLocaleString() + " - " + person.getDeath().getDate().toLocaleString() + ")"
                           + "</p>";
 
         int response = RMessageBox::question(this,tr("Remove person"),question);
@@ -384,7 +384,7 @@ void DiagramView::onRemoveItem()
         QString question  = tr("Are you sure you want to remove the selected relation?")
                           + "<p>"
                           + "<b>" + tr("Children") + ": " + QLocale().toString(relation.getChildren().size()) + "</b>"
-                          + " (" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + ")"
+                          + " (" + relation.getBegin().getDate().toLocaleString() + " - " + relation.getEnd().getDate().toLocaleString() + ")"
                           + "<p>"
                           + "<i>" + tr("No person will be removed.") + "</i>"
                           + "</p>";

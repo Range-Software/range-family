@@ -600,14 +600,34 @@
 <context>
     <name>DateEditWidget</name>
     <message>
-        <location filename="../src/date_edit_widget.cpp" line="17"/>
+        <location filename="../src/date_edit_widget.cpp" line="20"/>
+        <source>Month</source>
+        <translation>Місяць</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="29"/>
+        <source>Year</source>
+        <translation>Рік</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="34"/>
+        <source>Approximate</source>
+        <translation>Приблизно</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="37"/>
+        <source>Calendar</source>
+        <translation>Календар</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="40"/>
         <source>Clear</source>
         <translation>Очистити</translation>
     </message>
     <message>
-        <location filename="../src/date_edit_widget.cpp" line="27"/>
-        <source>Click here to set date</source>
-        <translation>Натисніть, щоб задати дату</translation>
+        <location filename="../src/date_edit_widget.cpp" line="66"/>
+        <source>Day</source>
+        <translation>День</translation>
     </message>
 </context>
 <context>
@@ -1150,35 +1170,64 @@
 <context>
     <name>PersonSuggestedDatesDialog</name>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="25"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="40"/>
         <source>Suggested person birth and death dates</source>
         <translation>Запропоновані дати народження та смерті особи</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="35"/>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="36"/>
-        <source>unknown</source>
-        <translation>невідомо</translation>
-    </message>
-    <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="67"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="53"/>
         <source>Birth</source>
         <translation>Народження</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="68"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="54"/>
         <source>Death</source>
         <translation>Смерть</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="73"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="59"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="76"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="62"/>
         <source>Edit</source>
         <translation>Редагувати</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="87"/>
+        <source>unknown</source>
+        <translation>невідомо</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="94"/>
+        <source>dates of relatives contradict each other</source>
+        <translation>дати родичів суперечать одна одній</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="103"/>
+        <source>between %1 and %2</source>
+        <translation>між %1 та %2</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="107"/>
+        <source>not before %1</source>
+        <translation>не раніше %1</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="111"/>
+        <source>not after %1</source>
+        <translation>не пізніше %1</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="115"/>
+        <source>replaces %1</source>
+        <translation>замінює %1</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="118"/>
+        <source>about %1</source>
+        <translation>приблизно %1</translation>
     </message>
 </context>
 <context>

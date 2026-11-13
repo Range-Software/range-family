@@ -2,7 +2,9 @@
 #define DATE_EDIT_WIDGET_H
 
 #include <QWidget>
-#include <QPushButton>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QSpinBox>
 
 #include <rfl_date.h>
 
@@ -15,7 +17,12 @@ class DateEditWidget : public QWidget
 
         FDate date;
 
-        QPushButton *dateButton;
+        //! First item of day and month combo means that the value is not set.
+        QComboBox *dayCombo;
+        QComboBox *monthCombo;
+        //! Zero means that the year is not set.
+        QSpinBox *yearSpin;
+        QCheckBox *fuzzyCheck;
 
     public:
 
@@ -23,11 +30,14 @@ class DateEditWidget : public QWidget
 
     protected:
 
-        void updateButtonText();
+        //! Show current date in the widgets.
+        void updateWidgets();
 
     protected slots:
 
-        void onDateButtonClicked();
+        void onValueChanged();
+        void onFuzzyToggled(bool checked);
+        void onCalendarButtonClicked();
         void onClearButtonClicked();
 
     signals:

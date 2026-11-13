@@ -50,6 +50,15 @@ class PersonDetailsWidget : public QWidget
         //! Return date and place of given event.
         static QString eventString(const FEvent &event);
 
+        //! Return dates of beginning and end of a period, empty string if none of them is set.
+        static QString periodString(const FDate &begin, const FDate &end);
+
+        //! Return table row with given label and value.
+        static QString rowHtml(const QString &label, const QString &value);
+
+        //! Return table row with links to given persons, empty string if there are none.
+        QString personsRowHtml(const QString &label, const QList<QUuid> &personsIds, const QUuid &skippedId = QUuid()) const;
+
     protected slots:
 
         //! Person changed.

@@ -600,14 +600,34 @@
 <context>
     <name>DateEditWidget</name>
     <message>
-        <location filename="../src/date_edit_widget.cpp" line="17"/>
+        <location filename="../src/date_edit_widget.cpp" line="20"/>
+        <source>Month</source>
+        <translation>Mese</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="29"/>
+        <source>Year</source>
+        <translation>Anno</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="34"/>
+        <source>Approximate</source>
+        <translation>Approssimativa</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="37"/>
+        <source>Calendar</source>
+        <translation>Calendario</translation>
+    </message>
+    <message>
+        <location filename="../src/date_edit_widget.cpp" line="40"/>
         <source>Clear</source>
         <translation>Cancella</translation>
     </message>
     <message>
-        <location filename="../src/date_edit_widget.cpp" line="27"/>
-        <source>Click here to set date</source>
-        <translation>Clicca qui per impostare la data</translation>
+        <location filename="../src/date_edit_widget.cpp" line="66"/>
+        <source>Day</source>
+        <translation>Giorno</translation>
     </message>
 </context>
 <context>
@@ -1150,35 +1170,64 @@
 <context>
     <name>PersonSuggestedDatesDialog</name>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="25"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="40"/>
         <source>Suggested person birth and death dates</source>
         <translation>Date di nascita e morte suggerite della persona</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="35"/>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="36"/>
-        <source>unknown</source>
-        <translation>sconosciuto</translation>
-    </message>
-    <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="67"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="53"/>
         <source>Birth</source>
         <translation>Nascita</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="68"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="54"/>
         <source>Death</source>
         <translation>Morte</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="73"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="59"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../src/person_suggested_dates_dialog.cpp" line="76"/>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="62"/>
         <source>Edit</source>
         <translation>Modifica</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="87"/>
+        <source>unknown</source>
+        <translation>sconosciuto</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="94"/>
+        <source>dates of relatives contradict each other</source>
+        <translation>le date dei parenti si contraddicono</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="103"/>
+        <source>between %1 and %2</source>
+        <translation>tra il %1 e il %2</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="107"/>
+        <source>not before %1</source>
+        <translation>non prima del %1</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="111"/>
+        <source>not after %1</source>
+        <translation>non dopo il %1</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="115"/>
+        <source>replaces %1</source>
+        <translation>sostituisce %1</translation>
+    </message>
+    <message>
+        <location filename="../src/person_suggested_dates_dialog.cpp" line="118"/>
+        <source>about %1</source>
+        <translation>circa %1</translation>
     </message>
 </context>
 <context>

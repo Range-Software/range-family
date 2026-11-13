@@ -17,6 +17,7 @@
 #include "diagram_dialog.h"
 #include "person_add_dialog.h"
 #include "person_edit_dialog.h"
+#include "date_tree_widget_item.h"
 #include "persons_list_widget.h"
 #include "person_suggested_dates_dialog.h"
 
@@ -171,7 +172,7 @@ void PersonsListWidget::populate()
     foreach (const QUuid &personId, this->familyTree->getPersons())
     {
         FPerson person = this->familyTree->findPerson(personId);
-        QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
+        QTreeWidgetItem *item = new DateTreeWidgetItem(this->treeWidget);
         PersonsListWidget::setTreeWidgetItemValues(item,person);
     }
     this->applyFilter();
@@ -211,10 +212,10 @@ void PersonsListWidget::setTreeWidgetItemValues(QTreeWidgetItem *item, const FPe
     item->setText(ColumnMiddleName,person.getName().getMiddleName());
     item->setText(ColumnLastName,person.getName().getLastName());
     item->setText(ColumnMaidenName,person.getName().getMaidenName());
-    item->setData(ColumnBirthDate,Qt::DisplayRole,person.getBirth().getDate().toDate());
+    DateTreeWidgetItem::setDate(item,ColumnBirthDate,person.getBirth().getDate());
     item->setText(ColumnBirthAddress,person.getBirth().getPlace().getAddress().toString());
     item->setText(ColumnBirthCoordinates,person.getBirth().getPlace().getGeoCoordinates().toString());
-    item->setData(ColumnDeathDate,Qt::DisplayRole,person.getDeath().getDate().toDate());
+    DateTreeWidgetItem::setDate(item,ColumnDeathDate,person.getDeath().getDate());
     item->setText(ColumnDeathAddress,person.getDeath().getPlace().getAddress().toString());
     item->setText(ColumnDeathCoordinates,person.getDeath().getPlace().getGeoCoordinates().toString());
 }
@@ -316,7 +317,7 @@ void PersonsListWidget::removeSelectedPersons()
 
 void PersonsListWidget::addPerson(const FPerson &person)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
+    QTreeWidgetItem *item = new DateTreeWidgetItem(this->treeWidget);
     PersonsListWidget::setTreeWidgetItemValues(item,person);
     this->applyFilter();
 }

@@ -18,6 +18,7 @@
 #include "diagram_dialog.h"
 #include "relation_add_dialog.h"
 #include "relation_edit_dialog.h"
+#include "date_tree_widget_item.h"
 #include "relations_list_widget.h"
 
 RelationsListWidget::RelationsListWidget(FTree *familyTree, QWidget *parent)
@@ -177,7 +178,7 @@ void RelationsListWidget::populate()
     foreach (const QUuid &relationId, this->familyTree->getRelations())
     {
         FRelation relation = this->familyTree->findRelation(relationId);
-        QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
+        QTreeWidgetItem *item = new DateTreeWidgetItem(this->treeWidget);
         this->setTreeWidgetItemValues(item,relation);
     }
     this->applyFilter();
@@ -209,10 +210,10 @@ void RelationsListWidget::setTreeWidgetItemValues(QTreeWidgetItem *item, const F
     item->setData(ColumnId,Qt::UserRole,QVariant(relation.getId()));
     item->setText(ColumnPartners,this->getPartnersListString(relation));
     item->setText(ColumnChildren,this->getChildrenListString(relation));
-    item->setData(ColumnBeginDate,Qt::DisplayRole,relation.getBegin().getDate().toDate());
+    DateTreeWidgetItem::setDate(item,ColumnBeginDate,relation.getBegin().getDate());
     item->setText(ColumnBeginAddress,relation.getBegin().getPlace().getAddress().toString());
     item->setText(ColumnBeginCoordinates,relation.getBegin().getPlace().getGeoCoordinates().toString());
-    item->setData(ColumnEndDate,Qt::DisplayRole,relation.getEnd().getDate().toDate());
+    DateTreeWidgetItem::setDate(item,ColumnEndDate,relation.getEnd().getDate());
     item->setText(ColumnEndAddress,relation.getEnd().getPlace().getAddress().toString());
     item->setText(ColumnEndCoordinates,relation.getEnd().getPlace().getGeoCoordinates().toString());
 }
@@ -346,7 +347,7 @@ void RelationsListWidget::removeSelectedRelations()
 
 void RelationsListWidget::addRelation(const FRelation &relation)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(this->treeWidget);
+    QTreeWidgetItem *item = new DateTreeWidgetItem(this->treeWidget);
     this->setTreeWidgetItemValues(item,relation);
     this->applyFilter();
 }

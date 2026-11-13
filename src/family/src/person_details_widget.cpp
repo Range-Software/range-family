@@ -4,6 +4,7 @@
 
 #include <rgl_application.h>
 
+#include "diagram_colors.h"
 #include "person_details_widget.h"
 
 #define _FP_TR(qstr) qApp->translate("FPerson",qstr.toUtf8().constData())
@@ -75,13 +76,13 @@ QString PersonDetailsWidget::generateMarkdown() const
         content += '\n';
         content += "- " + tr("Sex") + ": " + _FP_TR(FPerson::sexKeyToDesc(person.getSex())) + '\n';
 
-        QString bornDateString = QLocale().toString(person.getBirth().getDate().toDate());
+        QString bornDateString = person.getBirth().getDate().toLocaleString();
         QString bornPlaceString = person.getBirth().getPlace().getAddress().toString();
         QString bornSeparator = !bornDateString.isEmpty() && !bornPlaceString.isEmpty() ? ", " : QString();
 
         content += "- " + tr("Born") + ": " + bornDateString + bornSeparator + bornPlaceString + '\n';
 
-        QString deathDateString = QLocale().toString(person.getDeath().getDate().toDate());
+        QString deathDateString = person.getDeath().getDate().toLocaleString();
         QString deathPlaceString = person.getDeath().getPlace().getAddress().toString();
         QString deathSeparator = !deathDateString.isEmpty() && !deathPlaceString.isEmpty() ? ", " : QString();
 
@@ -98,11 +99,11 @@ QString PersonDetailsWidget::generateMarkdown() const
             foreach (QUuid relationId, childRelations) {
                 FRelation relation = this->tree->findRelation(relationId);
 
-                content += "#### " + tr("Parents")  + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]" + '\n';
+                content += "#### " + tr("Parents")  + " [" + relation.getBegin().getDate().toLocaleString() + " - " + relation.getEnd().getDate().toLocaleString() + "]" + '\n';
                 content += '\n';
                 foreach (QUuid parentId, this->tree->sortPersons(relation.getPartners())) {
                     FPerson parent = this->tree->findPerson(parentId);
-                    content += "- " + parent.getName().toString() + " [" + QLocale().toString(parent.getBirth().getDate().toDate()) + " - " + QLocale().toString(parent.getDeath().getDate().toDate()) + "]" + '\n';
+                    content += "- " + parent.getName().toString() + " [" + parent.getBirth().getDate().toLocaleString() + " - " + parent.getDeath().getDate().toLocaleString() + "]" + '\n';
                 }
                 content += '\n';
 
@@ -114,7 +115,7 @@ QString PersonDetailsWidget::generateMarkdown() const
                         continue;
                     }
                     FPerson child = this->tree->findPerson(childId);
-                    content += "- " + child.getName().toString() + " [" + QLocale().toString(child.getBirth().getDate().toDate()) + " - " + QLocale().toString(child.getDeath().getDate().toDate()) + "]" + '\n';
+                    content += "- " + child.getName().toString() + " [" + child.getBirth().getDate().toLocaleString() + " - " + child.getDeath().getDate().toLocaleString() + "]" + '\n';
                 }
                 content += '\n';
             }
@@ -127,7 +128,7 @@ QString PersonDetailsWidget::generateMarkdown() const
             foreach (QUuid relationId, partnerRelations) {
                 FRelation relation = this->tree->findRelation(relationId);
 
-                content += "#### " + tr("Partner") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]" + '\n';
+                content += "#### " + tr("Partner") + " [" + relation.getBegin().getDate().toLocaleString() + " - " + relation.getEnd().getDate().toLocaleString() + "]" + '\n';
                 content += '\n';
                 foreach (QUuid partnerId, relation.getPartners()) {
                     if (partnerId == personId)
@@ -135,7 +136,7 @@ QString PersonDetailsWidget::generateMarkdown() const
                         continue;
                     }
                     FPerson partner = this->tree->findPerson(partnerId);
-                    content += "- " + partner.getName().toString() + " [" + QLocale().toString(partner.getBirth().getDate().toDate()) + " - " + QLocale().toString(partner.getDeath().getDate().toDate()) + "]" + '\n';
+                    content += "- " + partner.getName().toString() + " [" + partner.getBirth().getDate().toLocaleString() + " - " + partner.getDeath().getDate().toLocaleString() + "]" + '\n';
                 }
                 content += '\n';
 
@@ -143,7 +144,7 @@ QString PersonDetailsWidget::generateMarkdown() const
                 content += '\n';
                 foreach (QUuid childId, relation.getChildren()) {
                     FPerson child = this->tree->findPerson(childId);
-                    content += "- " + child.getName().toString() + " [" + QLocale().toString(child.getBirth().getDate().toDate()) + " - " + QLocale().toString(child.getDeath().getDate().toDate()) + "]" + '\n';
+                    content += "- " + child.getName().toString() + " [" + child.getBirth().getDate().toLocaleString() + " - " + child.getDeath().getDate().toLocaleString() + "]" + '\n';
                 }
                 content += '\n';
             }
@@ -165,55 +166,95 @@ QString PersonDetailsWidget::personLink(const FPerson &person)
     return "<a href=\"person:" + person.getId().toString(QUuid::WithoutBraces) + "\">" + person.getName().toString().toHtmlEscaped() + "</a>";
 }
 
+QString PersonDetailsWidget::periodString(const FDate &begin, const FDate &end)
+{
+    if (begin.isEmpty() && end.isEmpty())
+    {
+        return QString();
+    }
+    return "<span style=\"color: " + DiagramColors::textColorSecondary().name() + "; font-weight: normal;\">"
+           + begin.toLocaleString(QLocale::ShortFormat) + " – " + end.toLocaleString(QLocale::ShortFormat)
+           + "</span>";
+}
+
 QString PersonDetailsWidget::personLinkWithDates(const FPerson &person)
 {
     return PersonDetailsWidget::personLink(person)
-           + " [" + QLocale().toString(person.getBirth().getDate().toDate())
-           + " - " + QLocale().toString(person.getDeath().getDate().toDate()) + "]";
+           + "&nbsp;&nbsp;" + PersonDetailsWidget::periodString(person.getBirth().getDate(),person.getDeath().getDate());
 }
 
 QString PersonDetailsWidget::eventString(const FEvent &event)
 {
-    QString dateString = QLocale().toString(event.getDate().toDate());
+    QString dateString = event.getDate().toLocaleString();
     QString placeString = event.getPlace().getAddress().toString().toHtmlEscaped();
     QString separator = !dateString.isEmpty() && !placeString.isEmpty() ? ", " : QString();
     return dateString + separator + placeString;
 }
 
+QString PersonDetailsWidget::rowHtml(const QString &label, const QString &value)
+{
+    return "<tr><td class=\"label\" width=\"25%\">" + label + "</td><td>" + value + "</td></tr>";
+}
+
+QString PersonDetailsWidget::personsRowHtml(const QString &label, const QList<QUuid> &personsIds, const QUuid &skippedId) const
+{
+    QStringList links;
+    foreach (QUuid id, personsIds)
+    {
+        if (id != skippedId)
+        {
+            links.append(PersonDetailsWidget::personLinkWithDates(this->tree->findPerson(id)));
+        }
+    }
+    if (links.isEmpty())
+    {
+        return QString();
+    }
+    return PersonDetailsWidget::rowHtml(label,links.join("<br/>"));
+}
+
 QString PersonDetailsWidget::generateHtml() const
 {
-    const bool darkMode = (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark);
-    const QString titleBackground = darkMode ? "#161616" : "lightgrey";
-    const QString sectionBackground = darkMode ? "#242424" : "#E8E8E8";
+    // Same colors as the cards of the family tree diagram.
+    const QString border = DiagramColors::borderColor().name();
+    const QString background = DiagramColors::boxBackground().name();
+    const QString text = DiagramColors::textColorPrimary().name();
+    const QString secondaryText = DiagramColors::textColorSecondary().name();
+    const QString link = DiagramColors::borderColorSelected().name();
+    const QString sectionBackground = DiagramColors::relationHeaderTop().name();
+    const QString sectionText = DiagramColors::relationTextPrimary().name();
+
+    const QString tableStart = "<table width=\"100%\" cellspacing=\"0\" cellpadding=\"6\">";
 
     QString content;
 
     content += "<!DOCTYPE html>";
-    content += "<html lang=\"en\">";
+    content += "<html>";
     content += "<head>";
     content += "<title>" + tr("Person details") + "</title>";
     content += "<style type=\"text/css\">";
-    content += "table, th, td {\
-                    border: 1px solid " + QString(darkMode ? "gray" : "darkgrey") + "; \
-                    border-collapse: collapse; \
-                    background: " + QString(darkMode ? "#323232" : "whitesmoke") + "; \
-                    text-align: left; \
-                    color: " + QString(darkMode ? "white" : "black") + "; \
-                }";
+    content += "table { border: 1px solid " + border + "; border-collapse: collapse; background: " + background + "; color: " + text + "; }";
+    content += "td { border-bottom: 1px solid " + border + "; }";
+    content += "td.title { font-size: large; font-weight: bold; }";
+    content += "td.section { background: " + sectionBackground + "; color: " + sectionText + "; font-weight: bold; }";
+    content += "td.label { color: " + secondaryText + "; }";
+    content += "td.plain { border: 0px; }";
+    content += "a { color: " + link + "; text-decoration: none; }";
+    content += "p.hint { color: " + secondaryText + "; }";
     content += "</style>";
     content += "</head>";
     content += "<body>";
 
     if (this->personsIds.isEmpty())
     {
-        content += "<p align=\"center\" style=\"color: gray;\"><br/>" + tr("Select a person in the list of persons to see the details.") + "</p>";
+        content += "<p class=\"hint\" align=\"center\"><br/>" + tr("Select a person in the list of persons to see the details.") + "</p>";
     }
     else if (this->personsIds.count() > PersonDetailsWidget::maxDetailedPersons)
     {
         // Full details of many persons, with their pictures, would be long and slow to build.
-        content += "<table width=\"100%\">";
-        content += "<tr><th colspan=\"3\" align=\"center\" style=\"background: " + titleBackground + ";\">" + tr("Selected persons") + " (" + QLocale().toString(this->personsIds.count()) + ")</th></tr>";
-        content += "<tr><th>" + tr("Name") + "</th><th>" + tr("Born") + "</th><th>" + tr("Died") + "</th></tr>";
+        content += tableStart;
+        content += "<tr><td colspan=\"3\" class=\"title\" style=\"background: " + DiagramColors::headerNeutral().name() + ";\">" + tr("Selected persons") + " (" + QLocale().toString(this->personsIds.count()) + ")</td></tr>";
+        content += "<tr><td class=\"label\">" + tr("Name") + "</td><td class=\"label\">" + tr("Born") + "</td><td class=\"label\">" + tr("Died") + "</td></tr>";
         foreach (QUuid personId, this->tree->sortPersons(this->personsIds))
         {
             FPerson person = this->tree->findPerson(personId);
@@ -224,104 +265,65 @@ QString PersonDetailsWidget::generateHtml() const
             content += "</tr>";
         }
         content += "</table>";
-        content += "<p style=\"color: gray;\">" + tr("Click a name to see the details of the person.") + "</p>";
+        content += "<p class=\"hint\">" + tr("Click a name to see the details of the person.") + "</p>";
     }
     else
     {
         foreach (QUuid personId, this->personsIds)
         {
             FPerson person = this->tree->findPerson(personId);
-            content += "<table width=\"100%\">";
-            content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + titleBackground + ";\">" + person.getName().toString().toHtmlEscaped() + "</th></tr>";
+
+            QColor titleBackground = DiagramColors::headerNeutral();
+            switch (FPerson::sexDescToIndex(person.getSex()))
+            {
+                case FPerson::SexIndex::male:   titleBackground = DiagramColors::headerMale(); break;
+                case FPerson::SexIndex::female: titleBackground = DiagramColors::headerFemale(); break;
+                case FPerson::SexIndex::other:  titleBackground = DiagramColors::headerOther(); break;
+                default: break;
+            }
+
+            content += tableStart;
+            content += "<tr><td colspan=\"2\" class=\"title\" style=\"background: " + titleBackground.name() + ";\">" + person.getName().toString().toHtmlEscaped() + "</td></tr>";
             if (!person.getPicture().isEmpty())
             {
-                content += "<tr><td colspan=\"2\" align=\"left\">";
-                content += "<table style=\"border: 0px\">";
+                content += "<tr><td colspan=\"2\">";
+                content += "<table style=\"border: 0px;\" cellspacing=\"0\" cellpadding=\"0\">";
                 content += "<tr>";
-                content += "<td style=\"border: 0px\">";
+                content += "<td class=\"plain\">";
                 content += "<img src=\"data:image/png;base64," + person.getPicture().getData().toBase64() + "\">";
                 content += "</td>";
-                content += "<td style=\"border: 0px\">";
+                content += "<td class=\"plain\" style=\"padding-left: 10px;\">";
                 content += "<strong>" + person.getPicture().getTitle().toHtmlEscaped() + "</strong><br/>" + person.getPicture().getDescription().toHtmlEscaped();
                 content += "</td>";
                 content += "</tr>";
                 content += "</table>";
                 content += "</td></tr>";
             }
-            content += "<tr><th>" + tr("Sex")  + "</th><td width=\"80%\">" + _FP_TR(FPerson::sexKeyToDesc(person.getSex())) + "</td></tr>";
-            content += "<tr><th>" + tr("Born") + "</th><td>" + PersonDetailsWidget::eventString(person.getBirth()) + "</td></tr>";
-            content += "<tr><th>" + tr("Died") + "</th><td>" + PersonDetailsWidget::eventString(person.getDeath()) + "</td></tr>";
+            content += PersonDetailsWidget::rowHtml(tr("Sex"),_FP_TR(FPerson::sexKeyToDesc(person.getSex())));
+            content += PersonDetailsWidget::rowHtml(tr("Born"),PersonDetailsWidget::eventString(person.getBirth()));
+            content += PersonDetailsWidget::rowHtml(tr("Died"),PersonDetailsWidget::eventString(person.getDeath()));
 
-            QList<QUuid> partnerRelations = this->tree->findPersonPartnerRelations(personId);
-            QList<QUuid> childRelations = this->tree->findPersonChildRelations(personId);
-
-            foreach (QUuid relationId, childRelations)
+            foreach (QUuid relationId, this->tree->findPersonChildRelations(personId))
             {
                 FRelation relation = this->tree->findRelation(relationId);
 
-                content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + sectionBackground + ";\">" + tr("Parents and siblings") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]</th></tr>";
-                content += "<tr><th>" + tr("Parents") + "</th>";
-                content += "<td>";
-                content += "<ul>";
-                foreach (QUuid parentId, this->tree->sortPersons(relation.getPartners()))
-                {
-                    content += "<li>" + PersonDetailsWidget::personLinkWithDates(this->tree->findPerson(parentId)) + "</li>";
-                }
-                content += "</ul>";
-                content += "</td>";
-                content += "</tr>";
-
-                content += "<tr><th>" + tr("Siblings") + "</th>";
-                content += "<td>";
-                content += "<ul>";
-                foreach (QUuid childId, this->tree->sortPersons(relation.getChildren()))
-                {
-                    if (childId == personId)
-                    {
-                        continue;
-                    }
-                    content += "<li>" + PersonDetailsWidget::personLinkWithDates(this->tree->findPerson(childId)) + "</li>";
-                }
-                content += "</ul>";
-                content += "</td>";
-                content += "</tr>";
+                content += "<tr><td colspan=\"2\" class=\"section\">" + tr("Parents and siblings") + "&nbsp;&nbsp;" + PersonDetailsWidget::periodString(relation.getBegin().getDate(),relation.getEnd().getDate()) + "</td></tr>";
+                content += this->personsRowHtml(tr("Parents"),this->tree->sortPersons(relation.getPartners()));
+                content += this->personsRowHtml(tr("Siblings"),this->tree->sortPersons(relation.getChildren()),personId);
             }
 
-            foreach (QUuid relationId, partnerRelations)
+            foreach (QUuid relationId, this->tree->findPersonPartnerRelations(personId))
             {
                 FRelation relation = this->tree->findRelation(relationId);
 
-                content += "<tr><th colspan=\"2\" align=\"center\" style=\"background: " + sectionBackground + ";\">" + tr("Partner and children") + " [" + QLocale().toString(relation.getBegin().getDate().toDate()) + " - " + QLocale().toString(relation.getEnd().getDate().toDate()) + "]</th></tr>";
-                content += "<tr><th>" + tr("Partner") + "</th>";
-                content += "<td>";
-                content += "<ul>";
-                foreach (QUuid partnerId, relation.getPartners())
-                {
-                    if (partnerId == personId)
-                    {
-                        continue;
-                    }
-                    content += "<li>" + PersonDetailsWidget::personLinkWithDates(this->tree->findPerson(partnerId)) + "</li>";
-                }
-                content += "</ul>";
-                content += "</td>";
-                content += "</tr>";
-
-                content += "<tr><th>" + tr("Children") + "</th>";
-                content += "<td>";
-                content += "<ul>";
-                foreach (QUuid childId, relation.getChildren())
-                {
-                    content += "<li>" + PersonDetailsWidget::personLinkWithDates(this->tree->findPerson(childId)) + "</li>";
-                }
-                content += "</ul>";
-                content += "</td>";
-                content += "</tr>";
+                content += "<tr><td colspan=\"2\" class=\"section\">" + tr("Partner and children") + "&nbsp;&nbsp;" + PersonDetailsWidget::periodString(relation.getBegin().getDate(),relation.getEnd().getDate()) + "</td></tr>";
+                content += this->personsRowHtml(tr("Partner"),relation.getPartners(),personId);
+                content += this->personsRowHtml(tr("Children"),relation.getChildren());
             }
 
             if (!person.getText().isEmpty())
             {
-                content += "<tr><th colspan=\"2\" align=\"center\">" + tr("Additional information") + "</th></tr>";
+                content += "<tr><td colspan=\"2\" class=\"section\">" + tr("Additional information") + "</td></tr>";
                 content += "<tr><td colspan=\"2\"><p style=\"white-space: pre-wrap;\">" + person.getText().toHtmlEscaped() + "</p></td></tr>";
             }
 

@@ -34,6 +34,12 @@ class Session : public QObject
         bool treeChanged;
 
         QFileSystemWatcher *fileSystemWatcher;
+        //! Hash of the tree file content as it was last read or written by this application.
+        QByteArray treeFileHash;
+        //! Tree file is being written by this application.
+        bool treeFileWriting;
+        //! Tree file change was reported while it was being written.
+        bool treeFileChangePending;
 
     public:
 
@@ -77,7 +83,7 @@ class Session : public QObject
         void readTreeFile();
 
         //! Write tree file.
-        void writeTreeFile() const;
+        void writeTreeFile();
 
         //! Write tree file under a new name and remove the file it was read from.
         void moveTreeFile(const QString &newTreeFileName);
@@ -107,6 +113,12 @@ class Session : public QObject
 
         //! Handle tree file has changed.
         void onTreeFileChanged(const QString &fileName);
+
+        //! Return hash of content of given file.
+        static QByteArray hashFile(const QString &fileName);
+
+        //! Tree file writing has ended, handle change which was reported meanwhile.
+        void finishTreeFileWriting();
 
         //! Write action has finished.
         void writeActionFinished(const QSharedPointer<RToolAction> &action);

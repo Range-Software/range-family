@@ -11,6 +11,7 @@ qt_add_executable(family
     src/calendar_dialog.h
     src/date_edit_widget.cpp
     src/date_edit_widget.h
+    src/date_tree_widget_item.h
     src/diagram_dialog.cpp
     src/diagram_dialog.h
     src/diagram_scene.cpp

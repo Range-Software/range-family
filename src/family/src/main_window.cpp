@@ -81,6 +81,9 @@ MainWindow::MainWindow(Session *session,
 
     // Docks can be placed side by side, stacked or tabbed.
     this->setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
+    // Tabs of panels stacked at a side of the window are placed on its outer edge.
+    this->setTabPosition(Qt::LeftDockWidgetArea,QTabWidget::West);
+    this->setTabPosition(Qt::RightDockWidgetArea,QTabWidget::East);
 
     this->createDockWidgets();
     this->createMenus();

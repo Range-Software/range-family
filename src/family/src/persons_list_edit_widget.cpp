@@ -87,7 +87,7 @@ QString PersonsListEditWidget::getPersonString(const FPerson &person)
     QString personString = person.getName().toString();
     if (!person.getBirth().getDate().isEmpty())
     {
-        personString += " (" + QLocale().toString(person.getBirth().getDate().toDate()) + ")";
+        personString += " (" + person.getBirth().getDate().toLocaleString() + ")";
     }
     return personString;
 }

@@ -1,3 +1,4 @@
+#include <QCryptographicHash>
 #include <QFile>
 #include <QFileInfo>
 
@@ -12,6 +13,8 @@
 Session::Session(QObject *parent)
     : QObject(parent)
     , treeChanged(false)
+    , treeFileWriting(false)
+    , treeFileChangePending(false)
 {
     this->pTree = new FTree(this);
 
@@ -102,7 +105,7 @@ void Session::readTreeFile()
     RJobManager::getInstance().submit(toolTask);
 }
 
-void Session::writeTreeFile() const
+void Session::writeTreeFile()
 {
     RLogger::debug("Registering to write \'%s\'\n",this->treeFileName.toUtf8().constData());
     RToolInput toolInput;
@@ -112,7 +115,7 @@ void Session::writeTreeFile() const
     QObject::connect(toolTask,&RToolTask::actionFinished,this,&Session::writeActionFinished);
     QObject::connect(toolTask,&RToolTask::actionFailed,this,&Session::writeActionFailed);
 
-    this->fileSystemWatcher->blockSignals(true);
+    this->treeFileWriting = true;
     RJobManager::getInstance().submit(toolTask);
 }
 
@@ -200,6 +203,8 @@ void Session::onTreeFileLoaded(const QString &fileName)
     // Pending picture files belong to the tree which has just been replaced.
     this->clearObsoletePictureFiles();
 
+    this->treeFileHash = Session::hashFile(fileName);
+
     emit this->treeFileLoaded(fileName);
 }
 
@@ -209,6 +214,7 @@ void Session::onTreeFileSaved(const QString &fileName)
     this->pTree->rebasePictureUrls(fileName);
     this->setTreeFileName(fileName);
     this->treeChanged = false;
+    this->treeFileHash = Session::hashFile(fileName);
 
     // Picture data of the pictures which were moved into the tree are stored
     // in the saved file - the files they were stored in before can be removed.
@@ -235,8 +241,29 @@ void Session::onTreeFileSaved(const QString &fileName)
 
 void Session::onTreeFileChanged(const QString &fileName)
 {
+    if (this->treeFileWriting)
+    {
+        // Content can not be compared until the writing has ended.
+        this->treeFileChangePending = true;
+        return;
+    }
+
     if (QFileInfo::exists(fileName))
     {
+        // File which was replaced is no longer watched.
+        if (!this->fileSystemWatcher->files().contains(fileName))
+        {
+            this->fileSystemWatcher->addPath(fileName);
+        }
+
+        // File written by this application, or rewritten with the same content, has not changed.
+        QByteArray hash = Session::hashFile(fileName);
+        if (hash == this->treeFileHash)
+        {
+            return;
+        }
+        this->treeFileHash = hash;
+
         RLogger::info("File \"%s\" has been modified outside of this application.\n",this->treeFileName.toUtf8().constData());
         emit this->treeFileChanged(fileName);
     }
@@ -247,9 +274,34 @@ void Session::onTreeFileChanged(const QString &fileName)
     }
 }
 
+QByteArray Session::hashFile(const QString &fileName)
+{
+    QFile file(fileName);
+    QCryptographicHash hash(QCryptographicHash::Sha256);
+    if (!file.open(QIODevice::ReadOnly) || !hash.addData(&file))
+    {
+        return QByteArray();
+    }
+    return hash.result();
+}
+
+void Session::finishTreeFileWriting()
+{
+    this->treeFileWriting = false;
+
+    if (this->treeFileChangePending)
+    {
+        this->treeFileChangePending = false;
+        if (QFileInfo::exists(this->treeFileName))
+        {
+            this->onTreeFileChanged(this->treeFileName);
+        }
+    }
+}
+
 void Session::writeActionFinished(const QSharedPointer<RToolAction> &action)
 {
-    this->fileSystemWatcher->blockSignals(false);
+    this->finishTreeFileWriting();
 }
 
 void Session::writeActionFailed(const QSharedPointer<RToolAction> &action)
@@ -257,5 +309,5 @@ void Session::writeActionFailed(const QSharedPointer<RToolAction> &action)
     // The tree was not written - the file it was read from must be kept.
     this->treeFileToRemove.clear();
 
-    this->fileSystemWatcher->blockSignals(false);
+    this->finishTreeFileWriting();
 }

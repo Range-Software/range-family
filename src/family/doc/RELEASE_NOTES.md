@@ -116,6 +116,27 @@
   selected person a hint is shown, and more than three selected persons are
   shown as a summary of their names and dates.
 - Highlighted rows use a color which stays readable in the dark color scheme.
+- Dates can be entered without a day, or without a day and a month, when only
+  the month or the year is known. The date editor has separate day, month and
+  year fields; "Calendar" still picks a full date. Such dates are shown as
+  "1850" or "February 1852" everywhere and are sorted by their earliest
+  possible day in the lists of persons and relations.
+- New "Approximate" option of the date editor marks a date as uncertain. Until
+  now this mark could only be set by suggested dates and by imports.
+- "Suggest birth and death dates" is rewritten. It uses dates from the whole
+  family tree instead of only the closest relatives, takes the sex of a parent,
+  dates of partners and deaths of parents into account, and picks the most
+  likely date from typical ages instead of the middle of the possible range.
+  Suggested dates are approximate years.
+- The dialog with suggested dates shows the possible range of each date and the
+  approximate date it would replace. Birth and death are accepted separately,
+  and contradicting dates of relatives are reported instead of being averaged.
+- Person details use the colors of the family tree diagram in both the light
+  and the dark color scheme: the title has the color of the person's card and
+  the sections the color of a relation card. Relatives are listed one per line
+  with short dates, and rows and dates which are empty are left out.
+- Tabs of panels stacked at the left or the right side of the main window are
+  placed on the outer edge of the window.
 
 ### Bug fixes
 
@@ -141,6 +162,14 @@
   was accepted and only reported as SSL errors in the log. Such connections are
   now refused. A session whose host uses a private certificate authority needs
   that authority set as its host "Certificate", or its "Verification" relaxed.
+- Saving the family tree was followed by the question whether to load the
+  modified file. The file is now compared with what the application last read
+  or wrote, so the question is asked only when another tool or a synchronization
+  has changed its content. A change made while the tree is being saved is no
+  longer missed, and a file replaced by another tool stays watched.
+- "Suggest birth and death dates" replaced a known death date with a suggested
+  one when the birth date was missing or approximate, and suggested a death at
+  an age of over a hundred years for a person known only by the parents.
 
 ### Submodules
 
