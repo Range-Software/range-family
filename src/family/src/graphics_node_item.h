@@ -3,10 +3,15 @@
 
 #include <QAbstractGraphicsShapeItem>
 
+class QPainter;
+
 class GraphicsNodeItem : public QAbstractGraphicsShapeItem
 {
 
     protected:
+
+        //! Width of the glow around a highlighted item.
+        static constexpr qreal highlightGlowSize = 12.0;
 
         bool highlighted;
         QRectF slot;
@@ -49,6 +54,12 @@ class GraphicsNodeItem : public QAbstractGraphicsShapeItem
         QPointF getCenterPosition() const;
 
         void setHighlighted(bool highlighted);
+
+    protected:
+
+        //! Paint glow around the box of a highlighted item, so it stands out from the background.
+        //! Must be painted before the box itself.
+        void paintHighlightGlow(QPainter *painter, const QRectF &boxRect, qreal rounding) const;
 
 };
 

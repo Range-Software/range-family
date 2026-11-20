@@ -69,10 +69,11 @@ class Action : public RAction
             ACTION_FILE_CLOSE,
             ACTION_FILE_STORE_IMAGES_IN_TREE,
             ACTION_FILE_STORE_IMAGES_IN_DATA_DIR,
+            ACTION_VIEW_PERSONS,
             ACTION_VIEW_PERSON_DETAILS,
             ACTION_VIEW_RELATIONS,
-            ACTION_VIEW_FAMILY_TREE,
             ACTION_VIEW_OUTPUT,
+            ACTION_VIEW_RESET_LAYOUT,
             ACTION_EDIT_PERSON_ADD,
             ACTION_EDIT_PERSON_EDIT,
             ACTION_EDIT_PERSON_REMOVE,
@@ -270,11 +271,14 @@ class Action : public RAction
         //! Show or hide list of relations.
         void onViewRelations(bool checked);
 
-        //! Show or hide family tree diagram.
-        void onViewFamilyTree(bool checked);
+        //! Show or hide list of persons.
+        void onViewPersons(bool checked);
 
         //! Show or hide application output.
         void onViewOutput(bool checked);
+
+        //! Restore default layout of the main window.
+        void onViewResetLayout();
 
 };
 

@@ -1,4 +1,7 @@
+#include <QPainter>
+
 #include "graphics_node_item.h"
+#include "diagram_colors.h"
 
 GraphicsNodeItem::GraphicsNodeItem(const QRectF &slot, QGraphicsItem *parent)
     : QAbstractGraphicsShapeItem(parent)
@@ -92,4 +95,24 @@ QPointF GraphicsNodeItem::getCenterPosition() const
 void GraphicsNodeItem::setHighlighted(bool highlighted)
 {
     this->highlighted = highlighted;
+}
+
+void GraphicsNodeItem::paintHighlightGlow(QPainter *painter, const QRectF &boxRect, qreal rounding) const
+{
+    if (!this->highlighted)
+    {
+        return;
+    }
+    // Layers drawn from the outside in add up, so the glow gets stronger towards the box.
+    const QColor glowColor = DiagramColors::highlightGlow();
+    painter->save();
+    painter->setPen(Qt::NoPen);
+    for (int i=int(highlightGlowSize);i>0;i--)
+    {
+        QColor layerColor = glowColor;
+        layerColor.setAlpha(18);
+        painter->setBrush(layerColor);
+        painter->drawRoundedRect(boxRect.adjusted(-i,-i,i,i),rounding + i,rounding + i);
+    }
+    painter->restore();
 }

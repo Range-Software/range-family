@@ -38,7 +38,7 @@ class MainWindow : public QMainWindow
         RApplicationSettings *applicationSettings;
         //! List of actions.
         RActionList *actionList;
-        //! Editor of the family tree, the central widget.
+        //! Editor of the family tree, keeping its views in sync.
         EditorWidget *editor;
         //! Application output.
         OutputWidget *outputWidget;
@@ -48,8 +48,8 @@ class MainWindow : public QMainWindow
         QDockWidget *detailsDock;
         //! Dock with list of relations.
         QDockWidget *relationsDock;
-        //! Dock with family tree diagram.
-        QDockWidget *diagramDock;
+        //! Dock with list of persons.
+        QDockWidget *personsDock;
         //! Dock with application output.
         QDockWidget *outputDock;
         //! Dock with AI chat.
@@ -76,9 +76,9 @@ class MainWindow : public QMainWindow
         //! Docks, in order of the view menu.
         enum DockType
         {
-            DockPersonDetails = 0,
+            DockPersons = 0,
+            DockPersonDetails,
             DockRelations,
-            DockFamilyTree,
             DockOutput,
             DockAiChat
         };
@@ -90,11 +90,14 @@ class MainWindow : public QMainWindow
                             RActionList *actionList,
                             QWidget *parent = nullptr);
 
-        //! Return editor with lists of persons and relations.
+        //! Return editor with views of the family tree.
         EditorWidget *getEditor() const;
 
         //! Show or hide given dock. Dock which gets shown is brought to the front of its tabs.
         void setDockVisible(DockType dockType, bool visible);
+
+        //! Place docks and tool bars to their default positions and sizes.
+        void restoreDefaultLayout();
 
         //! Switch between ribbon layout and layout with menus and tool bars and remember the choice.
         void setRibbonLayout(bool ribbonLayout);
@@ -122,8 +125,12 @@ class MainWindow : public QMainWindow
         //! Create menu showing and hiding docks.
         QMenu *createViewMenu(QWidget *parent);
 
-        //! Create editor, output and docks and place them to their default positions.
+        //! Create editor, output and docks and place them to their default positions. Family tree diagram is the central widget.
         void createDockWidgets();
+
+        //! Place docks to their default positions: persons tabbed with relations above person details on the left,
+        //! AI chat on the right and output at the bottom. AI chat and output are hidden.
+        void placeDockWidgets();
 
         //! Check actions of the view menu for docks which are shown.
         void syncDockActions();

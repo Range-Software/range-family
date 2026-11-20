@@ -247,7 +247,9 @@ family_add_icon_resources(icons-family "/icons/family"
 family_add_icon_resources(icons-view "/icons/view"
         pixmaps/range-view_output.svg
         pixmaps/range-view_person_details.svg
+        pixmaps/range-view_persons.svg
         pixmaps/range-view_relations.svg
+        pixmaps/range-view_reset_layout.svg
 )
 
 family_add_icon_resources(icons-ai "/icons/ai"

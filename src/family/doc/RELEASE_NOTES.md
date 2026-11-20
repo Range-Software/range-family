@@ -81,18 +81,23 @@
   and death dates" are application actions: they are found in the new "Edit"
   menu, on the tool bar and the ribbon, can be given keyboard shortcuts in the
   application settings and have help pages.
-- The main window is rearranged into panels. The list of persons stays in the
-  middle, "Person details", "Relations", "Family tree", "Output" and "AI chat"
+- The main window is rearranged into panels. The family tree diagram stays in
+  the middle, "Persons", "Person details", "Relations", "Output" and "AI chat"
   are panels which can be moved to another side of the window, stacked, tabbed,
   detached into their own window or closed. The arrangement is remembered. The
   new arrangement is applied once to existing installations.
 - New "View" menu shows and hides the panels. Its entries are application
   actions: they can be given keyboard shortcuts in the application settings and
-  have help pages.
+  have help pages. "Restore default layout" in the "View" menu puts all panels
+  and tool bars back to their default places.
+- By default "Persons" and "Relations" share tabs on the left above "Person
+  details", "AI chat" and "Output" are hidden.
+- On the first start the main window covers 80 % of the screen width and height.
 - A diagram of the family tree is part of the main window. It follows the person
-  selected in the list of persons, and a double-click on a person or relation in
-  the diagram selects it in the lists. "Show family tree" still opens the diagram
-  in its own window.
+  selected in the list of persons or the relation selected in the list of
+  relations, and a double-click on a person or relation in the diagram selects it
+  in the lists. The person or relation the diagram is built around glows, so it
+  is easy to spot. "Show family tree" still opens the diagram in its own window.
 - Controls of the family tree diagram are drawn over its corners, "Export tree"
   on the left and zoom on the right, so the diagram uses the whole height.
 - The application output is no longer a tab of the main window. While it is not

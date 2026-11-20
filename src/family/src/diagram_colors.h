@@ -54,10 +54,15 @@ struct DiagramColors
         return isDarkMode() ? QColor(170, 170, 185) : QColor(100, 100, 120);
     }
 
-    static QColor highlightOverlay()
+    static QColor highlightGlow()
     {
-        // Dark mode: lighten; Light mode: darken
-        return isDarkMode() ? QColor(255, 255, 255, 20) : QColor(0, 0, 0, 25);
+        // Warm glow behind the item the diagram is built around, distinct from the blue selection
+        return isDarkMode() ? QColor(255, 190, 70) : QColor(245, 160, 20);
+    }
+
+    static QColor highlightBorder()
+    {
+        return isDarkMode() ? QColor(255, 200, 90) : QColor(225, 140, 0);
     }
 
     // Header colors by sex - dark mode uses deeper, saturated tones

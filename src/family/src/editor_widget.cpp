@@ -1,22 +1,19 @@
-#include <QVBoxLayout>
+#include <QEvent>
 
 #include "editor_widget.h"
 
-EditorWidget::EditorWidget(Session *session, QWidget *parent)
-    : QWidget{parent}
+EditorWidget::EditorWidget(Session *session, QObject *parent)
+    : QObject{parent}
     , session(session)
     , diagramUpdating(false)
+    , relationsSelectedLast(false)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    this->setLayout(mainLayout);
-
+    // Views are placed, and so owned, by the owner of the editor.
     this->personList = new PersonsListWidget(this->session->getTree());
-    mainLayout->addWidget(this->personList);
-
-    // Remaining views are placed by the owner of the editor.
-    this->personDetailsList = new PersonDetailsWidget(this->session->getTree(),this);
-    this->relationList = new RelationsListWidget(this->session->getTree(),this);
-    this->diagram = new DiagramWidget(this->session->getTree(),QUuid(),this);
+    this->personDetailsList = new PersonDetailsWidget(this->session->getTree());
+    this->relationList = new RelationsListWidget(this->session->getTree());
+    this->diagram = new DiagramWidget(this->session->getTree(),QUuid());
+    this->diagram->installEventFilter(this);
 
     QObject::connect(this->personList,&PersonsListWidget::selectionChanged,this,&EditorWidget::onPersonsSelectionChanged);
     QObject::connect(this->session,&Session::activePersonIdChanged,this->personList,&PersonsListWidget::onActivePersonIdChanged);
@@ -53,6 +50,18 @@ DiagramWidget *EditorWidget::getDiagram() const
 
 void EditorWidget::onPersonsSelectionChanged(const QList<QUuid> &selectedPersonsIds)
 {
+    this->relationsSelectedLast = false;
+    this->updatePersonsSelection(selectedPersonsIds);
+}
+
+void EditorWidget::onRelationsSelectionChanged(const QList<QUuid> &selectedRelationsIds)
+{
+    this->relationsSelectedLast = true;
+    this->updateRelationsSelection(selectedRelationsIds);
+}
+
+void EditorWidget::updatePersonsSelection(const QList<QUuid> &selectedPersonsIds)
+{
     QList<QUuid> relationsIds;
     foreach (const QUuid &personId, selectedPersonsIds)
     {
@@ -67,7 +76,7 @@ void EditorWidget::onPersonsSelectionChanged(const QList<QUuid> &selectedPersons
     this->updateDiagram();
 }
 
-void EditorWidget::onRelationsSelectionChanged(const QList<QUuid> &selectedRelationsIds)
+void EditorWidget::updateRelationsSelection(const QList<QUuid> &selectedRelationsIds)
 {
     QList<QUuid> personsIds;
     foreach (const QUuid &relationId, selectedRelationsIds)
@@ -79,6 +88,7 @@ void EditorWidget::onRelationsSelectionChanged(const QList<QUuid> &selectedRelat
         }
     }
     this->personList->highlightPersons(personsIds);
+    this->updateDiagram();
 }
 
 void EditorWidget::onPersonChanged(const FPerson &person)
@@ -86,7 +96,7 @@ void EditorWidget::onPersonChanged(const FPerson &person)
     QList<QUuid> selectedIds = this->personList->getSelectedIds();
     if (selectedIds.contains(person.getId()))
     {
-        this->onPersonsSelectionChanged(selectedIds);
+        this->updatePersonsSelection(selectedIds);
     }
 }
 
@@ -95,7 +105,7 @@ void EditorWidget::onRelationChanged(const FRelation &relation)
     QList<QUuid> selectedIds = this->relationList->getSelectedIds();
     if (selectedIds.contains(relation.getId()))
     {
-        this->onRelationsSelectionChanged(selectedIds);
+        this->updateRelationsSelection(selectedIds);
     }
 }
 
@@ -110,7 +120,7 @@ void EditorWidget::updateDiagram()
     const FTree *tree = this->session->getTree();
 
     QUuid itemId;
-    const QList<QUuid> selectedIds = this->personList->getSelectedIds();
+    const QList<QUuid> selectedIds = this->relationsSelectedLast ? this->relationList->getSelectedIds() : this->personList->getSelectedIds();
     if (selectedIds.count() == 1)
     {
         itemId = selectedIds.first();
@@ -126,6 +136,15 @@ void EditorWidget::updateDiagram()
         this->diagram->setItemId(itemId);
         this->diagramUpdating = false;
     }
+}
+
+bool EditorWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == this->diagram && event->type() == QEvent::Show)
+    {
+        this->updateDiagram();
+    }
+    return QObject::eventFilter(watched,event);
 }
 
 void EditorWidget::onDiagramItemIdChanged(const QUuid &itemId)

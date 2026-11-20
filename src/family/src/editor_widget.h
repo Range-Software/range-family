@@ -1,7 +1,7 @@
 #ifndef EDITOR_WIDGET_H
 #define EDITOR_WIDGET_H
 
-#include <QWidget>
+#include <QObject>
 
 #include "session.h"
 #include "diagram_widget.h"
@@ -9,9 +9,9 @@
 #include "relations_list_widget.h"
 #include "person_details_widget.h"
 
-//! Editor of the family tree. It shows the list of persons itself and keeps it in sync
-//! with the other views, which are placed in the main window by its owner.
-class EditorWidget : public QWidget
+//! Editor of the family tree. It owns the views of the family tree and keeps them in sync,
+//! the views are placed in the main window by its owner.
+class EditorWidget : public QObject
 {
 
     Q_OBJECT
@@ -28,13 +28,15 @@ class EditorWidget : public QWidget
         RelationsListWidget *relationList;
         //! Family tree diagram.
         DiagramWidget *diagram;
-        //! Diagram is being set from the list of persons.
+        //! Diagram is being set from the lists.
         bool diagramUpdating;
+        //! Relations were selected after persons, so the diagram follows the list of relations.
+        bool relationsSelectedLast;
 
     public:
 
         //! Constructor
-        explicit EditorWidget(Session *session, QWidget *parent = nullptr);
+        explicit EditorWidget(Session *session, QObject *parent = nullptr);
 
         //! Return persons list.
         PersonsListWidget *getPersonsList() const;
@@ -62,9 +64,20 @@ class EditorWidget : public QWidget
         //! Relation changed.
         void onRelationChanged(const FRelation &relation);
 
-        //! Show family tree of the selected person in the diagram, if the diagram is visible.
-        //! Without a selected person the diagram is kept, an empty one shows the active person.
+        //! Show family tree of the person or relation selected last in the diagram, if the diagram is visible.
+        //! Without a single selected item the diagram is kept, an empty one shows the active person.
         void updateDiagram();
+
+    protected:
+
+        //! Update views depending on selected persons.
+        void updatePersonsSelection(const QList<QUuid> &selectedPersonsIds);
+
+        //! Update views depending on selected relations.
+        void updateRelationsSelection(const QList<QUuid> &selectedRelationsIds);
+
+        //! Update the diagram when it gets shown.
+        bool eventFilter(QObject *watched, QEvent *event) override;
 
     protected slots:
 

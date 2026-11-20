@@ -55,13 +55,16 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
     qreal x = this->slot.left() + (this->slot.width() - w) / 2.0;
     qreal y = this->slot.top() + (this->slot.height() - h) / 2.0;
 
-    // Expand bounding rect to include shadow
-    this->setBoundingRect(QRectF(x - shadowBlur, y - shadowBlur,
-                                  w + 2 * shadowBlur + shadowOffset,
-                                  h + 2 * shadowBlur + shadowOffset));
+    // Expand bounding rect to include shadow and glow of a highlighted item
+    const qreal margin = this->highlighted ? std::max(shadowBlur, highlightGlowSize) : shadowBlur;
+    this->setBoundingRect(QRectF(x - margin, y - margin,
+                                  w + 2 * margin + shadowOffset,
+                                  h + 2 * margin + shadowOffset));
 
     QRectF boxRect(x, y, w, h);
     QRectF headerRect(x, y, w, headerHeight);
+
+    this->paintHighlightGlow(painter, boxRect, rounding);
 
     // Draw shadow
     QColor shadow = DiagramColors::relationShadowColor();
@@ -92,6 +95,11 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
         currentBorderColor = DiagramColors::relationBorderColorSelected();
         currentBorderWidth = selectedBorderWidth;
     }
+    else if (this->highlighted)
+    {
+        currentBorderColor = DiagramColors::highlightBorder();
+        currentBorderWidth = selectedBorderWidth;
+    }
     else if (this->isUnderMouse())
     {
         currentBorderColor = DiagramColors::relationBorderColorHover();
@@ -116,13 +124,6 @@ void GraphicsRelationItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
     headerPath.addRect(QRectF(x, y + headerHeight - rounding, w, rounding));
 
     painter->drawPath(headerPath.simplified());
-
-    // Draw highlight overlay if highlighted
-    if (this->highlighted)
-    {
-        painter->setBrush(DiagramColors::highlightOverlay());
-        painter->drawRoundedRect(boxRect, rounding, rounding);
-    }
 
     // Draw link icon (two interlocking rings)
     qreal iconX = x + padding;

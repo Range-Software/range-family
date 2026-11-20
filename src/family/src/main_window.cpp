@@ -3,6 +3,7 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QGridLayout>
+#include <QScreen>
 #include <QStatusBar>
 #include <QSignalBlocker>
 #include <QStyle>
@@ -39,15 +40,15 @@ static constexpr int toolBarsVersion = 2;
 //! Actions showing and hiding docks, indexed by MainWindow::DockType.
 static const QList<Action::Type> dockActionTypes =
 {
+    Action::ACTION_VIEW_PERSONS,
     Action::ACTION_VIEW_PERSON_DETAILS,
     Action::ACTION_VIEW_RELATIONS,
-    Action::ACTION_VIEW_FAMILY_TREE,
     Action::ACTION_VIEW_OUTPUT,
     Action::ACTION_AI_CHAT
 };
 
 //! Version of the stored window state. Increase it when docks change, so a state which does not know them is not restored.
-static constexpr int windowStateVersion = 1;
+static constexpr int windowStateVersion = 3;
 
 MainWindow::MainWindow(Session *session,
                        RCloudSessionManager *cloudSession,
@@ -102,7 +103,14 @@ MainWindow::MainWindow(Session *session,
         }
     }
 
-    this->restoreGeometry(this->applicationSettings->value("mainWindow/geometry").toByteArray());
+    if (!this->restoreGeometry(this->applicationSettings->value("mainWindow/geometry").toByteArray()))
+    {
+        // First start: window covers most of the screen.
+        const QRect available = this->screen()->availableGeometry();
+        const QSize size(available.width() * 4 / 5,available.height() * 4 / 5);
+        this->resize(size);
+        this->move(available.left() + (available.width() - size.width()) / 2,available.top() + (available.height() - size.height()) / 2);
+    }
     if (!this->restoreState(this->applicationSettings->value("mainWindow/windowState").toByteArray(),windowStateVersion))
     {
         // Sizes can be given to docks only after the window has got its own.
@@ -193,6 +201,19 @@ void MainWindow::setDockVisible(DockType dockType, bool visible)
             dockWidget->hide();
         }
     }
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::restoreDefaultLayout()
+{
+    R_LOG_TRACE_IN;
+    this->placeDockWidgets();
+    this->placeToolBars();
+    // Placing shows tool bars, which the ribbon layout keeps hidden.
+    this->setRibbonLayout(this->actionList->getAction(Action::ACTION_APPLICATION_RIBBON_LAYOUT)->isChecked());
+    this->syncDockActions();
+    // Sizes can be given to docks only after the layout has placed them.
+    QTimer::singleShot(0,this,&MainWindow::resizeDockWidgets);
     R_LOG_TRACE_OUT;
 }
 
@@ -329,6 +350,8 @@ QMenu *MainWindow::createViewMenu(QWidget *parent)
     {
         menuView->addAction(this->actionList->getAction(type));
     }
+    menuView->addSeparator();
+    menuView->addAction(this->actionList->getAction(Action::ACTION_VIEW_RESET_LAYOUT));
     R_LOG_TRACE_OUT;
     return menuView;
 }
@@ -336,30 +359,21 @@ QMenu *MainWindow::createViewMenu(QWidget *parent)
 void MainWindow::createDockWidgets()
 {
     R_LOG_TRACE_IN;
-    // Editor shows the list of persons and owns the views kept in sync with it.
-    this->editor = new EditorWidget(this->session);
-    this->setCentralWidget(this->editor);
+    // Editor owns the views of the family tree and keeps them in sync, the main window places them.
+    this->editor = new EditorWidget(this->session,this);
+    // Family tree diagram fills the space left by the docks.
+    this->setCentralWidget(this->editor->getDiagram());
 
     this->outputWidget = new OutputWidget;
 
+    this->personsDock = this->createDockWidget("personsDock",tr("Persons"),this->editor->getPersonsList());
     this->detailsDock = this->createDockWidget("detailsDock",tr("Person details"),this->editor->getPersonDetails());
     this->relationsDock = this->createDockWidget("relationsDock",tr("Relations"),this->editor->getRelationsList());
-    this->diagramDock = this->createDockWidget("diagramDock",tr("Family tree"),this->editor->getDiagram());
     this->outputDock = this->createDockWidget("outputDock",tr("Output"),this->outputWidget);
     // AI chat is created when it is shown for the first time.
     this->aiChatDock = this->createDockWidget("aiChatDock",tr("AI chat"),nullptr);
 
-    // Person details above relations on the right, family tree and output share the bottom.
-    this->addDockWidget(Qt::RightDockWidgetArea,this->detailsDock);
-    this->addDockWidget(Qt::RightDockWidgetArea,this->relationsDock);
-    this->addDockWidget(Qt::RightDockWidgetArea,this->aiChatDock);
-    this->tabifyDockWidget(this->detailsDock,this->aiChatDock);
-    this->addDockWidget(Qt::BottomDockWidgetArea,this->diagramDock);
-    this->addDockWidget(Qt::BottomDockWidgetArea,this->outputDock);
-    this->tabifyDockWidget(this->diagramDock,this->outputDock);
-    this->aiChatDock->hide();
-    this->detailsDock->raise();
-    this->diagramDock->raise();
+    this->placeDockWidgets();
 
     // Actions of the view menu follow docks closed by their buttons or restored with the window state.
     for (int i=0;i<this->dockWidgets.count();i++)
@@ -369,8 +383,32 @@ void MainWindow::createDockWidgets()
     }
     this->syncDockActions();
 
-    QObject::connect(this->diagramDock,&QDockWidget::visibilityChanged,this->editor,&EditorWidget::updateDiagram);
     QObject::connect(this->aiChatDock,&QDockWidget::visibilityChanged,this,&MainWindow::onAiChatDockVisibilityChanged);
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::placeDockWidgets()
+{
+    R_LOG_TRACE_IN;
+    for (QDockWidget *dockWidget : std::as_const(this->dockWidgets))
+    {
+        // Removing a dock hides it.
+        this->removeDockWidget(dockWidget);
+        dockWidget->setFloating(false);
+    }
+
+    this->addDockWidget(Qt::LeftDockWidgetArea,this->personsDock);
+    this->splitDockWidget(this->personsDock,this->detailsDock,Qt::Vertical);
+    this->tabifyDockWidget(this->personsDock,this->relationsDock);
+    this->addDockWidget(Qt::RightDockWidgetArea,this->aiChatDock);
+    this->addDockWidget(Qt::BottomDockWidgetArea,this->outputDock);
+
+    this->personsDock->show();
+    this->relationsDock->show();
+    this->detailsDock->show();
+    this->aiChatDock->hide();
+    this->outputDock->hide();
+    this->personsDock->raise();
     R_LOG_TRACE_OUT;
 }
 
@@ -404,8 +442,12 @@ void MainWindow::syncDockActions()
 void MainWindow::resizeDockWidgets()
 {
     R_LOG_TRACE_IN;
-    this->resizeDocks({this->detailsDock},{this->width() * 2 / 5},Qt::Horizontal);
-    this->resizeDocks({this->diagramDock},{this->height() / 3},Qt::Vertical);
+    // Lists and details take a third of the width, persons and relations get more height than details.
+    this->resizeDocks({this->personsDock},{this->width() * 7 / 20},Qt::Horizontal);
+    this->resizeDocks({this->personsDock,this->detailsDock},{this->height() * 3 / 5,this->height() * 2 / 5},Qt::Vertical);
+    // AI chat and output are hidden by default, their sizes apply when the layout keeps them.
+    this->resizeDocks({this->aiChatDock},{this->width() / 4},Qt::Horizontal);
+    this->resizeDocks({this->outputDock},{this->height() / 5},Qt::Vertical);
     R_LOG_TRACE_OUT;
 }
 

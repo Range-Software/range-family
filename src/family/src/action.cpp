@@ -87,10 +87,11 @@ QString Action::getName(Type type)
         case ACTION_FILE_CLOSE:                    return "file-close";
         case ACTION_FILE_STORE_IMAGES_IN_TREE:     return "file-store_images_in_tree";
         case ACTION_FILE_STORE_IMAGES_IN_DATA_DIR: return "file-store_images_in_data_dir";
+        case ACTION_VIEW_PERSONS:                  return "view-persons";
         case ACTION_VIEW_PERSON_DETAILS:           return "view-person_details";
         case ACTION_VIEW_RELATIONS:                return "view-relations";
-        case ACTION_VIEW_FAMILY_TREE:              return "view-family_tree";
         case ACTION_VIEW_OUTPUT:                   return "view-output";
+        case ACTION_VIEW_RESET_LAYOUT:             return "view-reset_layout";
         case ACTION_EDIT_PERSON_ADD:               return "edit-person_add";
         case ACTION_EDIT_PERSON_EDIT:              return "edit-person_edit";
         case ACTION_EDIT_PERSON_REMOVE:            return "edit-person_remove";
@@ -158,10 +159,11 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_CLOSE, tr("Close"), "", "Ctrl+W", ":/icons/file/pixmaps/range-close.svg", static_cast<PointerToMemberTrigger>(&Action::onFileClose));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_TREE, tr("Store all images in family tree"), "", "", ":/icons/file/pixmaps/range-import.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInTree));
     Action::regDef(actionDef, ACTION_GROUP_FILE, ACTION_FILE_STORE_IMAGES_IN_DATA_DIR, tr("Store all images in data directory"), "", "", ":/icons/file/pixmaps/range-export.svg", static_cast<PointerToMemberTrigger>(&Action::onFileStoreImagesInDataDir));
+    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_PERSONS, tr("Persons"), tr("Show or hide the list of persons."), "", ":/icons/view/pixmaps/range-view_persons.svg", static_cast<PointerToMemberToggle>(&Action::onViewPersons));
     Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_PERSON_DETAILS, tr("Person details"), tr("Show or hide details of persons selected in the list of persons."), "", ":/icons/view/pixmaps/range-view_person_details.svg", static_cast<PointerToMemberToggle>(&Action::onViewPersonDetails));
     Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_RELATIONS, tr("Relations"), tr("Show or hide the list of relations."), "", ":/icons/view/pixmaps/range-view_relations.svg", static_cast<PointerToMemberToggle>(&Action::onViewRelations));
-    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_FAMILY_TREE, tr("Family tree"), tr("Show or hide a diagram of the family tree around the selected person."), "", ":/icons/family/pixmaps/range-family_tree.svg", static_cast<PointerToMemberToggle>(&Action::onViewFamilyTree));
     Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_OUTPUT, tr("Output"), tr("Show or hide the application output."), "", ":/icons/view/pixmaps/range-view_output.svg", static_cast<PointerToMemberToggle>(&Action::onViewOutput));
+    Action::regDef(actionDef, ACTION_GROUP_VIEW, ACTION_VIEW_RESET_LAYOUT, tr("Restore default layout"), tr("Arrange panels and tool bars of the main window as they are after the first start."), "", ":/icons/view/pixmaps/range-view_reset_layout.svg", static_cast<PointerToMemberTrigger>(&Action::onViewResetLayout));
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_ADD, tr("Add person"), tr("Add a new person to the family tree."), "", ":/icons/family/pixmaps/range-person_add.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonAdd));
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_EDIT, tr("Edit selected persons"), tr("Edit persons selected in the list of persons."), "", ":/icons/family/pixmaps/range-person_edit.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonEdit));
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_PERSON_REMOVE, tr("Remove selected persons"), tr("Remove persons selected in the list of persons from the family tree."), "", ":/icons/family/pixmaps/range-person_remove.svg", static_cast<PointerToMemberTrigger>(&Action::onEditPersonRemove));
@@ -792,10 +794,10 @@ void Action::onViewRelations(bool checked)
     R_LOG_TRACE_OUT;
 }
 
-void Action::onViewFamilyTree(bool checked)
+void Action::onViewPersons(bool checked)
 {
     R_LOG_TRACE_IN;
-    setDockVisible(MainWindow::DockFamilyTree,checked);
+    setDockVisible(MainWindow::DockPersons,checked);
     R_LOG_TRACE_OUT;
 }
 
@@ -803,6 +805,13 @@ void Action::onViewOutput(bool checked)
 {
     R_LOG_TRACE_IN;
     setDockVisible(MainWindow::DockOutput,checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onViewResetLayout()
+{
+    R_LOG_TRACE_IN;
+    qobject_cast<MainWindow*>(Application::instance()->getMainWindow())->restoreDefaultLayout();
     R_LOG_TRACE_OUT;
 }
 

@@ -142,6 +142,9 @@ I.view_person_details = rect(2.75, 4.75, 18.5, 14.5, 2, C.ink, C.paper) + circ(8
 I.view_relations = circ(5.75, 7.25, 3, C.amber, C.amberL) + circ(9.25, 7.25, 3, C.amber)
   + circ(5.75, 16.75, 3, C.amber, C.amberL) + circ(9.25, 16.75, 3, C.amber)
   + P('M15 7.25h6M15 16.75h6', C.ink);
+I.view_persons = circ(6, 6.5, 2.25, C.blue, C.blueL) + circ(6, 12, 2.25, C.blue, C.blueL) + circ(6, 17.5, 2.25, C.blue, C.blueL)
+  + P('M11 6.5h9.25M11 12h9.25M11 17.5h6.5', C.ink);
+I.view_reset_layout = withBadge(rect(2.75, 4.75, 18.5, 14.5, 2, C.ink, C.paper) + P('M9 4.75v14.5M9 12h12.25', C.ink), 'update');
 I.view_output = rect(2.75, 4.75, 18.5, 14.5, 2, C.ink, C.paper) + P('M6.5 9.25l3 2.75-3 2.75', C.blue) + P('M12 15h5.5', C.ink);
 
 // Action
