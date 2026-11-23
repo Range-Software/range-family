@@ -38,11 +38,12 @@ OutputWidget::OutputWidget(QWidget *parent)
     this->applicationOutputBrowser = new RTextBrowser(true);
     mainLayout->addWidget(this->applicationOutputBrowser);
 
-    // Logger signals
-    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::infoPrinted,this,&OutputWidget::onInfoPrinted);
-    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::noticePrinted,this,&OutputWidget::onNoticePrinted);
-    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::warningPrinted,this,&OutputWidget::onWarningPrinted);
-    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::errorPrinted,this,&OutputWidget::onErrorPrinted);
+    // Logger signals are queued so that the slots never run from within the
+    // logger, which may be called from anywhere (including other slots).
+    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::infoPrinted,this,&OutputWidget::onInfoPrinted,Qt::QueuedConnection);
+    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::noticePrinted,this,&OutputWidget::onNoticePrinted,Qt::QueuedConnection);
+    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::warningPrinted,this,&OutputWidget::onWarningPrinted,Qt::QueuedConnection);
+    QObject::connect(&RLoggerHandler::getInstance(),&RLoggerHandler::errorPrinted,this,&OutputWidget::onErrorPrinted,Qt::QueuedConnection);
 }
 
 void OutputWidget::showEvent(QShowEvent *event)

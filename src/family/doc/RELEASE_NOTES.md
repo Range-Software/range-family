@@ -175,11 +175,16 @@
 - "Suggest birth and death dates" replaced a known death date with a suggested
   one when the birth date was missing or approximate, and suggested a death at
   an age of over a hundred years for a person known only by the parents.
+- The application froze when an error or a warning was reported while the
+  "Output" panel was hidden, e.g. after a "Cloud AI query" was sent while Cloud
+  was not accessible. Messages are now passed to the "Output" panel after the
+  logger has finished, so the panel can safely update the error count shown in
+  the status bar or show a notice dialog.
 
 ### Submodules
 
 - range-ai-lib @ v1.2.0
-- range-base-lib @ v1.2.1
+- range-base-lib @ v1.2.2
 - range-build-tools @ v1.1.1
 - range-cloud-lib @ v1.3.0
 - range-family-lib @ v1.2.0
