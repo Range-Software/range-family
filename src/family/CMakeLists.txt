@@ -85,8 +85,6 @@ qt_add_executable(family
     src/tree_diff_update_relation_dialog.h
     src/tree_diff_widget.cpp
     src/tree_diff_widget.h
-    src/cloud_ai_query_dialog.cpp
-    src/cloud_ai_query_dialog.h
     src/cloud_ai_query_widget.cpp
     src/cloud_ai_query_widget.h
 )

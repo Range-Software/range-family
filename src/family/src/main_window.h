@@ -14,6 +14,7 @@
 #include "session.h"
 
 class AiChatWidget;
+class CloudAiQueryWidget;
 class EditorWidget;
 class OutputWidget;
 class QToolButton;
@@ -44,6 +45,8 @@ class MainWindow : public QMainWindow
         OutputWidget *outputWidget;
         //! AI chat, null until it is shown for the first time.
         AiChatWidget *aiChatWidget;
+        //! Cloud AI query, null until it is shown for the first time.
+        CloudAiQueryWidget *cloudAiQueryWidget;
         //! Dock with person details.
         QDockWidget *detailsDock;
         //! Dock with list of relations.
@@ -54,6 +57,8 @@ class MainWindow : public QMainWindow
         QDockWidget *outputDock;
         //! Dock with AI chat.
         QDockWidget *aiChatDock;
+        //! Dock with Cloud AI query.
+        QDockWidget *cloudAiQueryDock;
         //! List of docks indexed by DockType.
         QList<QDockWidget*> dockWidgets;
         //! Status bar button telling about unseen warnings and errors in the output.
@@ -80,7 +85,8 @@ class MainWindow : public QMainWindow
             DockPersonDetails,
             DockRelations,
             DockOutput,
-            DockAiChat
+            DockAiChat,
+            DockCloudAiQuery
         };
 
         //! Constructor.
@@ -129,7 +135,7 @@ class MainWindow : public QMainWindow
         void createDockWidgets();
 
         //! Place docks to their default positions: persons tabbed with relations above person details on the left,
-        //! AI chat on the right and output at the bottom. AI chat and output are hidden.
+        //! AI chat tabbed with Cloud AI query on the right and output at the bottom. AI chat, Cloud AI query and output are hidden.
         void placeDockWidgets();
 
         //! Check actions of the view menu for docks which are shown.
@@ -211,6 +217,9 @@ class MainWindow : public QMainWindow
 
         //! AI chat dock has been shown or hidden.
         void onAiChatDockVisibilityChanged(bool visible);
+
+        //! Cloud AI query dock has been shown or hidden.
+        void onCloudAiQueryDockVisibilityChanged(bool visible);
 
         //! Toolbar icon size has changed.
         void onToolbarIconSizeChanged(int toolbarIconSize);

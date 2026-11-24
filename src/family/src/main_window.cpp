@@ -31,6 +31,7 @@
 #include "main_window.h"
 #include "action.h"
 #include "ai_chat_widget.h"
+#include "cloud_ai_query_widget.h"
 #include "editor_widget.h"
 #include "output_widget.h"
 
@@ -44,11 +45,12 @@ static const QList<Action::Type> dockActionTypes =
     Action::ACTION_VIEW_PERSON_DETAILS,
     Action::ACTION_VIEW_RELATIONS,
     Action::ACTION_VIEW_OUTPUT,
-    Action::ACTION_AI_CHAT
+    Action::ACTION_AI_CHAT,
+    Action::ACTION_CLOUD_AI_QUERY
 };
 
 //! Version of the stored window state. Increase it when docks change, so a state which does not know them is not restored.
-static constexpr int windowStateVersion = 3;
+static constexpr int windowStateVersion = 4;
 
 MainWindow::MainWindow(Session *session,
                        RCloudSessionManager *cloudSession,
@@ -61,6 +63,7 @@ MainWindow::MainWindow(Session *session,
     , applicationSettings{applicationSettings}
     , actionList{actionList}
     , aiChatWidget{nullptr}
+    , cloudAiQueryWidget{nullptr}
     , isFirstRun{true}
 {
     R_LOG_TRACE_IN;
@@ -190,9 +193,9 @@ void MainWindow::setDockVisible(DockType dockType, bool visible)
             dockWidget->show();
             dockWidget->raise();
         }
-        else if (dockType == DockAiChat && !this->tabifiedDockWidgets(dockWidget).isEmpty() && dockWidget->visibleRegion().isEmpty())
+        else if ((dockType == DockAiChat || dockType == DockCloudAiQuery) && !this->tabifiedDockWidgets(dockWidget).isEmpty() && dockWidget->visibleRegion().isEmpty())
         {
-            // AI chat is shown, but behind another tab. Bring it to the front instead of hiding it.
+            // AI chat or Cloud AI query is shown, but behind another tab. Bring it to the front instead of hiding it.
             dockWidget->raise();
             this->actionList->getAction(dockActionTypes.at(dockType))->setChecked(true);
         }
@@ -372,6 +375,8 @@ void MainWindow::createDockWidgets()
     this->outputDock = this->createDockWidget("outputDock",tr("Output"),this->outputWidget);
     // AI chat is created when it is shown for the first time.
     this->aiChatDock = this->createDockWidget("aiChatDock",tr("AI chat"),nullptr);
+    // Cloud AI query is created when it is shown for the first time.
+    this->cloudAiQueryDock = this->createDockWidget("cloudAiQueryDock",tr("Cloud AI query"),nullptr);
 
     this->placeDockWidgets();
 
@@ -384,6 +389,7 @@ void MainWindow::createDockWidgets()
     this->syncDockActions();
 
     QObject::connect(this->aiChatDock,&QDockWidget::visibilityChanged,this,&MainWindow::onAiChatDockVisibilityChanged);
+    QObject::connect(this->cloudAiQueryDock,&QDockWidget::visibilityChanged,this,&MainWindow::onCloudAiQueryDockVisibilityChanged);
     R_LOG_TRACE_OUT;
 }
 
@@ -401,12 +407,14 @@ void MainWindow::placeDockWidgets()
     this->splitDockWidget(this->personsDock,this->detailsDock,Qt::Vertical);
     this->tabifyDockWidget(this->personsDock,this->relationsDock);
     this->addDockWidget(Qt::RightDockWidgetArea,this->aiChatDock);
+    this->tabifyDockWidget(this->aiChatDock,this->cloudAiQueryDock);
     this->addDockWidget(Qt::BottomDockWidgetArea,this->outputDock);
 
     this->personsDock->show();
     this->relationsDock->show();
     this->detailsDock->show();
     this->aiChatDock->hide();
+    this->cloudAiQueryDock->hide();
     this->outputDock->hide();
     this->personsDock->raise();
     R_LOG_TRACE_OUT;
@@ -445,8 +453,8 @@ void MainWindow::resizeDockWidgets()
     // Lists and details take a third of the width, persons and relations get more height than details.
     this->resizeDocks({this->personsDock},{this->width() * 7 / 20},Qt::Horizontal);
     this->resizeDocks({this->personsDock,this->detailsDock},{this->height() * 3 / 5,this->height() * 2 / 5},Qt::Vertical);
-    // AI chat and output are hidden by default, their sizes apply when the layout keeps them.
-    this->resizeDocks({this->aiChatDock},{this->width() / 4},Qt::Horizontal);
+    // AI chat, Cloud AI query and output are hidden by default, their sizes apply when the layout keeps them.
+    this->resizeDocks({this->aiChatDock,this->cloudAiQueryDock},{this->width() / 4,this->width() / 4},Qt::Horizontal);
     this->resizeDocks({this->outputDock},{this->height() / 5},Qt::Vertical);
     R_LOG_TRACE_OUT;
 }
@@ -901,6 +909,17 @@ void MainWindow::onAiChatDockVisibilityChanged(bool visible)
     {
         this->aiChatWidget = new AiChatWidget(Application::instance()->getAiAgentSettingsManager(),this->applicationSettings);
         this->aiChatDock->setWidget(this->aiChatWidget);
+    }
+    R_LOG_TRACE_OUT;
+}
+
+void MainWindow::onCloudAiQueryDockVisibilityChanged(bool visible)
+{
+    R_LOG_TRACE_IN;
+    if (visible && !this->cloudAiQueryWidget)
+    {
+        this->cloudAiQueryWidget = new CloudAiQueryWidget(Application::instance()->getCloudConnectionHandler(),this->applicationSettings);
+        this->cloudAiQueryDock->setWidget(this->cloudAiQueryWidget);
     }
     R_LOG_TRACE_OUT;
 }

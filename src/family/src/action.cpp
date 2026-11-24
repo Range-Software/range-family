@@ -22,13 +22,10 @@
 
 #include "application.h"
 #include "action.h"
-#include "cloud_ai_query_dialog.h"
 #include "editor_widget.h"
 #include "image_button.h"
 #include "main_window.h"
 #include "tree_diff_dialog.h"
-
-QPointer<CloudAiQueryDialog> Action::cloudAiQueryDialog;
 
 Action::Action(RAction::Definition definition, QObject *parent)
     : RAction{definition,parent}
@@ -177,7 +174,7 @@ QList<RAction::Definition> Action::generateActionDefinitionList()
     Action::regDef(actionDef, ACTION_GROUP_EDIT, ACTION_EDIT_RELATION_SHOW_TREE, tr("Show family tree of selected relations"), tr("Show a diagram of the family tree around each relation selected in the list of relations."), "", ":/icons/family/pixmaps/range-family_tree.svg", static_cast<PointerToMemberTrigger>(&Action::onEditRelationShowTree));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_SESSION_MANAGER, tr("Cloud session manager"), "", "", ":/icons/cloud/pixmaps/range-session_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudSessionManager));
     Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_FILE_MANAGER, tr("Cloud file manager"), "", "", ":/icons/cloud/pixmaps/range-file_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudFileManager));
-    Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_AI_QUERY, tr("Cloud AI query"), "", "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberTrigger>(&Action::onCloudAiQuery));
+    Action::regDef(actionDef, ACTION_GROUP_CLOUD, ACTION_CLOUD_AI_QUERY, tr("Cloud AI query"), tr("Show or hide the Cloud AI query."), "", ":/icons/cloud/pixmaps/range-ai_query.svg", static_cast<PointerToMemberToggle>(&Action::onCloudAiQuery));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_SETTINGS_MANAGER, tr("AI settings manager"), "", "", ":/icons/ai/pixmaps/range-ai_settings_manager.svg", static_cast<PointerToMemberTrigger>(&Action::onAiSettingsManager));
     Action::regDef(actionDef, ACTION_GROUP_AI, ACTION_AI_CHAT, tr("AI chat"), tr("Show or hide the AI chat."), "", ":/icons/ai/pixmaps/range-ai_chat.svg", static_cast<PointerToMemberToggle>(&Action::onAiChat));
 
@@ -733,26 +730,6 @@ void Action::onCloudFileManager()
     R_LOG_TRACE_OUT;
 }
 
-void Action::onCloudAiQuery()
-{
-    R_LOG_TRACE_IN;
-    if (Action::cloudAiQueryDialog.isNull())
-    {
-        Action::cloudAiQueryDialog = new CloudAiQueryDialog(Application::instance()->getCloudConnectionHandler(),
-                                                            Application::instance()->getApplicationSettings(),
-                                                            Application::instance()->getMainWindow());
-        Action::cloudAiQueryDialog->show();
-    }
-    else
-    {
-        // Dialog is already opened. Bring it to the front instead of opening another one.
-        Action::cloudAiQueryDialog->showNormal();
-        Action::cloudAiQueryDialog->raise();
-        Action::cloudAiQueryDialog->activateWindow();
-    }
-    R_LOG_TRACE_OUT;
-}
-
 void Action::onAiSettingsManager()
 {
     R_LOG_TRACE_IN;
@@ -777,6 +754,13 @@ void Action::onAiChat(bool checked)
 {
     R_LOG_TRACE_IN;
     setDockVisible(MainWindow::DockAiChat,checked);
+    R_LOG_TRACE_OUT;
+}
+
+void Action::onCloudAiQuery(bool checked)
+{
+    R_LOG_TRACE_IN;
+    setDockVisible(MainWindow::DockCloudAiQuery,checked);
     R_LOG_TRACE_OUT;
 }
 
