@@ -189,12 +189,20 @@
   keeping the most recent one.
 - Saving the tree rewrote all pictures even when they did not change, so Cloud
   and iCloud transferred them again. Only changed pictures are written now.
-- The log files and the temporary folder (including the Cloud synchronization
-  state) are kept in `Library/Application Support/Range Software/Family` on
-  macOS, `AppData/Local/Range Software/Family` on Windows and
+- The log files, the temporary folder (including the Cloud synchronization
+  state), the certificates with private keys and the Cloud sessions are kept in
+  `Library/Application Support/Range Software/Family` on macOS,
+  `AppData/Local/Range Software/Family` on Windows and
   `~/.local/share/Range Software/Family` on Linux instead of the Documents
   folder. When Documents is synchronized across computers, e.g. by iCloud,
-  their state no longer mixes up. Use "File > Folders" to find them.
+  their state no longer mixes up and private keys stay on the computer they
+  belong to. Existing certificates and sessions are copied to the new folder on
+  the first start; the old ones stay in the Documents folder and can be deleted
+  once every computer has been started with this version. Use "File > Folders"
+  to find them.
+- "Cloud AI query" did not notice when the family tree file had not been
+  synchronized to Cloud yet. Instead of saying so, it sent the query with a
+  reference to a file which does not exist, and Cloud answered with an error.
 
 ### Submodules
 
