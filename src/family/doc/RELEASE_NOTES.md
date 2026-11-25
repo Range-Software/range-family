@@ -180,6 +180,21 @@
   was not accessible. Messages are now passed to the "Output" panel after the
   logger has finished, so the panel can safely update the error count shown in
   the status bar or show a notice dialog.
+- With "Synchronize data directory" turned on, every file of the family tree
+  could be stored in Cloud several times, and each save added more copies.
+  Saving the tree shortly after the start, before the list of Cloud files had
+  been received, uploaded all files again, repeatedly while the folder was still
+  changing. Files are now compared only with a fresh list of Cloud files, a
+  file is never stored twice and copies left by earlier versions are removed,
+  keeping the most recent one.
+- Saving the tree rewrote all pictures even when they did not change, so Cloud
+  and iCloud transferred them again. Only changed pictures are written now.
+- The log files and the temporary folder (including the Cloud synchronization
+  state) are kept in `Library/Application Support/Range Software/Family` on
+  macOS, `AppData/Local/Range Software/Family` on Windows and
+  `~/.local/share/Range Software/Family` on Linux instead of the Documents
+  folder. When Documents is synchronized across computers, e.g. by iCloud,
+  their state no longer mixes up. Use "File > Folders" to find them.
 
 ### Submodules
 
