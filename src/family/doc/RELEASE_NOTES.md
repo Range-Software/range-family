@@ -2,67 +2,70 @@
 
 ### Improvements
 
-- Redesigned all icons in one clean, light style shared with Range FEA: a 24 px
-  grid, uniform line width and a common color palette where each color carries
-  one meaning (green add/confirm, red remove/cancel, amber edit, blue files and
-  navigation, violet AI). Icons used for the same purpose in Range FEA are reused.
-- "About", "License" and "Release notes" have their own icons instead of the
-  application logo.
-- Every icon has a dark variant which is used while a dark color scheme is
-  active. Icons already shown switch as soon as the color scheme changes.
-- The Windows application icon fills the whole icon area, so it no longer looks
-  smaller than other Windows applications. Its small sizes are drawn with
-  heavier lines to stay readable. macOS keeps its own icon.
-- New macOS application setting to draw the menu bar inside the application
-  window instead of the system menu bar. It takes effect after a restart.
-- New `--reset-settings` command line option resets all application settings
-  to their default values. It replaces `--reset-defaults`.
-- Links in help pages and release notes work: links to other help pages open
-  them, links to headings scroll to them and web or e-mail links open in the
-  default external application.
-- The release notes dialog opens on the first topic instead of an empty view
-  and always keeps one topic selected.
-- Builds for the Apple App Store and Microsoft Store do not check for software
-  updates: the automatic check, its application setting and the "Check for
-  update" action are left out.
-- On macOS the private key and the certificate signing request for Cloud are
-  generated with the Apple Security framework instead of the `openssl` tool, and
-  so is the text shown by the private key view. The `openssl` tool is no longer
-  bundled with the application, only the OpenSSL libraries used for TLS
-  connections. The paths of the OpenSSL tool and its configuration are hidden in
-  the application settings. Configure with `-DRANGE_NATIVE_KEY_TOOL=OFF` to keep
-  using the `openssl` tool.
-- New "Folders" submenu in the File menu opens the application folders -
-  "Certificates", "Data", "Documents", "Logs" and "Temporary files" - in the file
-  browser of the operating system (Finder on macOS, File Explorer on Windows, the
-  file manager on Linux). In the Apple App Store version these folders are kept
-  inside the application container, where they are otherwise hard to reach.
-- New "Privacy policy" action in the Help menu shows the privacy policy, which is
-  now installed together with the license and the release notes.
-- Builds for the Apple App Store and Microsoft Store produce a submission ready
-  artifact: a sandboxed bundle signed for the App Store and wrapped in a `.pkg`,
-  and an MSIX package. Both are built by their own target, so an ordinary release
-  build is left untouched. Each upload takes a build number, so resubmitting the
-  same release after a rejection is accepted.
-- Confirmation messages of the Cloud file manager name the affected file: Cloud
-  files with their path and identifier, downloaded files with their local file
-  name.
-- The software manager lists only versions newer than the one being run, unless
-  "show all" is checked.
+- The main window is rearranged around the family tree diagram, which now stays
+  in its middle.
+  - The diagram follows the person selected in the list of persons or the
+    relation selected in the list of relations, and a double-click on a person
+    or relation in the diagram selects it in the lists. The person or relation
+    the diagram is built around glows, so it is easy to spot. Its controls are
+    drawn over its corners, "Export tree" on the left and zoom on the right, so
+    the diagram uses the whole height. "Show family tree" still opens the
+    diagram in its own window.
+  - "Persons", "Person details", "Relations", "Output" and "AI chat" are panels
+    which can be moved to another side of the window, stacked, tabbed, detached
+    into their own window or closed. Tabs of panels stacked at the left or the
+    right side are placed on the outer edge of the window. The arrangement is
+    remembered.
+  - By default "Persons" and "Relations" share tabs on the left above "Person
+    details"; "AI chat" and "Output" are hidden. The new arrangement is applied
+    once to existing installations. On the first start the main window covers
+    80 % of the screen width and height.
+  - New "View" menu shows and hides the panels, and "Restore default layout"
+    puts all panels and tool bars back to their default places. Its entries can
+    be given keyboard shortcuts in the application settings and have help pages.
+  - AI chat is a panel instead of a window staying on top. "AI chat" opens it,
+    brings it to the front if it is behind another panel, and closes it if it
+    already is in front.
+  - The application output is no longer a tab of the main window. While it is
+    not visible, the status bar shows the number of new warnings or errors, and
+    a click on it shows the output.
+- Dates can be entered without a day, or without a day and a month, when only
+  the month or the year is known. The date editor has separate day, month and
+  year fields; "Calendar" still picks a full date. Such dates are shown as
+  "1850" or "February 1852" everywhere and are sorted by their earliest possible
+  day in the lists of persons and relations. New "Approximate" option of the
+  date editor marks a date as uncertain; until now this mark could only be set
+  by suggested dates and by imports.
+- "Suggest birth and death dates" is rewritten. It uses dates from the whole
+  family tree instead of only the closest relatives, takes the sex of a parent,
+  dates of partners and deaths of parents into account, and picks the most
+  likely date from typical ages instead of the middle of the possible range.
+  Suggested dates are approximate years. The dialog shows the possible range of
+  each date and the approximate date it would replace, birth and death are
+  accepted separately, and contradicting dates of relatives are reported instead
+  of being averaged.
+- Lists of persons and relations have a filter, which shows only rows containing
+  all typed words. Ctrl+F moves to the filter of the list being used. The number
+  of rows, and of the shown ones while filtering, is displayed beside the filter.
+  - New "Always show highlighted" option below both lists keeps persons of the
+    selected relations, and relations of the selected persons, visible even if
+    they do not match the filter. New "Only highlighted" option below the list
+    of relations shows only relations of the selected persons.
+  - "Add", "Edit" and "Remove" buttons below the lists are replaced by small
+    buttons beside the filter, and the same commands are in the context menu of
+    each list.
+  - Highlighted rows use a color which stays readable in the dark color scheme.
+- Person details are easier to read and navigate. Names of parents, siblings,
+  partners and children are links which select that person, listed one per line
+  with short dates; rows and dates which are empty are left out. The picture is
+  shown at the top. The title has the color of the person's card in the family
+  tree diagram and the sections the color of a relation card, in both the light
+  and the dark color scheme. Without a selected person a hint is shown, and more
+  than three selected persons are shown as a summary of their names and dates.
 - The user interface is translated to Czech, German, Spanish, French, Italian,
   Polish and Ukrainian in addition to English and Slovak, and all of them are
   offered in the language selection of the application settings. A language
   change takes effect after a restart.
-- New "Verification" setting of the Cloud host in the Cloud session manager.
-  "Full verification" (default) checks that the host certificate is issued by a
-  trusted certificate authority and matches the host name. "Trusted certificate
-  only (skip host name)" is meant for a server reached by its IP address: set its
-  certificate authority as the session's host "Certificate" and the host name is
-  not checked. "No verification" accepts any certificate and does not guarantee
-  the identity of the host.
-- Cloud requests are faster. A request completes as soon as the reply arrives,
-  where it used to wait up to an extra second, and connections to the Cloud are
-  kept open and reused between requests instead of being opened for each one.
 - New optional ribbon layout shows commands on the pages "Family tree",
   "Persons", "Relations" and "Cloud and AI" instead of menus and tool bars. The
   "File" menu, "Save", Cloud, application settings and help stay in the line with
@@ -70,98 +73,92 @@
   application tool bar. "Compact ribbon" shows it in less vertical space, with
   smaller buttons and no group titles. Both choices, the selected page and the
   collapsed state are remembered.
-- Tool bars are reorganized into "File", "Family tree", "Persons and relations"
-  and "Application" tool bars, each of which can be moved or hidden on its own.
-  Related commands share one drop-down button: "Save" and "Save as", storing of
-  images, and adding, editing and removing of persons and of relations. "Quit"
-  and "About" are no longer on a tool bar. The new arrangement is applied once
-  to existing installations.
-- Adding, editing and removing of persons and relations, "Show family tree",
-  "Set selected person as active", "Merge selected persons" and "Suggest birth
-  and death dates" are application actions: they are found in the new "Edit"
-  menu, on the tool bar and the ribbon, can be given keyboard shortcuts in the
-  application settings and have help pages.
-- The main window is rearranged into panels. The family tree diagram stays in
-  the middle, "Persons", "Person details", "Relations", "Output" and "AI chat"
-  are panels which can be moved to another side of the window, stacked, tabbed,
-  detached into their own window or closed. The arrangement is remembered. The
-  new arrangement is applied once to existing installations.
-- New "View" menu shows and hides the panels. Its entries are application
-  actions: they can be given keyboard shortcuts in the application settings and
-  have help pages. "Restore default layout" in the "View" menu puts all panels
-  and tool bars back to their default places.
-- By default "Persons" and "Relations" share tabs on the left above "Person
-  details", "AI chat" and "Output" are hidden.
-- On the first start the main window covers 80 % of the screen width and height.
-- A diagram of the family tree is part of the main window. It follows the person
-  selected in the list of persons or the relation selected in the list of
-  relations, and a double-click on a person or relation in the diagram selects it
-  in the lists. The person or relation the diagram is built around glows, so it
-  is easy to spot. "Show family tree" still opens the diagram in its own window.
-- Controls of the family tree diagram are drawn over its corners, "Export tree"
-  on the left and zoom on the right, so the diagram uses the whole height.
-- The application output is no longer a tab of the main window. While it is not
-  visible, the status bar shows the number of new warnings or errors, a click on
-  it shows the output.
-- AI chat is a panel of the main window instead of a window staying on top. "AI
-  chat" opens it, brings it to the front if it is behind another panel, and
-  closes it if it already is in front.
-- Lists of persons and relations have a filter, which shows only rows containing
-  all typed words. Ctrl+F moves to the filter of the list being used. The number
-  of rows, and of the shown ones while filtering, is displayed beside the filter.
-- New "Always show highlighted" option below both lists keeps persons of the
-  selected relations, and relations of the selected persons, visible even if they
-  do not match the filter. New "Only highlighted" option below the list of
-  relations shows only relations of the selected persons.
-- "Add", "Edit" and "Remove" buttons below the lists are replaced by small
-  buttons beside the filter, and the same commands are in the context menu of
-  each list.
-- Names of parents, siblings, partners and children in the person details are
-  links which select that person. The picture is shown at the top. Without a
-  selected person a hint is shown, and more than three selected persons are
-  shown as a summary of their names and dates.
-- Highlighted rows use a color which stays readable in the dark color scheme.
-- Dates can be entered without a day, or without a day and a month, when only
-  the month or the year is known. The date editor has separate day, month and
-  year fields; "Calendar" still picks a full date. Such dates are shown as
-  "1850" or "February 1852" everywhere and are sorted by their earliest
-  possible day in the lists of persons and relations.
-- New "Approximate" option of the date editor marks a date as uncertain. Until
-  now this mark could only be set by suggested dates and by imports.
-- "Suggest birth and death dates" is rewritten. It uses dates from the whole
-  family tree instead of only the closest relatives, takes the sex of a parent,
-  dates of partners and deaths of parents into account, and picks the most
-  likely date from typical ages instead of the middle of the possible range.
-  Suggested dates are approximate years.
-- The dialog with suggested dates shows the possible range of each date and the
-  approximate date it would replace. Birth and death are accepted separately,
-  and contradicting dates of relatives are reported instead of being averaged.
-- Person details use the colors of the family tree diagram in both the light
-  and the dark color scheme: the title has the color of the person's card and
-  the sections the color of a relation card. Relatives are listed one per line
-  with short dates, and rows and dates which are empty are left out.
-- Tabs of panels stacked at the left or the right side of the main window are
-  placed on the outer edge of the window.
+- Commands are reorganized.
+  - Adding, editing and removing of persons and relations, "Show family tree",
+    "Set selected person as active", "Merge selected persons" and "Suggest birth
+    and death dates" are application actions: they are found in the new "Edit"
+    menu, on the tool bar and the ribbon, can be given keyboard shortcuts in the
+    application settings and have help pages.
+  - Tool bars are split into "File", "Family tree", "Persons and relations" and
+    "Application" tool bars, each of which can be moved or hidden on its own.
+    Related commands share one drop-down button: "Save" and "Save as", storing
+    of images, and adding, editing and removing of persons and of relations.
+    "Quit" and "About" are no longer on a tool bar. The new arrangement is
+    applied once to existing installations.
+- Cloud requests are faster. A request completes as soon as the reply arrives,
+  where it used to wait up to an extra second, and connections to the Cloud are
+  kept open and reused between requests instead of being opened for each one.
+- New "Verification" setting of the Cloud host in the Cloud session manager
+  (see also the certificate verification fix below). "Full verification"
+  (default) checks that the host certificate is issued by a trusted certificate
+  authority and matches the host name. "Trusted certificate only (skip host
+  name)" is meant for a server reached by its IP address: set its certificate
+  authority as the session's host "Certificate" and the host name is not
+  checked. "No verification" accepts any certificate and does not guarantee the
+  identity of the host.
+- Confirmation messages of the Cloud file manager name the affected file: Cloud
+  files with their path and identifier, downloaded files with their local file
+  name.
+- All icons are redesigned in one clean, light style shared with Range FEA: a
+  24 px grid, uniform line width and a common color palette where each color
+  carries one meaning (green add/confirm, red remove/cancel, amber edit, blue
+  files and navigation, violet AI). Icons used for the same purpose in Range FEA
+  are reused.
+  - Every icon has a dark variant which is used while a dark color scheme is
+    active. Icons already shown switch as soon as the color scheme changes.
+  - "About", "License" and "Release notes" have their own icons instead of the
+    application logo.
+  - The Windows application icon fills the whole icon area, so it no longer
+    looks smaller than other Windows applications. Its small sizes are drawn
+    with heavier lines to stay readable. macOS keeps its own icon.
+- New "Folders" submenu in the File menu opens the application folders -
+  "Certificates", "Data", "Documents", "Logs" and "Temporary files" - in the file
+  browser of the operating system (Finder on macOS, File Explorer on Windows, the
+  file manager on Linux). In the Apple App Store version these folders are kept
+  inside the application container, where they are otherwise hard to reach.
+- Help and release notes are easier to use. Links in help pages and release
+  notes work: links to other help pages open them, links to headings scroll to
+  them and web or e-mail links open in the default external application. The
+  release notes dialog opens on the first topic instead of an empty view and
+  always keeps one topic selected.
+- New "Privacy policy" action in the Help menu shows the privacy policy, which
+  is now installed together with the license and the release notes.
+- The software manager lists only versions newer than the one being run, unless
+  "show all" is checked.
+- New macOS application setting draws the menu bar inside the application window
+  instead of the system menu bar. It takes effect after a restart.
+- On macOS the private key and the certificate signing request for Cloud are
+  generated with the Apple Security framework instead of the `openssl` tool, and
+  so is the text shown by the private key view. The `openssl` tool is no longer
+  bundled with the macOS application, only the OpenSSL libraries used for TLS
+  connections, and the paths of the OpenSSL tool and its configuration are
+  hidden in the application settings. Configure with
+  `-DRANGE_NATIVE_KEY_TOOL=OFF` to keep using the `openssl` tool.
+- New `--reset-settings` command line option resets all application settings to
+  their default values. It replaces `--reset-defaults`.
+- The application can be published in the Apple App Store and the Microsoft
+  Store. Store builds produce a submission ready artifact: a sandboxed bundle
+  signed for the App Store and wrapped in a `.pkg`, and an MSIX package. Both are
+  built by their own target, so an ordinary release build is left untouched.
+  Each upload takes a build number, so resubmitting the same release after a
+  rejection is accepted. Store builds do not check for software updates: the
+  automatic check, its application setting and the "Check for update" action
+  are left out.
 
 ### Bug fixes
 
-- Changing the style or the color scheme while the application runs shrank the
-  tool bar icons to the default size of the style. Tool bars now keep the icon
-  size set in the application settings.
-- After the color scheme changed, the person details kept the colors of the
-  previous scheme, the labels of the "Editor" and "Output" tabs kept the previous
-  text color, so a dark scheme left them white on a light background, and text
-  already printed to the application output kept the previous colors.
-
-- The Apple App Store version could not write to its folders. They were kept in
-  `Documents/Range Software/Family`, which the App Sandbox does not allow to be
-  written to. The sandboxed version now keeps them in
-  `Library/Application Support/Range Software/Family` inside its container
-  (`~/Library/Containers/com.range-software.family/Data`); other versions keep
-  using the Documents folder. Use "File > Folders" to find them.
-- Certificate signing requests generated on macOS store subject fields with
-  characters outside ASCII, such as `Žilina`, correctly. The `openssl` tool used
-  before stored them in a mangled form (`Å½ilina`).
+- The application froze when an error or a warning was reported while the
+  "Output" panel was hidden, e.g. after a "Cloud AI query" was sent while Cloud
+  was not accessible. Messages are now passed to the "Output" panel after the
+  logger has finished, so the panel can safely update the error count shown in
+  the status bar or show a notice dialog.
+- With "Synchronize data directory" turned on, every file of the family tree
+  could be stored in Cloud several times, and each save added more copies.
+  Saving the tree shortly after the start, before the list of Cloud files had
+  been received, uploaded all files again, repeatedly while the folder was still
+  changing. Files are now compared only with a fresh list of Cloud files, a file
+  is never stored twice and copies left by earlier versions are removed, keeping
+  the most recent one.
 - The Cloud host certificate was not verified, so a connection to a host
   presenting a certificate from an untrusted authority or for another host name
   was accepted and only reported as SSL errors in the log. Such connections are
@@ -175,34 +172,38 @@
 - "Suggest birth and death dates" replaced a known death date with a suggested
   one when the birth date was missing or approximate, and suggested a death at
   an age of over a hundred years for a person known only by the parents.
-- The application froze when an error or a warning was reported while the
-  "Output" panel was hidden, e.g. after a "Cloud AI query" was sent while Cloud
-  was not accessible. Messages are now passed to the "Output" panel after the
-  logger has finished, so the panel can safely update the error count shown in
-  the status bar or show a notice dialog.
-- With "Synchronize data directory" turned on, every file of the family tree
-  could be stored in Cloud several times, and each save added more copies.
-  Saving the tree shortly after the start, before the list of Cloud files had
-  been received, uploaded all files again, repeatedly while the folder was still
-  changing. Files are now compared only with a fresh list of Cloud files, a
-  file is never stored twice and copies left by earlier versions are removed,
-  keeping the most recent one.
-- Saving the tree rewrote all pictures even when they did not change, so Cloud
-  and iCloud transferred them again. Only changed pictures are written now.
-- The log files, the temporary folder (including the Cloud synchronization
-  state), the certificates with private keys and the Cloud sessions are kept in
-  `Library/Application Support/Range Software/Family` on macOS,
-  `AppData/Local/Range Software/Family` on Windows and
-  `~/.local/share/Range Software/Family` on Linux instead of the Documents
-  folder. When Documents is synchronized across computers, e.g. by iCloud,
-  their state no longer mixes up and private keys stay on the computer they
-  belong to. Existing certificates and sessions are copied to the new folder on
-  the first start; the old ones stay in the Documents folder and can be deleted
-  once every computer has been started with this version. Use "File > Folders"
-  to find them.
 - "Cloud AI query" did not notice when the family tree file had not been
   synchronized to Cloud yet. Instead of saying so, it sent the query with a
   reference to a file which does not exist, and Cloud answered with an error.
+- Saving the tree rewrote all pictures even when they did not change, so Cloud
+  and iCloud transferred them again. Only changed pictures are written now.
+- Files which belong to one computer are no longer kept in the Documents
+  folder. The log files, the temporary folder (including the Cloud
+  synchronization state), the certificates with private keys and the Cloud
+  sessions are kept in `Library/Application Support/Range Software/Family` on
+  macOS, `AppData/Local/Range Software/Family` on Windows and
+  `~/.local/share/Range Software/Family` on Linux. When Documents is
+  synchronized across computers, e.g. by iCloud, their state no longer mixes up
+  and private keys stay on the computer they belong to. Existing certificates
+  and sessions are copied to the new folder on the first start; the old ones
+  stay in the Documents folder and can be deleted once every computer has been
+  started with this version. Use "File > Folders" to find them.
+- The Apple App Store version could not write to its folders. They were kept in
+  `Documents/Range Software/Family`, which the App Sandbox does not allow to be
+  written to. The sandboxed version now keeps all of them in
+  `Library/Application Support/Range Software/Family` inside its container
+  (`~/Library/Containers/com.range-software.family/Data`); other versions keep
+  the remaining folders in the Documents folder.
+- After the color scheme changed, the person details kept the colors of the
+  previous scheme, the labels of the "Editor" and "Output" tabs kept the previous
+  text color, so a dark scheme left them white on a light background, and text
+  already printed to the application output kept the previous colors. Changing
+  the style or the color scheme also shrank the tool bar icons to the default
+  size of the style; tool bars now keep the icon size set in the application
+  settings.
+- Certificate signing requests generated on macOS store subject fields with
+  characters outside ASCII, such as `Žilina`, correctly. The `openssl` tool used
+  before stored them in a mangled form (`Å½ilina`).
 
 ### Submodules
 
