@@ -1,0 +1,3 @@
+# Nový
+
+Vytvořit nový rodokmen.

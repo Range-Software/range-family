@@ -1,0 +1,13 @@
+{
+    "main": "index.md",
+    "chapters": [
+        {
+            "title": "Stammbaum",
+            "file": "family_tree.md"
+        },
+        {
+            "title": "Spezifikation der Stammbaum-JSON-Datei",
+            "file": "family_tree_json_specification.md"
+        }
+    ]
+}

@@ -1,0 +1,3 @@
+# Ayuda
+
+Abrir esta ayuda.

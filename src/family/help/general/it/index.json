@@ -1,0 +1,13 @@
+{
+    "main": "index.md",
+    "chapters": [
+        {
+            "title": "Albero genealogico",
+            "file": "family_tree.md"
+        },
+        {
+            "title": "Specifica del file JSON dell'albero genealogico",
+            "file": "family_tree_json_specification.md"
+        }
+    ]
+}

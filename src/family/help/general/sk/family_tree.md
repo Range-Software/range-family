@@ -11,6 +11,9 @@ Rodinný strom pozostáva z dvoch typov prvkov a to **osôb** a ich **vzťahov**
 - **Meno** - Meno pozostáva z **prvého**, **stredného**, **posledného** a **rodného** mena
 - **Narodenie** - Narodenie osoby je definované dátumom a miestom narodenia
 - **Úmrtie** - Úmrtie osoby je definované dátumom a miestom úmrtia
+- **Pohlavie** - Muž, žena alebo iné
+- **Obrázok** - Obrázok osoby s názvom a popisom, uložený buď v rodinnom strome, alebo v samostatnom súbore
+- **Poznámky** - Poznámky alebo životopis osoby
 
 Všetky parametre okrem **ID** nie sú unikátne čo znamená, že viaceré osoby môžu obsahovať rovnaké osobné údaje. Takisto všetky parametre okrem **ID** môžu byť prázdne.
 

@@ -1,0 +1,3 @@
+# Esci
+
+Uscire dal programma.

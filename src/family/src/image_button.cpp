@@ -2,6 +2,7 @@
 
 #include <QBuffer>
 #include <QFileDialog>
+#include <QLocale>
 #include <QMessageBox>
 #include <QResizeEvent>
 #include <QStyle>
@@ -188,8 +189,8 @@ void ImageButton::onButtonClicked()
     messageBox.setIcon(QMessageBox::Question);
     messageBox.setWindowTitle(tr("Store image"));
     messageBox.setText(tr("How should the image be stored?"));
-    messageBox.setInformativeText(tr("An image stored within the family tree is reduced to occupy a maximum of %1 MB.")
-                                      .arg(ImageButton::maxTreeDataSize / (1024 * 1024))
+    messageBox.setInformativeText(tr("An image stored within the family tree is reduced to occupy a maximum of %1.")
+                                      .arg(QLocale().formattedDataSize(ImageButton::maxTreeDataSize,0,QLocale::DataSizeTraditionalFormat))
                                   + "\n"
                                   + (pictureFilePath.isEmpty()
                                          ? tr("The family tree must be saved to a file and the person must be a part of it before an image can be stored as a separate file.")

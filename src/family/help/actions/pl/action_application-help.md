@@ -1,0 +1,3 @@
+# Pomoc
+
+Uruchomić tę pomoc.

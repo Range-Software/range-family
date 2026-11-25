@@ -23,8 +23,8 @@ Každá osoba v rodokmeni je reprezentovaná objektom Person s nasledujúcou št
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
 | id | Reťazec (UUID) | Áno | Jedinečný identifikátor osoby |
-| name | Objekt Name | Áno | Informácie o mene osoby |
-| sex | Reťazec | Áno | Pohlavie: "male" alebo "female" |
+| name | Objekt Name | Nie | Informácie o mene osoby |
+| sex | Reťazec | Nie | Pohlavie: "male", "female" alebo "other" |
 | birth | Objekt Event | Nie | Informácie o dátume a mieste narodenia |
 | death | Objekt Event | Nie | Informácie o dátume a mieste úmrtia |
 | picture | Objekt Picture | Nie | Fotografia osoby kódovaná v Base64 |
@@ -34,12 +34,12 @@ Každá osoba v rodokmeni je reprezentovaná objektom Person s nasledujúcou št
 
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
-| first-name | Reťazec | Áno | Krstné meno osoby |
-| last-name | Reťazec | Áno | Priezvisko osoby |
+| first-name | Reťazec | Nie | Krstné meno osoby |
+| last-name | Reťazec | Nie | Priezvisko osoby |
 | middle-name | Reťazec | Nie | Stredné meno/mená osoby |
 | maiden-name | Reťazec | Nie | Rodné priezvisko (ak sa zmenilo po svadbe) |
 
-### 3.3 Objekt Event (Udalosť - Narodenie/Úmrtie)
+### 3.3 Objekt Event (Udalosť - Narodenie/Úmrtie/Začiatok a koniec vzťahu)
 
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
@@ -51,15 +51,18 @@ Každá osoba v rodokmeni je reprezentovaná objektom Person s nasledujúcou št
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
 | year | Celé číslo | Áno | Rok (napr. 1985) |
-| month | Celé číslo | Áno | Mesiac (1-12) |
-| day | Celé číslo | Áno | Deň v mesiaci (1-31) |
-| fuzzy | Boolean | Áno | True ak je dátum približný/neistý |
+| month | Celé číslo | Nie | Mesiac (1-12), vynechá sa ak nie je známy |
+| day | Celé číslo | Nie | Deň v mesiaci (1-31), vynechá sa ak nie je známy |
+| fuzzy | Boolean | Nie | True ak je dátum približný/neistý, false ak je vynechané |
+
+Ak je známy iba mesiac a rok, vynechá sa `day`, ak je známy iba rok, vynechajú sa `day` aj `month`.
 
 ### 3.5 Objekt Place (Miesto)
 
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
 | address | Objekt Address | Nie | Štruktúrované informácie o adrese |
+| geo-coordinate | Objekt Geo Coordinate | Nie | Zemepisná poloha |
 
 ### 3.6 Objekt Address (Adresa)
 
@@ -67,7 +70,17 @@ Každá osoba v rodokmeni je reprezentovaná objektom Person s nasledujúcou št
 |------|-----|---------|-------|
 | city | Reťazec | Nie | Názov mesta alebo obce |
 | country | Reťazec | Nie | Názov krajiny |
-| street-number | Reťazec | Nie | Ulica a číslo domu |
+| street | Reťazec | Nie | Názov ulice |
+| street-number | Reťazec | Nie | Číslo domu |
+| postal-code | Reťazec | Nie | Poštové smerovacie číslo |
+
+### 3.6.1 Objekt Geo Coordinate (Zemepisné súradnice)
+
+| Pole | Typ | Povinné | Popis |
+|------|-----|---------|-------|
+| latitude | Číslo | Nie | Zemepisná šírka v stupňoch |
+| longitude | Číslo | Nie | Zemepisná dĺžka v stupňoch |
+| altitude | Číslo | Nie | Nadmorská výška v metroch |
 
 ### 3.7 Objekt Picture (Obrázok)
 
@@ -96,29 +109,12 @@ Vzťahy definujú rodinné väzby medzi osobami. Každý vzťah predstavuje part
 | Pole | Typ | Povinné | Popis |
 |------|-----|---------|-------|
 | id | Reťazec (UUID) | Áno | Jedinečný identifikátor vzťahu |
-| partners | Pole\<UUID\> | Nie | Pole ID osôb (zvyčajne 2 partneri) |
+| partners | Pole\<UUID\> | Nie | Pole ID osôb (zvyčajne 2 partneri), partneri sú zároveň rodičmi detí |
 | children | Pole\<UUID\> | Nie | Pole ID osôb detí |
 | begin | Objekt Event | Nie | Začiatok vzťahu (napr. dátum svadby) |
 | end | Objekt Event | Nie | Koniec vzťahu (napr. dátum rozvodu) |
 
-## 5. Štatistiky dát (aktuálny súbor)
-
-Nasledujúce štatistiky popisujú aktuálny súbor rodokmeňa:
-
-| Metrika | Hodnota |
-|---------|---------|
-| Celkový počet osôb | 322 |
-| Muži | 166 |
-| Ženy | 156 |
-| Celkový počet vzťahov | 89 |
-| Osoby s dátumom narodenia | 210 |
-| Osoby s dátumom úmrtia | 77 |
-| Osoby s fotografiou | 4 |
-| Osoby s poznámkami | 14 |
-| Vzťahy s dátumom svadby | 18 |
-| Vzťahy s dátumom ukončenia | 1 |
-
-## 6. Príklad
+## 5. Príklad
 
 Nižšie je uvedený príklad minimálneho rodokmeňa s dvoma osobami a jedným vzťahom:
 
@@ -127,7 +123,7 @@ Nižšie je uvedený príklad minimálneho rodokmeňa s dvoma osobami a jedným 
   "version": "0.0.1",
   "persons": [
     {
-      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "id": "a1b2c3d4-e5f6-4789-abcd-ef1234567890",
       "name": { "first-name": "Ján", "last-name": "Novák" },
       "sex": "male",
       "birth": {
@@ -136,15 +132,15 @@ Nižšie je uvedený príklad minimálneho rodokmeňa s dvoma osobami a jedným 
       }
     },
     {
-      "id": "e5f6g7h8-i9j0-1234-klmn-op5678901234",
+      "id": "b7c8d9e0-f1a2-4b3c-8d4e-5f6a7b8c9d0e",
       "name": { "first-name": "Mária", "last-name": "Nováková", "maiden-name": "Horváthová" },
       "sex": "female"
     }
   ],
   "relations": [
     {
-      "id": "r1s2t3u4-v5w6-7890-xyza-bc1234567890",
-      "partners": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890", "e5f6g7h8-i9j0-1234-klmn-op5678901234"],
+      "id": "c3d4e5f6-a7b8-4c9d-9e0f-1a2b3c4d5e6f",
+      "partners": ["a1b2c3d4-e5f6-4789-abcd-ef1234567890", "b7c8d9e0-f1a2-4b3c-8d4e-5f6a7b8c9d0e"],
       "children": [],
       "begin": { "date": { "day": 20, "month": 8, "year": 2010, "fuzzy": false } }
     }
@@ -152,7 +148,7 @@ Nižšie je uvedený príklad minimálneho rodokmeňa s dvoma osobami a jedným 
 }
 ```
 
-## 7. Implementačné poznámky
+## 6. Implementačné poznámky
 
 **Formát ID:** Všetky identifikátory používajú formát UUID v4 (napr. "4e28b000-0c04-434a-9382-792ea3543316").
 

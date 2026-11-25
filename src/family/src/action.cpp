@@ -1,6 +1,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QLocale>
 #include <QMessageBox>
 
 #include <rbl_error.h>
@@ -355,8 +356,8 @@ void Action::onFileStoreImagesInTree()
 
     QString question = tr("All images which are stored in the data directory will be moved into the family tree.")
                      + "<br/>"
-                     + tr("An image stored within the family tree is reduced to occupy a maximum of %1 MB.")
-                           .arg(ImageButton::maxTreeDataSize / (1024 * 1024))
+                     + tr("An image stored within the family tree is reduced to occupy a maximum of %1.")
+                           .arg(QLocale().formattedDataSize(ImageButton::maxTreeDataSize,0,QLocale::DataSizeTraditionalFormat))
                      + "<br/>"
                      + tr("Would you like to continue?");
 

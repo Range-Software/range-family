@@ -1,0 +1,189 @@
+{
+    "main": "action_index.md",
+    "chapters": [
+        {
+            "title": "Nastavení aplikace",
+            "file": "action_application-settings.md"
+        },
+        {
+            "title": "Rozložení s pásem karet",
+            "file": "action_application-ribbon_layout.md"
+        },
+        {
+            "title": "Kompaktní pás karet",
+            "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Zkontrolovat aktualizace",
+            "file": "action_application-update.md"
+        },
+        {
+            "title": "O aplikaci",
+            "file": "action_application-about.md"
+        },
+        {
+            "title": "O knihovně Qt",
+            "file": "action_application-about_qt.md"
+        },
+        {
+            "title": "Licence",
+            "file": "action_application-license.md"
+        },
+        {
+            "title": "Zásady ochrany osobních údajů",
+            "file": "action_application-privacy_policy.md"
+        },
+        {
+            "title": "Poznámky k vydání",
+            "file": "action_application-release_notes.md"
+        },
+        {
+            "title": "Certifikáty",
+            "file": "action_application-folder_cert.md"
+        },
+        {
+            "title": "Data",
+            "file": "action_application-folder_data.md"
+        },
+        {
+            "title": "Dokumenty",
+            "file": "action_application-folder_doc.md"
+        },
+        {
+            "title": "Protokoly",
+            "file": "action_application-folder_log.md"
+        },
+        {
+            "title": "Dočasné soubory",
+            "file": "action_application-folder_tmp.md"
+        },
+        {
+            "title": "Nápověda",
+            "file": "action_application-help.md"
+        },
+        {
+            "title": "Ukončit",
+            "file": "action_application-quit.md"
+        },
+        {
+            "title": "Nový",
+            "file": "action_file-new.md"
+        },
+        {
+            "title": "Otevřít",
+            "file": "action_file-open.md"
+        },
+        {
+            "title": "Importovat",
+            "file": "action_file-import.md"
+        },
+        {
+            "title": "Porovnat",
+            "file": "action_file-compare.md"
+        },
+        {
+            "title": "Uložit",
+            "file": "action_file-save.md"
+        },
+        {
+            "title": "Uložit jako",
+            "file": "action_file-save_as.md"
+        },
+        {
+            "title": "Zavřít",
+            "file": "action_file-close.md"
+        },
+        {
+            "title": "Uložit všechny obrázky v rodokmenu",
+            "file": "action_file-store_images_in_tree.md"
+        },
+        {
+            "title": "Uložit všechny obrázky v adresáři dat",
+            "file": "action_file-store_images_in_data_dir.md"
+        },
+        {
+            "title": "Osoby",
+            "file": "action_view-persons.md"
+        },
+        {
+            "title": "Podrobnosti osoby",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Vztahy",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Výstup",
+            "file": "action_view-output.md"
+        },
+        {
+            "title": "Obnovit výchozí rozvržení",
+            "file": "action_view-reset_layout.md"
+        },
+        {
+            "title": "Přidat osobu",
+            "file": "action_edit-person_add.md"
+        },
+        {
+            "title": "Upravit vybrané osoby",
+            "file": "action_edit-person_edit.md"
+        },
+        {
+            "title": "Odstranit vybrané osoby",
+            "file": "action_edit-person_remove.md"
+        },
+        {
+            "title": "Zobrazit rodokmen vybraných osob",
+            "file": "action_edit-person_show_tree.md"
+        },
+        {
+            "title": "Nastavit vybranou osobu jako aktivní",
+            "file": "action_edit-person_set_active.md"
+        },
+        {
+            "title": "Sloučit vybrané osoby",
+            "file": "action_edit-person_merge.md"
+        },
+        {
+            "title": "Odhadnout datum narození a úmrtí",
+            "file": "action_edit-person_suggest_dates.md"
+        },
+        {
+            "title": "Přidat vztah",
+            "file": "action_edit-relation_add.md"
+        },
+        {
+            "title": "Upravit vybrané vztahy",
+            "file": "action_edit-relation_edit.md"
+        },
+        {
+            "title": "Odstranit vybrané vztahy",
+            "file": "action_edit-relation_remove.md"
+        },
+        {
+            "title": "Zobrazit rodokmen vybraných vztahů",
+            "file": "action_edit-relation_show_tree.md"
+        },
+        {
+            "title": "Správce relací Cloud",
+            "file": "action_cloud-session_manager.md"
+        },
+        {
+            "title": "Správce souborů Cloud",
+            "file": "action_cloud-file_manager.md"
+        },
+        {
+            "title": "Dotaz AI v Cloud",
+            "file": "action_cloud-query.md"
+        },
+        {
+            "title": "Správce nastavení AI",
+            "file": "action_ai-settings-manager.md"
+        },
+        {
+            "title": "Chat AI",
+            "file": "action_ai-chat.md"
+        }
+    ]
+}

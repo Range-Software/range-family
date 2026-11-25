@@ -1,0 +1,189 @@
+{
+    "main": "action_index.md",
+    "chapters": [
+        {
+            "title": "Anwendungseinstellungen",
+            "file": "action_application-settings.md"
+        },
+        {
+            "title": "Menüband-Layout",
+            "file": "action_application-ribbon_layout.md"
+        },
+        {
+            "title": "Kompaktes Menüband",
+            "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Nach Aktualisierung suchen",
+            "file": "action_application-update.md"
+        },
+        {
+            "title": "Über",
+            "file": "action_application-about.md"
+        },
+        {
+            "title": "Über Qt",
+            "file": "action_application-about_qt.md"
+        },
+        {
+            "title": "Lizenz",
+            "file": "action_application-license.md"
+        },
+        {
+            "title": "Datenschutzerklärung",
+            "file": "action_application-privacy_policy.md"
+        },
+        {
+            "title": "Versionshinweise",
+            "file": "action_application-release_notes.md"
+        },
+        {
+            "title": "Zertifikate",
+            "file": "action_application-folder_cert.md"
+        },
+        {
+            "title": "Daten",
+            "file": "action_application-folder_data.md"
+        },
+        {
+            "title": "Dokumente",
+            "file": "action_application-folder_doc.md"
+        },
+        {
+            "title": "Protokolle",
+            "file": "action_application-folder_log.md"
+        },
+        {
+            "title": "Temporäre Dateien",
+            "file": "action_application-folder_tmp.md"
+        },
+        {
+            "title": "Hilfe",
+            "file": "action_application-help.md"
+        },
+        {
+            "title": "Beenden",
+            "file": "action_application-quit.md"
+        },
+        {
+            "title": "Neu",
+            "file": "action_file-new.md"
+        },
+        {
+            "title": "Öffnen",
+            "file": "action_file-open.md"
+        },
+        {
+            "title": "Importieren",
+            "file": "action_file-import.md"
+        },
+        {
+            "title": "Vergleichen",
+            "file": "action_file-compare.md"
+        },
+        {
+            "title": "Speichern",
+            "file": "action_file-save.md"
+        },
+        {
+            "title": "Speichern unter",
+            "file": "action_file-save_as.md"
+        },
+        {
+            "title": "Schließen",
+            "file": "action_file-close.md"
+        },
+        {
+            "title": "Alle Bilder im Stammbaum speichern",
+            "file": "action_file-store_images_in_tree.md"
+        },
+        {
+            "title": "Alle Bilder im Datenordner speichern",
+            "file": "action_file-store_images_in_data_dir.md"
+        },
+        {
+            "title": "Personen",
+            "file": "action_view-persons.md"
+        },
+        {
+            "title": "Personendetails",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Beziehungen",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Ausgabe",
+            "file": "action_view-output.md"
+        },
+        {
+            "title": "Standardlayout wiederherstellen",
+            "file": "action_view-reset_layout.md"
+        },
+        {
+            "title": "Person hinzufügen",
+            "file": "action_edit-person_add.md"
+        },
+        {
+            "title": "Ausgewählte Personen bearbeiten",
+            "file": "action_edit-person_edit.md"
+        },
+        {
+            "title": "Ausgewählte Personen entfernen",
+            "file": "action_edit-person_remove.md"
+        },
+        {
+            "title": "Stammbaum der ausgewählten Personen anzeigen",
+            "file": "action_edit-person_show_tree.md"
+        },
+        {
+            "title": "Ausgewählte Person als aktiv festlegen",
+            "file": "action_edit-person_set_active.md"
+        },
+        {
+            "title": "Ausgewählte Personen zusammenführen",
+            "file": "action_edit-person_merge.md"
+        },
+        {
+            "title": "Geburts- und Sterbedatum vorschlagen",
+            "file": "action_edit-person_suggest_dates.md"
+        },
+        {
+            "title": "Beziehung hinzufügen",
+            "file": "action_edit-relation_add.md"
+        },
+        {
+            "title": "Ausgewählte Beziehungen bearbeiten",
+            "file": "action_edit-relation_edit.md"
+        },
+        {
+            "title": "Ausgewählte Beziehungen entfernen",
+            "file": "action_edit-relation_remove.md"
+        },
+        {
+            "title": "Stammbaum der ausgewählten Beziehungen anzeigen",
+            "file": "action_edit-relation_show_tree.md"
+        },
+        {
+            "title": "Cloud-Sitzungsverwaltung",
+            "file": "action_cloud-session_manager.md"
+        },
+        {
+            "title": "Cloud-Dateimanager",
+            "file": "action_cloud-file_manager.md"
+        },
+        {
+            "title": "Cloud-KI-Abfrage",
+            "file": "action_cloud-query.md"
+        },
+        {
+            "title": "KI-Einstellungsverwaltung",
+            "file": "action_ai-settings-manager.md"
+        },
+        {
+            "title": "KI-Chat",
+            "file": "action_ai-chat.md"
+        }
+    ]
+}

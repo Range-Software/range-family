@@ -2,72 +2,8 @@
     "main": "action_index.md",
     "chapters": [
         {
-            "title": "Application settings",
-            "file": "action_Application settings.md"
-        },
-        {
-            "title": "Check for update",
-            "file": "action_Check for update.md"
-        },
-        {
-            "title": "About",
-            "file": "action_About.md"
-        },
-        {
-            "title": "About Qt",
-            "file": "action_About Qt.md"
-        },
-        {
-            "title": "License",
-            "file": "action_License.md"
-        },
-        {
-            "title": "Release notes",
-            "file": "action_Release notes.md"
-        },
-        {
-            "title": "Help",
-            "file": "action_Help.md"
-        },
-        {
-            "title": "Quit",
-            "file": "action_Quit.md"
-        },
-        {
-            "title": "Cloud session manager",
-            "file": "action_Cloud session manager.md"
-        },
-        {
-            "title": "Cloud file manager",
-            "file": "action_Cloud file manager.md"
-        },
-        {
-            "title": "New",
-            "file": "action_New.md"
-        },
-        {
-            "title": "Open",
-            "file": "action_Open.md"
-        },
-        {
-            "title": "Import",
-            "file": "action_Import.md"
-        },
-        {
-            "title": "Compare",
-            "file": "action_Compare.md"
-        },
-        {
-            "title": "Save",
-            "file": "action_Save.md"
-        },
-        {
-            "title": "Save as",
-            "file": "action_Save as.md"
-        },
-        {
-            "title": "Close",
-            "file": "action_Close.md"
+            "title": "Nastavenia aplikácie",
+            "file": "action_application-settings.md"
         },
         {
             "title": "Rozloženie s pásom kariet",
@@ -76,6 +12,114 @@
         {
             "title": "Kompaktný pás kariet",
             "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Overiť aktualizáciu",
+            "file": "action_application-update.md"
+        },
+        {
+            "title": "O aplikácii",
+            "file": "action_application-about.md"
+        },
+        {
+            "title": "O knižnici Qt",
+            "file": "action_application-about_qt.md"
+        },
+        {
+            "title": "Licencia",
+            "file": "action_application-license.md"
+        },
+        {
+            "title": "Zásady ochrany osobných údajov",
+            "file": "action_application-privacy_policy.md"
+        },
+        {
+            "title": "Poznámky k vydaniu",
+            "file": "action_application-release_notes.md"
+        },
+        {
+            "title": "Certifikáty",
+            "file": "action_application-folder_cert.md"
+        },
+        {
+            "title": "Dáta",
+            "file": "action_application-folder_data.md"
+        },
+        {
+            "title": "Dokumenty",
+            "file": "action_application-folder_doc.md"
+        },
+        {
+            "title": "Záznamy",
+            "file": "action_application-folder_log.md"
+        },
+        {
+            "title": "Dočasné súbory",
+            "file": "action_application-folder_tmp.md"
+        },
+        {
+            "title": "Pomocník",
+            "file": "action_application-help.md"
+        },
+        {
+            "title": "Skončiť",
+            "file": "action_application-quit.md"
+        },
+        {
+            "title": "Nový",
+            "file": "action_file-new.md"
+        },
+        {
+            "title": "Otvoriť",
+            "file": "action_file-open.md"
+        },
+        {
+            "title": "Importovať",
+            "file": "action_file-import.md"
+        },
+        {
+            "title": "Porovnať",
+            "file": "action_file-compare.md"
+        },
+        {
+            "title": "Uložiť",
+            "file": "action_file-save.md"
+        },
+        {
+            "title": "Uložiť ako",
+            "file": "action_file-save_as.md"
+        },
+        {
+            "title": "Zatvoriť",
+            "file": "action_file-close.md"
+        },
+        {
+            "title": "Uložiť všetky obrázky v rodinnom strome",
+            "file": "action_file-store_images_in_tree.md"
+        },
+        {
+            "title": "Uložiť všetky obrázky v dátovom adresári",
+            "file": "action_file-store_images_in_data_dir.md"
+        },
+        {
+            "title": "Osoby",
+            "file": "action_view-persons.md"
+        },
+        {
+            "title": "Podrobnosti osoby",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Vzťahy",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Výstup",
+            "file": "action_view-output.md"
+        },
+        {
+            "title": "Obnoviť predvolené rozloženie",
+            "file": "action_view-reset_layout.md"
         },
         {
             "title": "Pridať osobu",
@@ -122,24 +166,24 @@
             "file": "action_edit-relation_show_tree.md"
         },
         {
-            "title": "Osoby",
-            "file": "action_view-persons.md"
+            "title": "Cloud správca relácií",
+            "file": "action_cloud-session_manager.md"
         },
         {
-            "title": "Podrobnosti osoby",
-            "file": "action_view-person_details.md"
+            "title": "Cloud súborový manažér",
+            "file": "action_cloud-file_manager.md"
         },
         {
-            "title": "Vzťahy",
-            "file": "action_view-relations.md"
+            "title": "Cloud AI dopyt",
+            "file": "action_cloud-query.md"
         },
         {
-            "title": "Výstup",
-            "file": "action_view-output.md"
+            "title": "Manažér AI nastavení",
+            "file": "action_ai-settings-manager.md"
         },
         {
-            "title": "Obnoviť predvolené rozloženie",
-            "file": "action_view-reset_layout.md"
+            "title": "AI chat",
+            "file": "action_ai-chat.md"
         }
     ]
 }

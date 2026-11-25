@@ -1,0 +1,189 @@
+{
+    "main": "action_index.md",
+    "chapters": [
+        {
+            "title": "Налаштування програми",
+            "file": "action_application-settings.md"
+        },
+        {
+            "title": "Розкладка зі стрічкою",
+            "file": "action_application-ribbon_layout.md"
+        },
+        {
+            "title": "Компактна стрічка",
+            "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Перевірити оновлення",
+            "file": "action_application-update.md"
+        },
+        {
+            "title": "Про програму",
+            "file": "action_application-about.md"
+        },
+        {
+            "title": "Про Qt",
+            "file": "action_application-about_qt.md"
+        },
+        {
+            "title": "Ліцензія",
+            "file": "action_application-license.md"
+        },
+        {
+            "title": "Політика конфіденційності",
+            "file": "action_application-privacy_policy.md"
+        },
+        {
+            "title": "Примітки до випуску",
+            "file": "action_application-release_notes.md"
+        },
+        {
+            "title": "Сертифікати",
+            "file": "action_application-folder_cert.md"
+        },
+        {
+            "title": "Дані",
+            "file": "action_application-folder_data.md"
+        },
+        {
+            "title": "Документи",
+            "file": "action_application-folder_doc.md"
+        },
+        {
+            "title": "Журнали",
+            "file": "action_application-folder_log.md"
+        },
+        {
+            "title": "Тимчасові файли",
+            "file": "action_application-folder_tmp.md"
+        },
+        {
+            "title": "Довідка",
+            "file": "action_application-help.md"
+        },
+        {
+            "title": "Вийти",
+            "file": "action_application-quit.md"
+        },
+        {
+            "title": "Новий",
+            "file": "action_file-new.md"
+        },
+        {
+            "title": "Відкрити",
+            "file": "action_file-open.md"
+        },
+        {
+            "title": "Імпортувати",
+            "file": "action_file-import.md"
+        },
+        {
+            "title": "Порівняти",
+            "file": "action_file-compare.md"
+        },
+        {
+            "title": "Зберегти",
+            "file": "action_file-save.md"
+        },
+        {
+            "title": "Зберегти як",
+            "file": "action_file-save_as.md"
+        },
+        {
+            "title": "Закрити",
+            "file": "action_file-close.md"
+        },
+        {
+            "title": "Зберігати всі зображення в родинному дереві",
+            "file": "action_file-store_images_in_tree.md"
+        },
+        {
+            "title": "Зберігати всі зображення в теці даних",
+            "file": "action_file-store_images_in_data_dir.md"
+        },
+        {
+            "title": "Особи",
+            "file": "action_view-persons.md"
+        },
+        {
+            "title": "Подробиці про особу",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Зв'язки",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Вивід",
+            "file": "action_view-output.md"
+        },
+        {
+            "title": "Відновити типове розташування",
+            "file": "action_view-reset_layout.md"
+        },
+        {
+            "title": "Додати особу",
+            "file": "action_edit-person_add.md"
+        },
+        {
+            "title": "Редагувати вибраних осіб",
+            "file": "action_edit-person_edit.md"
+        },
+        {
+            "title": "Видалити вибраних осіб",
+            "file": "action_edit-person_remove.md"
+        },
+        {
+            "title": "Показати родинне дерево вибраних осіб",
+            "file": "action_edit-person_show_tree.md"
+        },
+        {
+            "title": "Зробити вибрану особу активною",
+            "file": "action_edit-person_set_active.md"
+        },
+        {
+            "title": "Об'єднати вибраних осіб",
+            "file": "action_edit-person_merge.md"
+        },
+        {
+            "title": "Запропонувати дати народження та смерті",
+            "file": "action_edit-person_suggest_dates.md"
+        },
+        {
+            "title": "Додати зв'язок",
+            "file": "action_edit-relation_add.md"
+        },
+        {
+            "title": "Редагувати вибрані зв'язки",
+            "file": "action_edit-relation_edit.md"
+        },
+        {
+            "title": "Видалити вибрані зв'язки",
+            "file": "action_edit-relation_remove.md"
+        },
+        {
+            "title": "Показати родинне дерево вибраних зв'язків",
+            "file": "action_edit-relation_show_tree.md"
+        },
+        {
+            "title": "Менеджер сеансів Cloud",
+            "file": "action_cloud-session_manager.md"
+        },
+        {
+            "title": "Файловий менеджер Cloud",
+            "file": "action_cloud-file_manager.md"
+        },
+        {
+            "title": "AI-запит у Cloud",
+            "file": "action_cloud-query.md"
+        },
+        {
+            "title": "Менеджер налаштувань AI",
+            "file": "action_ai-settings-manager.md"
+        },
+        {
+            "title": "AI-чат",
+            "file": "action_ai-chat.md"
+        }
+    ]
+}

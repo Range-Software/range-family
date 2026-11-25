@@ -4,463 +4,468 @@
 <context>
     <name>Action</name>
     <message>
-        <location filename="../src/action.cpp" line="137"/>
+        <location filename="../src/action.cpp" line="135"/>
         <source>Application settings</source>
         <translation>Ustawienia aplikacji</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="138"/>
+        <location filename="../src/action.cpp" line="136"/>
         <source>Ribbon layout</source>
         <translation>Układ wstążki</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="138"/>
+        <location filename="../src/action.cpp" line="136"/>
         <source>Show commands in a ribbon instead of menus and tool bars.</source>
         <translation>Pokaż polecenia na wstążce zamiast w menu i na paskach narzędzi.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="139"/>
+        <location filename="../src/action.cpp" line="137"/>
         <source>Compact ribbon</source>
         <translation>Kompaktowa wstążka</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="139"/>
+        <location filename="../src/action.cpp" line="137"/>
         <source>Show the ribbon in less vertical space, with smaller buttons and no group titles.</source>
         <translation>Pokaż wstążkę o mniejszej wysokości, z mniejszymi przyciskami i bez tytułów grup.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="140"/>
+        <location filename="../src/action.cpp" line="138"/>
         <source>Check for update</source>
         <translation>Sprawdź aktualizacje</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="141"/>
-        <location filename="../src/action.cpp" line="620"/>
+        <location filename="../src/action.cpp" line="139"/>
+        <location filename="../src/action.cpp" line="618"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="142"/>
-        <location filename="../src/action.cpp" line="635"/>
+        <location filename="../src/action.cpp" line="140"/>
+        <location filename="../src/action.cpp" line="633"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="143"/>
-        <location filename="../src/action.cpp" line="654"/>
+        <location filename="../src/action.cpp" line="141"/>
+        <location filename="../src/action.cpp" line="652"/>
         <source>License</source>
         <translation>Licencja</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="144"/>
-        <location filename="../src/action.cpp" line="686"/>
+        <location filename="../src/action.cpp" line="142"/>
+        <location filename="../src/action.cpp" line="684"/>
         <source>Privacy policy</source>
         <translation>Polityka prywatności</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="145"/>
+        <location filename="../src/action.cpp" line="143"/>
         <source>Release notes</source>
         <translation>Informacje o wydaniu</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="146"/>
+        <location filename="../src/action.cpp" line="144"/>
         <source>Certificates</source>
         <translation>Certyfikaty</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="146"/>
+        <location filename="../src/action.cpp" line="144"/>
         <source>Open certificates folder in file browser.</source>
         <translation>Otwiera folder certyfikatów w przeglądarce plików.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="147"/>
+        <location filename="../src/action.cpp" line="145"/>
         <source>Data</source>
         <translation>Dane</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="147"/>
+        <location filename="../src/action.cpp" line="145"/>
         <source>Open data folder in file browser.</source>
         <translation>Otwiera folder danych w przeglądarce plików.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="148"/>
+        <location filename="../src/action.cpp" line="146"/>
         <source>Documents</source>
         <translation>Dokumenty</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="148"/>
+        <location filename="../src/action.cpp" line="146"/>
         <source>Open documents folder in file browser.</source>
         <translation>Otwiera folder dokumentów w przeglądarce plików.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="149"/>
+        <location filename="../src/action.cpp" line="147"/>
         <source>Logs</source>
         <translation>Dzienniki</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="149"/>
+        <location filename="../src/action.cpp" line="147"/>
         <source>Open log folder in file browser.</source>
         <translation>Otwiera folder dzienników w przeglądarce plików.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="150"/>
+        <location filename="../src/action.cpp" line="148"/>
         <source>Temporary files</source>
         <translation>Pliki tymczasowe</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="150"/>
+        <location filename="../src/action.cpp" line="148"/>
         <source>Open temporary files folder in file browser.</source>
         <translation>Otwiera folder plików tymczasowych w przeglądarce plików.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="151"/>
-        <location filename="../src/action.cpp" line="573"/>
+        <location filename="../src/action.cpp" line="149"/>
+        <location filename="../src/action.cpp" line="571"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="152"/>
+        <location filename="../src/action.cpp" line="150"/>
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="153"/>
+        <location filename="../src/action.cpp" line="151"/>
         <source>New</source>
         <translation>Nowy</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="154"/>
+        <location filename="../src/action.cpp" line="152"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="155"/>
+        <location filename="../src/action.cpp" line="153"/>
         <source>Import</source>
         <translation>Importuj</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="156"/>
+        <location filename="../src/action.cpp" line="154"/>
         <source>Compare</source>
         <translation>Porównaj</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="157"/>
+        <location filename="../src/action.cpp" line="155"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="158"/>
+        <location filename="../src/action.cpp" line="156"/>
         <source>Save as</source>
         <translation>Zapisz jako</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="159"/>
+        <location filename="../src/action.cpp" line="157"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="160"/>
+        <location filename="../src/action.cpp" line="158"/>
         <source>Store all images in family tree</source>
         <translation>Przechowuj wszystkie obrazy w drzewie genealogicznym</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="161"/>
+        <location filename="../src/action.cpp" line="159"/>
         <source>Store all images in data directory</source>
         <translation>Przechowuj wszystkie obrazy w katalogu danych</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="162"/>
+        <location filename="../src/action.cpp" line="160"/>
         <source>Persons</source>
         <translation>Osoby</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="162"/>
+        <location filename="../src/action.cpp" line="160"/>
         <source>Show or hide the list of persons.</source>
         <translation>Pokaż lub ukryj listę osób.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="163"/>
+        <location filename="../src/action.cpp" line="161"/>
         <source>Person details</source>
         <translation>Szczegóły osoby</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="163"/>
+        <location filename="../src/action.cpp" line="161"/>
         <source>Show or hide details of persons selected in the list of persons.</source>
         <translation>Pokaż lub ukryj szczegóły osób wybranych na liście osób.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="164"/>
+        <location filename="../src/action.cpp" line="162"/>
         <source>Relations</source>
         <translation>Relacje</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="164"/>
+        <location filename="../src/action.cpp" line="162"/>
         <source>Show or hide the list of relations.</source>
         <translation>Pokaż lub ukryj listę relacji.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="165"/>
+        <location filename="../src/action.cpp" line="163"/>
         <source>Output</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="165"/>
+        <location filename="../src/action.cpp" line="163"/>
         <source>Show or hide the application output.</source>
         <translation>Pokaż lub ukryj dane wyjściowe aplikacji.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="166"/>
+        <location filename="../src/action.cpp" line="164"/>
         <source>Restore default layout</source>
         <translation>Przywróć domyślny układ</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="166"/>
+        <location filename="../src/action.cpp" line="164"/>
         <source>Arrange panels and tool bars of the main window as they are after the first start.</source>
         <translation>Rozmieść panele i paski narzędzi okna głównego tak jak po pierwszym uruchomieniu.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="167"/>
+        <location filename="../src/action.cpp" line="165"/>
         <source>Add person</source>
         <translation>Dodaj osobę</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="167"/>
+        <location filename="../src/action.cpp" line="165"/>
         <source>Add a new person to the family tree.</source>
         <translation>Dodaj nową osobę do drzewa genealogicznego.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="168"/>
+        <location filename="../src/action.cpp" line="166"/>
         <source>Edit selected persons</source>
         <translation>Edytuj wybrane osoby</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="168"/>
+        <location filename="../src/action.cpp" line="166"/>
         <source>Edit persons selected in the list of persons.</source>
         <translation>Edytuj osoby wybrane na liście osób.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="169"/>
+        <location filename="../src/action.cpp" line="167"/>
         <source>Remove selected persons</source>
         <translation>Usuń wybrane osoby</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="169"/>
+        <location filename="../src/action.cpp" line="167"/>
         <source>Remove persons selected in the list of persons from the family tree.</source>
         <translation>Usuń z drzewa genealogicznego osoby wybrane na liście osób.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="170"/>
+        <location filename="../src/action.cpp" line="168"/>
         <source>Show family tree of selected persons</source>
         <translation>Pokaż drzewo genealogiczne wybranych osób</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="170"/>
+        <location filename="../src/action.cpp" line="168"/>
         <source>Show a diagram of the family tree around each person selected in the list of persons.</source>
         <translation>Pokaż diagram drzewa genealogicznego wokół każdej osoby wybranej na liście osób.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="171"/>
+        <location filename="../src/action.cpp" line="169"/>
         <source>Set selected person as active</source>
         <translation>Ustaw wybraną osobę jako aktywną</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="171"/>
+        <location filename="../src/action.cpp" line="169"/>
         <source>Set the person selected in the list of persons as the active person.</source>
         <translation>Ustaw osobę wybraną na liście osób jako osobę aktywną.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="172"/>
+        <location filename="../src/action.cpp" line="170"/>
         <source>Merge selected persons</source>
         <translation>Scal wybrane osoby</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="172"/>
+        <location filename="../src/action.cpp" line="170"/>
         <source>Merge persons selected in the list of persons into one person.</source>
         <translation>Scal osoby wybrane na liście osób w jedną osobę.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="173"/>
+        <location filename="../src/action.cpp" line="171"/>
         <source>Suggest birth and death dates</source>
         <translation>Zaproponuj daty urodzenia i zgonu</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="173"/>
+        <location filename="../src/action.cpp" line="171"/>
         <source>Suggest birth and death dates of selected persons from dates of their relatives.</source>
         <translation>Zaproponuj daty urodzenia i zgonu wybranych osób na podstawie dat ich krewnych.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="174"/>
+        <location filename="../src/action.cpp" line="172"/>
         <source>Add relation</source>
         <translation>Dodaj relację</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="174"/>
+        <location filename="../src/action.cpp" line="172"/>
         <source>Add a new relation to the family tree.</source>
         <translation>Dodaj nową relację do drzewa genealogicznego.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="175"/>
+        <location filename="../src/action.cpp" line="173"/>
         <source>Edit selected relations</source>
         <translation>Edytuj wybrane relacje</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="175"/>
+        <location filename="../src/action.cpp" line="173"/>
         <source>Edit relations selected in the list of relations.</source>
         <translation>Edytuj relacje wybrane na liście relacji.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="176"/>
+        <location filename="../src/action.cpp" line="174"/>
         <source>Remove selected relations</source>
         <translation>Usuń wybrane relacje</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="176"/>
+        <location filename="../src/action.cpp" line="174"/>
         <source>Remove relations selected in the list of relations from the family tree.</source>
         <translation>Usuń z drzewa genealogicznego relacje wybrane na liście relacji.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="177"/>
+        <location filename="../src/action.cpp" line="175"/>
         <source>Show family tree of selected relations</source>
         <translation>Pokaż drzewo genealogiczne wybranych relacji</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="177"/>
+        <location filename="../src/action.cpp" line="175"/>
         <source>Show a diagram of the family tree around each relation selected in the list of relations.</source>
         <translation>Pokaż diagram drzewa genealogicznego wokół każdej relacji wybranej na liście relacji.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="178"/>
+        <location filename="../src/action.cpp" line="176"/>
         <source>Cloud session manager</source>
         <translation>Menedżer sesji Cloud</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="179"/>
+        <location filename="../src/action.cpp" line="177"/>
         <source>Cloud file manager</source>
         <translation>Menedżer plików Cloud</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="180"/>
+        <location filename="../src/action.cpp" line="178"/>
         <source>Cloud AI query</source>
         <translation>Zapytanie AI w Cloud</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="181"/>
+        <location filename="../src/action.cpp" line="178"/>
+        <source>Show or hide the Cloud AI query.</source>
+        <translation>Pokaż lub ukryj zapytanie AI w Cloud.</translation>
+    </message>
+    <message>
+        <location filename="../src/action.cpp" line="179"/>
         <source>AI settings manager</source>
         <translation>Menedżer ustawień AI</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="182"/>
+        <location filename="../src/action.cpp" line="180"/>
         <source>AI chat</source>
         <translation>Czat AI</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="182"/>
+        <location filename="../src/action.cpp" line="180"/>
         <source>Show or hide the AI chat.</source>
         <translation>Pokaż lub ukryj czat AI.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="223"/>
+        <location filename="../src/action.cpp" line="221"/>
         <source>Open tree</source>
         <translation>Otwórz drzewo</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="245"/>
+        <location filename="../src/action.cpp" line="243"/>
         <source>The current family tree contains unsaved changes.</source>
         <translation>Bieżące drzewo genealogiczne zawiera niezapisane zmiany.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="247"/>
+        <location filename="../src/action.cpp" line="245"/>
         <source>Would you like to save it first?</source>
         <translation>Czy chcesz je najpierw zapisać?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="248"/>
+        <location filename="../src/action.cpp" line="246"/>
         <source>Save current tree</source>
         <translation>Zapisz bieżące drzewo</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="256"/>
+        <location filename="../src/action.cpp" line="254"/>
         <source>Import tree</source>
         <translation>Importuj drzewo</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="340"/>
+        <location filename="../src/action.cpp" line="338"/>
         <source>Close tree?</source>
         <translation>Zamknąć drzewo?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="341"/>
+        <location filename="../src/action.cpp" line="339"/>
         <source>Are you sure you want to close current family tree?</source>
         <translation>Czy na pewno chcesz zamknąć otwarte drzewo genealogiczne?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="359"/>
+        <location filename="../src/action.cpp" line="357"/>
         <source>All images which are stored in the data directory will be moved into the family tree.</source>
         <translation>Wszystkie obrazy przechowywane w katalogu danych zostaną przeniesione do drzewa genealogicznego.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="361"/>
-        <source>An image stored within the family tree is reduced to occupy a maximum of %1 MB.</source>
-        <translation>Obraz przechowywany w drzewie genealogicznym jest zmniejszany, aby zajmował maksymalnie %1 MB.</translation>
+        <location filename="../src/action.cpp" line="359"/>
+        <source>An image stored within the family tree is reduced to occupy a maximum of %1.</source>
+        <translation>Obraz przechowywany w drzewie genealogicznym jest zmniejszany, aby zajmował maksymalnie %1.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="364"/>
-        <location filename="../src/action.cpp" line="439"/>
+        <location filename="../src/action.cpp" line="362"/>
+        <location filename="../src/action.cpp" line="437"/>
         <source>Would you like to continue?</source>
         <translation>Czy chcesz kontynuować?</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="366"/>
-        <location filename="../src/action.cpp" line="410"/>
+        <location filename="../src/action.cpp" line="364"/>
+        <location filename="../src/action.cpp" line="408"/>
         <source>Store images in family tree</source>
         <translation>Przechowywanie obrazów w drzewie genealogicznym</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="411"/>
+        <location filename="../src/action.cpp" line="409"/>
         <source>Number of images moved into the family tree: %1</source>
         <translation>Liczba obrazów przeniesionych do drzewa genealogicznego: %1</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="413"/>
-        <location filename="../src/action.cpp" line="482"/>
+        <location filename="../src/action.cpp" line="411"/>
+        <location filename="../src/action.cpp" line="480"/>
         <source>The family tree must be saved for the change to take effect.</source>
         <translation>Aby zmiana zaczęła obowiązywać, drzewo genealogiczne musi zostać zapisane.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="430"/>
-        <location filename="../src/action.cpp" line="441"/>
-        <location filename="../src/action.cpp" line="479"/>
+        <location filename="../src/action.cpp" line="428"/>
+        <location filename="../src/action.cpp" line="439"/>
+        <location filename="../src/action.cpp" line="477"/>
         <source>Store images in data directory</source>
         <translation>Przechowywanie obrazów w katalogu danych</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="431"/>
+        <location filename="../src/action.cpp" line="429"/>
         <source>The family tree must be saved to a file before images can be stored as separate files.</source>
         <translation>Drzewo genealogiczne musi zostać zapisane do pliku, zanim obrazy będą mogły być przechowywane jako osobne pliki.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="436"/>
+        <location filename="../src/action.cpp" line="434"/>
         <source>All images which are stored in the family tree will be moved into the data directory &quot;%1&quot;.</source>
         <translation>Wszystkie obrazy przechowywane w drzewie genealogicznym zostaną przeniesione do katalogu danych &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="480"/>
+        <location filename="../src/action.cpp" line="478"/>
         <source>Number of images moved into the data directory: %1</source>
         <translation>Liczba obrazów przeniesionych do katalogu danych: %1</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="570"/>
+        <location filename="../src/action.cpp" line="568"/>
         <source>General</source>
         <translation>Ogólne</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="571"/>
+        <location filename="../src/action.cpp" line="569"/>
         <source>Tutorials</source>
         <translation>Poradniki</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="823"/>
-        <location filename="../src/action.cpp" line="824"/>
+        <location filename="../src/action.cpp" line="808"/>
+        <location filename="../src/action.cpp" line="809"/>
         <source>Failed to open folder</source>
         <translation>Nie udało się otworzyć folderu</translation>
     </message>
@@ -559,14 +564,6 @@
         <location filename="../src/calendar_dialog.cpp" line="32"/>
         <source>OK</source>
         <translation>OK</translation>
-    </message>
-</context>
-<context>
-    <name>CloudAiQueryDialog</name>
-    <message>
-        <location filename="../src/cloud_ai_query_dialog.cpp" line="13"/>
-        <source>Cloud AI query</source>
-        <translation>Zapytanie AI w Cloud</translation>
     </message>
 </context>
 <context>
@@ -761,57 +758,57 @@
 <context>
     <name>ImageButton</name>
     <message>
-        <location filename="../src/image_button.cpp" line="38"/>
+        <location filename="../src/image_button.cpp" line="39"/>
         <source>Remove current picture</source>
         <translation>Usuń bieżący obraz</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="53"/>
+        <location filename="../src/image_button.cpp" line="54"/>
         <source>Click to select</source>
         <translation>Kliknij, aby wybrać</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="162"/>
+        <location filename="../src/image_button.cpp" line="163"/>
         <source>Select image</source>
         <translation>Wybierz obraz</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="164"/>
+        <location filename="../src/image_button.cpp" line="165"/>
         <source>Image files</source>
         <translation>Pliki obrazów</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="189"/>
+        <location filename="../src/image_button.cpp" line="190"/>
         <source>Store image</source>
         <translation>Przechowywanie obrazu</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="190"/>
+        <location filename="../src/image_button.cpp" line="191"/>
         <source>How should the image be stored?</source>
         <translation>Jak obraz ma być przechowywany?</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="191"/>
-        <source>An image stored within the family tree is reduced to occupy a maximum of %1 MB.</source>
-        <translation>Obraz przechowywany w drzewie genealogicznym jest zmniejszany, aby zajmował maksymalnie %1 MB.</translation>
+        <location filename="../src/image_button.cpp" line="192"/>
+        <source>An image stored within the family tree is reduced to occupy a maximum of %1.</source>
+        <translation>Obraz przechowywany w drzewie genealogicznym jest zmniejszany, aby zajmował maksymalnie %1.</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="195"/>
+        <location filename="../src/image_button.cpp" line="196"/>
         <source>The family tree must be saved to a file and the person must be a part of it before an image can be stored as a separate file.</source>
         <translation>Drzewo genealogiczne musi zostać zapisane do pliku, a osoba musi być jego częścią, zanim obraz będzie mógł być przechowywany jako osobny plik.</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="196"/>
+        <location filename="../src/image_button.cpp" line="197"/>
         <source>A separate image will be stored as file &apos;%1&apos;.</source>
         <translation>Osobny obraz zostanie zapisany jako plik &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="198"/>
+        <location filename="../src/image_button.cpp" line="199"/>
         <source>Within the tree</source>
         <translation>W drzewie</translation>
     </message>
     <message>
-        <location filename="../src/image_button.cpp" line="199"/>
+        <location filename="../src/image_button.cpp" line="200"/>
         <source>Separate file</source>
         <translation>Osobny plik</translation>
     </message>
@@ -819,218 +816,223 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="76"/>
+        <location filename="../src/main_window.cpp" line="79"/>
         <source>Family tree manager</source>
         <translation>Menedżer drzewa genealogicznego</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="291"/>
-        <location filename="../src/main_window.cpp" line="606"/>
-        <location filename="../src/main_window.cpp" line="621"/>
+        <location filename="../src/main_window.cpp" line="294"/>
+        <location filename="../src/main_window.cpp" line="614"/>
+        <location filename="../src/main_window.cpp" line="629"/>
         <source>File</source>
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="305"/>
+        <location filename="../src/main_window.cpp" line="308"/>
         <source>Folders</source>
         <translation>Foldery</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="327"/>
-        <location filename="../src/main_window.cpp" line="640"/>
-        <location filename="../src/main_window.cpp" line="654"/>
+        <location filename="../src/main_window.cpp" line="330"/>
+        <location filename="../src/main_window.cpp" line="648"/>
+        <location filename="../src/main_window.cpp" line="662"/>
         <source>Edit</source>
         <translation>Edytuj</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="458"/>
-        <location filename="../src/main_window.cpp" line="610"/>
-        <location filename="../src/main_window.cpp" line="663"/>
+        <location filename="../src/main_window.cpp" line="379"/>
+        <source>Cloud AI query</source>
+        <translation>Zapytanie AI w Cloud</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="466"/>
+        <location filename="../src/main_window.cpp" line="618"/>
+        <location filename="../src/main_window.cpp" line="671"/>
         <source>Cloud</source>
         <translation>Cloud</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="470"/>
-        <location filename="../src/main_window.cpp" line="668"/>
+        <location filename="../src/main_window.cpp" line="478"/>
+        <location filename="../src/main_window.cpp" line="676"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="481"/>
-        <location filename="../src/main_window.cpp" line="614"/>
+        <location filename="../src/main_window.cpp" line="489"/>
+        <location filename="../src/main_window.cpp" line="622"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="506"/>
+        <location filename="../src/main_window.cpp" line="514"/>
         <source>File toolbar</source>
         <translation>Pasek plików</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="512"/>
+        <location filename="../src/main_window.cpp" line="520"/>
         <source>Family tree toolbar</source>
         <translation>Pasek drzewa genealogicznego</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="518"/>
+        <location filename="../src/main_window.cpp" line="526"/>
         <source>Persons and relations toolbar</source>
         <translation>Pasek osób i relacji</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="532"/>
+        <location filename="../src/main_window.cpp" line="540"/>
         <source>Application toolbar</source>
         <translation>Pasek aplikacji</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="619"/>
-        <location filename="../src/main_window.cpp" line="644"/>
-        <location filename="../src/main_window.cpp" line="658"/>
+        <location filename="../src/main_window.cpp" line="627"/>
+        <location filename="../src/main_window.cpp" line="652"/>
+        <location filename="../src/main_window.cpp" line="666"/>
         <source>Family tree</source>
         <translation>Drzewo genealogiczne</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="348"/>
-        <location filename="../src/main_window.cpp" line="607"/>
+        <location filename="../src/main_window.cpp" line="351"/>
+        <location filename="../src/main_window.cpp" line="615"/>
         <source>View</source>
         <translation>Widok</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="370"/>
+        <location filename="../src/main_window.cpp" line="373"/>
         <source>Person details</source>
         <translation>Szczegóły osoby</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="372"/>
+        <location filename="../src/main_window.cpp" line="375"/>
         <source>Output</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="374"/>
+        <location filename="../src/main_window.cpp" line="377"/>
         <source>AI chat</source>
         <translation>Czat AI</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="627"/>
+        <location filename="../src/main_window.cpp" line="635"/>
         <source>Other family trees</source>
         <translation>Inne drzewa genealogiczne</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="631"/>
+        <location filename="../src/main_window.cpp" line="639"/>
         <source>Images</source>
         <translation>Obrazy</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="632"/>
+        <location filename="../src/main_window.cpp" line="640"/>
         <source>Store in family tree</source>
         <translation>Przechowuj w drzewie genealogicznym</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="633"/>
+        <location filename="../src/main_window.cpp" line="641"/>
         <source>Store in data directory</source>
         <translation>Przechowuj w katalogu danych</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="369"/>
-        <location filename="../src/main_window.cpp" line="636"/>
+        <location filename="../src/main_window.cpp" line="372"/>
+        <location filename="../src/main_window.cpp" line="644"/>
         <source>Persons</source>
         <translation>Osoby</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="638"/>
+        <location filename="../src/main_window.cpp" line="646"/>
         <source>Person</source>
         <translation>Osoba</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="639"/>
-        <location filename="../src/main_window.cpp" line="653"/>
+        <location filename="../src/main_window.cpp" line="647"/>
+        <location filename="../src/main_window.cpp" line="661"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="641"/>
-        <location filename="../src/main_window.cpp" line="655"/>
+        <location filename="../src/main_window.cpp" line="649"/>
+        <location filename="../src/main_window.cpp" line="663"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="643"/>
-        <location filename="../src/main_window.cpp" line="657"/>
+        <location filename="../src/main_window.cpp" line="651"/>
+        <location filename="../src/main_window.cpp" line="665"/>
         <source>Tools</source>
         <translation>Narzędzia</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="645"/>
+        <location filename="../src/main_window.cpp" line="653"/>
         <source>Set as active</source>
         <translation>Ustaw jako aktywną</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="646"/>
+        <location filename="../src/main_window.cpp" line="654"/>
         <source>Merge</source>
         <translation>Scal</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="647"/>
+        <location filename="../src/main_window.cpp" line="655"/>
         <source>Suggest dates</source>
         <translation>Zaproponuj daty</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="878"/>
+        <location filename="../src/main_window.cpp" line="886"/>
         <source>Errors</source>
         <translation>Błędy</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="883"/>
+        <location filename="../src/main_window.cpp" line="891"/>
         <source>Warnings</source>
         <translation>Ostrzeżenia</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="371"/>
-        <location filename="../src/main_window.cpp" line="650"/>
+        <location filename="../src/main_window.cpp" line="374"/>
+        <location filename="../src/main_window.cpp" line="658"/>
         <source>Relations</source>
         <translation>Relacje</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="652"/>
+        <location filename="../src/main_window.cpp" line="660"/>
         <source>Relation</source>
         <translation>Relacja</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="661"/>
+        <location filename="../src/main_window.cpp" line="669"/>
         <source>Cloud and AI</source>
         <translation>Cloud i AI</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="664"/>
+        <location filename="../src/main_window.cpp" line="672"/>
         <source>Session manager</source>
         <translation>Menedżer sesji</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="665"/>
+        <location filename="../src/main_window.cpp" line="673"/>
         <source>File manager</source>
         <translation>Menedżer plików</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="666"/>
+        <location filename="../src/main_window.cpp" line="674"/>
         <source>AI query</source>
         <translation>Zapytanie AI</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="669"/>
+        <location filename="../src/main_window.cpp" line="677"/>
         <source>Chat</source>
         <translation>Czat</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="670"/>
+        <location filename="../src/main_window.cpp" line="678"/>
         <source>Settings manager</source>
         <translation>Menedżer ustawień</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="700"/>
+        <location filename="../src/main_window.cpp" line="708"/>
         <source>Show application output</source>
         <translation>Pokaż dane wyjściowe aplikacji</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="786"/>
+        <location filename="../src/main_window.cpp" line="794"/>
         <source>The current family tree contains unsaved changes.</source>
         <translation>Bieżące drzewo genealogiczne zawiera niezapisane zmiany.</translation>
     </message>
@@ -1038,7 +1040,7 @@
 <context>
     <name>OutputWidget</name>
     <message>
-        <location filename="../src/output_widget.cpp" line="93"/>
+        <location filename="../src/output_widget.cpp" line="94"/>
         <source>Notice</source>
         <translation>Uwaga</translation>
     </message>
@@ -1364,37 +1366,37 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/action.cpp" line="43"/>
+        <location filename="../src/action.cpp" line="41"/>
         <source>Application</source>
         <translation>Aplikacja</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="45"/>
+        <location filename="../src/action.cpp" line="43"/>
         <source>File</source>
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="47"/>
+        <location filename="../src/action.cpp" line="45"/>
         <source>View</source>
         <translation>Widok</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="49"/>
+        <location filename="../src/action.cpp" line="47"/>
         <source>Edit</source>
         <translation>Edytuj</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="51"/>
+        <location filename="../src/action.cpp" line="49"/>
         <source>Debug</source>
         <translation>Debugowanie</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="53"/>
+        <location filename="../src/action.cpp" line="51"/>
         <source>Cloud</source>
         <translation>Cloud</translation>
     </message>
     <message>
-        <location filename="../src/action.cpp" line="55"/>
+        <location filename="../src/action.cpp" line="53"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>

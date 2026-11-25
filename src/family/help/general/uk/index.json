@@ -1,0 +1,13 @@
+{
+    "main": "index.md",
+    "chapters": [
+        {
+            "title": "Родинне дерево",
+            "file": "family_tree.md"
+        },
+        {
+            "title": "Специфікація JSON-файлу родинного дерева",
+            "file": "family_tree_json_specification.md"
+        }
+    ]
+}

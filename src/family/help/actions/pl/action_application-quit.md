@@ -1,0 +1,3 @@
+# Zakończ
+
+Zakończyć program.

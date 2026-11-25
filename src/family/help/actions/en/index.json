@@ -3,71 +3,7 @@
     "chapters": [
         {
             "title": "Application settings",
-            "file": "action_Application settings.md"
-        },
-        {
-            "title": "Check for update",
-            "file": "action_Check for update.md"
-        },
-        {
-            "title": "About",
-            "file": "action_About.md"
-        },
-        {
-            "title": "About Qt",
-            "file": "action_About Qt.md"
-        },
-        {
-            "title": "License",
-            "file": "action_License.md"
-        },
-        {
-            "title": "Release notes",
-            "file": "action_Release notes.md"
-        },
-        {
-            "title": "Help",
-            "file": "action_Help.md"
-        },
-        {
-            "title": "Quit",
-            "file": "action_Quit.md"
-        },
-        {
-            "title": "Cloud session manager",
-            "file": "action_Cloud session manager.md"
-        },
-        {
-            "title": "Cloud file manager",
-            "file": "action_Cloud file manager.md"
-        },
-        {
-            "title": "New",
-            "file": "action_New.md"
-        },
-        {
-            "title": "Open",
-            "file": "action_Open.md"
-        },
-        {
-            "title": "Import",
-            "file": "action_Import.md"
-        },
-        {
-            "title": "Compare",
-            "file": "action_Compare.md"
-        },
-        {
-            "title": "Save",
-            "file": "action_Save.md"
-        },
-        {
-            "title": "Save as",
-            "file": "action_Save as.md"
-        },
-        {
-            "title": "Close",
-            "file": "action_Close.md"
+            "file": "action_application-settings.md"
         },
         {
             "title": "Ribbon layout",
@@ -76,6 +12,114 @@
         {
             "title": "Compact ribbon",
             "file": "action_application-ribbon_compact.md"
+        },
+        {
+            "title": "Check for update",
+            "file": "action_application-update.md"
+        },
+        {
+            "title": "About",
+            "file": "action_application-about.md"
+        },
+        {
+            "title": "About Qt",
+            "file": "action_application-about_qt.md"
+        },
+        {
+            "title": "License",
+            "file": "action_application-license.md"
+        },
+        {
+            "title": "Privacy policy",
+            "file": "action_application-privacy_policy.md"
+        },
+        {
+            "title": "Release notes",
+            "file": "action_application-release_notes.md"
+        },
+        {
+            "title": "Certificates",
+            "file": "action_application-folder_cert.md"
+        },
+        {
+            "title": "Data",
+            "file": "action_application-folder_data.md"
+        },
+        {
+            "title": "Documents",
+            "file": "action_application-folder_doc.md"
+        },
+        {
+            "title": "Logs",
+            "file": "action_application-folder_log.md"
+        },
+        {
+            "title": "Temporary files",
+            "file": "action_application-folder_tmp.md"
+        },
+        {
+            "title": "Help",
+            "file": "action_application-help.md"
+        },
+        {
+            "title": "Quit",
+            "file": "action_application-quit.md"
+        },
+        {
+            "title": "New",
+            "file": "action_file-new.md"
+        },
+        {
+            "title": "Open",
+            "file": "action_file-open.md"
+        },
+        {
+            "title": "Import",
+            "file": "action_file-import.md"
+        },
+        {
+            "title": "Compare",
+            "file": "action_file-compare.md"
+        },
+        {
+            "title": "Save",
+            "file": "action_file-save.md"
+        },
+        {
+            "title": "Save as",
+            "file": "action_file-save_as.md"
+        },
+        {
+            "title": "Close",
+            "file": "action_file-close.md"
+        },
+        {
+            "title": "Store all images in family tree",
+            "file": "action_file-store_images_in_tree.md"
+        },
+        {
+            "title": "Store all images in data directory",
+            "file": "action_file-store_images_in_data_dir.md"
+        },
+        {
+            "title": "Persons",
+            "file": "action_view-persons.md"
+        },
+        {
+            "title": "Person details",
+            "file": "action_view-person_details.md"
+        },
+        {
+            "title": "Relations",
+            "file": "action_view-relations.md"
+        },
+        {
+            "title": "Output",
+            "file": "action_view-output.md"
+        },
+        {
+            "title": "Restore default layout",
+            "file": "action_view-reset_layout.md"
         },
         {
             "title": "Add person",
@@ -122,24 +166,24 @@
             "file": "action_edit-relation_show_tree.md"
         },
         {
-            "title": "Persons",
-            "file": "action_view-persons.md"
+            "title": "Cloud session manager",
+            "file": "action_cloud-session_manager.md"
         },
         {
-            "title": "Person details",
-            "file": "action_view-person_details.md"
+            "title": "Cloud file manager",
+            "file": "action_cloud-file_manager.md"
         },
         {
-            "title": "Relations",
-            "file": "action_view-relations.md"
+            "title": "Cloud AI query",
+            "file": "action_cloud-query.md"
         },
         {
-            "title": "Output",
-            "file": "action_view-output.md"
+            "title": "AI settings manager",
+            "file": "action_ai-settings-manager.md"
         },
         {
-            "title": "Restore default layout",
-            "file": "action_view-reset_layout.md"
+            "title": "AI chat",
+            "file": "action_ai-chat.md"
         }
     ]
 }

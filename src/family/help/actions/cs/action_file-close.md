@@ -1,0 +1,3 @@
+# Zavřít
+
+Zavřít aktuální rodokmen.

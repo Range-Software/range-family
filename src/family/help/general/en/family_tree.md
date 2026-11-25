@@ -11,6 +11,9 @@ A family tree is built from two types of basic entities: **persons** and their *
 - **Name** - Name contains **first**, **middle**, **last** and **maiden** names
 - **Birth** - Birth of a person is defined by date and place
 - **Death** - Death of a person is defined by date and place
+- **Sex** - Male, female or other
+- **Picture** - Picture of a person with title and description, stored either within the family tree or in a separate file
+- **Notes** - Notes or biography of a person
 
 All parameters except **ID** are not unique, which means that there can be multiple persons with the same name or any other personal information. Also all parameters except **ID** can be empty.
 
