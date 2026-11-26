@@ -144,6 +144,15 @@
   rejection is accepted. Store builds do not check for software updates: the
   automatic check, its application setting and the "Check for update" action
   are left out.
+- "AI chat" and "Cloud AI query" ask for permission before the family tree is
+  sent to an AI service for the first time. The question names the service and
+  the data to be sent: for "AI chat" the question and the family tree without
+  pictures and notes, for "Cloud AI query" the question, the family tree file
+  stored in Cloud and the user's name, e-mail address and territory. Nothing is
+  sent when the permission is not given. All given permissions can be withdrawn
+  in the "AI services" group on the "Network" tab of the application settings.
+- Store builds send usage information only after the user turns it on, either
+  on the first start or in the application settings.
 
 ### Bug fixes
 
@@ -225,7 +234,7 @@
 - range-build-tools @ v1.2.0
 - range-cloud-lib @ v1.3.1
 - range-family-lib @ v1.2.0
-- range-gui-lib @ v1.3.2
+- range-gui-lib @ v1.3.3
 
 ---
 

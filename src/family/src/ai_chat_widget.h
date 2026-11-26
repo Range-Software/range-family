@@ -20,7 +20,7 @@ class AiChatWidget : public RAiChatWidget
 
         //! Constructor.
         explicit AiChatWidget(RAgentSettingsManager *aiAgentSettingsManager,
-                              const RApplicationSettings *applicationSettings,
+                              RApplicationSettings *applicationSettings,
                               QWidget *parent = nullptr);
 
 };

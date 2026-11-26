@@ -51,7 +51,7 @@ FILE_BEGIN
 <family_tree_json_content>
 FILE_END)";
 
-AiChatWidget::AiChatWidget(RAgentSettingsManager *aiAgentSettingsManager, const RApplicationSettings *applicationSettings, QWidget *parent)
+AiChatWidget::AiChatWidget(RAgentSettingsManager *aiAgentSettingsManager, RApplicationSettings *applicationSettings, QWidget *parent)
     : RAiChatWidget{aiAgentSettingsManager,
                     applicationSettings,
                     Application::instance()->getSession()->getLastAiChatAgent(),
