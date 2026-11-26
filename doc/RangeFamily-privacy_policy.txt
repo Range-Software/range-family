@@ -1,0 +1,219 @@
+Range Family Privacy Policy
+Effective date: 2026-11-26
+
+--------------------------------------------------
+Tomáš Šoltys, Range Software
+Ke Zlatkovu 597, 25070 Odolena Voda, Czech Republic
+tomas.soltys@range-software.com
+https://www.range-software.com
+--------------------------------------------------
+
+PRIVACY POLICY SECTIONS:
+
+  1. INTRODUCTION
+  2. SUMMARY
+  3. INFORMATION STORED ON YOUR DEVICE
+  4. INFORMATION SENT OVER THE NETWORK
+  5. HOW WE USE INFORMATION
+  6. SHARING
+  7. RETENTION, SECURITY AND TRANSFERS
+  8. YOUR CHOICES AND RIGHTS
+  9. CHANGES AND CONTACT
+
+
+--------------------------------------------------
+1. INTRODUCTION
+--------------------------------------------------
+
+Range Family is a desktop family tree application published by Tomáš Šoltys, Range Software ("we", "us"), Ke Zlatkovu 597, 25070 Odolena Voda, Czech Republic. We are the controller of any personal data described in this policy that we receive.
+
+This policy applies to the Range Family application, including the versions distributed through the Apple App Store and the Microsoft Store, its bundled command-line tool (family-tool), and the Range Software online services the application connects to. It does not apply to third-party websites or services that you choose to connect to.
+
+A family tree holds information about real people, often including living relatives. You decide what you record about them. As long as your family tree stays on your device, we have no access to it.
+
+
+--------------------------------------------------
+2. SUMMARY
+--------------------------------------------------
+
+Range Family works offline. Your family trees, pictures and notes stay on your device unless you choose to use an online feature. We do not sell personal data, we do not show ads, and the application contains no third-party analytics or tracking.
+
+Usage information
+  What leaves your device: application log of the previous session
+  Sent to: Range Software
+  When: at start-up, only if "Send usage information" is enabled
+
+Crash report
+  What leaves your device: application log of the crashed session and your optional comment
+  Sent to: Range Software
+  When: only when you click "Send crash report"
+
+Range Cloud
+  What leaves your device: account name, certificate details and the files you store in Range Cloud, which can include your family trees
+  Sent to: Range Software
+  When: only when you register and use cloud functions
+
+AI chat
+  What leaves your device: your questions, the open family tree without pictures and notes, and your name
+  Sent to: the AI provider you configure (OpenAI or Anthropic)
+  When: only after you set up an AI agent, ask a question and give your permission
+
+Cloud AI query
+  What leaves your device: your questions, the family tree file stored in Range Cloud, and your name, e-mail address and territory
+  Sent to: Range Software, which forwards it to an AI provider
+  When: only when you use Cloud AI query and give your permission
+
+Every online feature can be turned off or simply not used. The application remains fully usable without them.
+
+
+--------------------------------------------------
+3. INFORMATION STORED ON YOUR DEVICE
+--------------------------------------------------
+
+The application stores the following only on your device, in your user profile or in the folders you choose. We have no access to it.
+
+  - Family trees: persons and relations you create or import, with names, sex, dates and places of birth, death and relations, addresses, geographic coordinates, pictures and notes.
+  - Settings: preferences, recent files, access to the family tree you opened last, proxy settings, your name, e-mail address and territory if you enter them, your choice for usage information and the AI services you allowed to receive data.
+  - Cloud session data: server addresses, your private key, client certificate and trust store used to connect to Range Cloud.
+  - AI agent settings: the provider, model and API key you enter. The API key is kept in your local settings and is sent only to the provider it belongs to.
+  - Log files: technical records of what the application did, such as start-up steps, file paths opened, warnings and errors. Logs are rotated and older logs are overwritten.
+
+You can delete this information at any time by removing your files, uninstalling the application and deleting its data folder in your user profile.
+
+
+--------------------------------------------------
+4. INFORMATION SENT OVER THE NETWORK
+--------------------------------------------------
+
+The application connects to the internet only for the features below. All connections to Range Software servers (range-software.com) are encrypted with TLS. If you configure a proxy, traffic passes through it.
+
+4.1 Usage information
+
+When "Send usage information" is enabled, the application sends the log file of the previous session to Range Software at start-up. You choose this on the first-run screen and can change it at any time in the application settings. In the Apple App Store and Microsoft Store versions it is off until you turn it on. Logs describe how the software ran (actions, timings, warnings, errors, version, operating system). They do not contain the contents of your family trees. They can contain file and folder paths, which may include your computer user name and the names of your family tree files.
+
+4.2 Crash reports
+
+If the application ended unexpectedly, the next start shows the log from the crashed session. You can review it, add a comment and decide whether to send it. Nothing is sent unless you click "Send crash report".
+
+4.3 Range Cloud
+
+Range Cloud lets you store files on Range Software servers. It is used only if you register. When you do, we process:
+
+  - the user name (your e-mail address) you register and the details you put in your certificate request (common name, and optionally country, state, location, organization and organization unit);
+  - files you upload, with their names, sizes, versions, tags and access rights. If you turn on "Synchronize data directory", the family trees and pictures in your data directory are uploaded and kept in sync. These files contain the personal information you recorded about the people in your family tree;
+  - technical connection data such as IP address and request times, needed to run the service and keep it secure.
+
+4.4 AI chat and Cloud AI query
+
+Both AI features are optional and are off until you configure or use them. Before data is sent to an AI service for the first time, the application shows what will be sent and asks for your permission. Nothing is sent if you decline. You can withdraw all given permissions in the application settings ("Network" tab, "AI services").
+
+  - AI chat, with your own API key (OpenAI or Anthropic): your questions, the conversation so far, the open family tree without pictures and notes, your name or the person marked as you in the tree, and the current date are sent directly from your device to that provider. Your use is governed by your agreement with the provider and its privacy policy:
+      OpenAI:    https://openai.com/policies/privacy-policy
+      Anthropic: https://www.anthropic.com/legal/privacy
+  - Cloud AI query, through Range Cloud: your query, the conversation so far, a reference to the family tree file stored in Range Cloud, and your name, e-mail address and territory from the application settings are sent to Range Software, which forwards them, together with the family tree file, to an AI provider to produce the answer.
+
+A family tree can contain personal information about living people. Use the AI features only if you are comfortable sharing that information with the provider.
+
+4.5 Software updates
+
+The Apple App Store and Microsoft Store versions do not check for or download updates themselves. Updates are delivered by the store. Versions downloaded from our website may check range-software.com for new releases; this sends a list request and no personal data.
+
+
+--------------------------------------------------
+5. HOW WE USE INFORMATION
+--------------------------------------------------
+
+We use the information we receive only for the purposes below. We do not use it for advertising or profiling, we do not use your family trees to train AI models, and we make no automated decisions with legal or similar effects on you.
+
+Fix bugs and improve the software
+  Information: usage logs, crash reports and comments
+  Legal basis (GDPR): your consent, which you can withdraw in settings
+
+Provide Range Cloud
+  Information: account, certificate, files, connection data
+  Legal basis (GDPR): performance of a contract with you
+
+Answer AI queries sent through Range Cloud
+  Information: your queries, the referenced family tree file, your name, e-mail address and territory, and the responses
+  Legal basis (GDPR): your consent, given before the first query
+
+Keep services secure and prevent abuse
+  Information: connection data and server logs
+  Legal basis (GDPR): our legitimate interest in running a secure service
+
+Reply to you when you contact us
+  Information: your email and message
+  Legal basis (GDPR): our legitimate interest in answering you
+
+Meet legal obligations
+  Information: any of the above, as required
+  Legal basis (GDPR): legal obligation
+
+
+--------------------------------------------------
+6. SHARING
+--------------------------------------------------
+
+We do not sell or rent personal data and do not share it for advertising. We share it only in these cases:
+
+  - Hosting providers that run our servers on our behalf, under contracts that limit use to providing the service.
+  - AI providers, only for queries you send through Range Cloud, to generate the answer.
+  - Other Range Cloud users, only for files whose access rights you set to share with them.
+  - Authorities, when the law requires it, or to protect our rights, our users or the public.
+  - A successor, if the Range Family business is transferred. This policy would continue to apply to your information.
+
+When you install from the Apple App Store, Apple processes purchase and installation data under the Apple Privacy Policy (https://www.apple.com/legal/privacy/). When you install from the Microsoft Store, Microsoft processes it under the Microsoft Privacy Statement (https://privacy.microsoft.com/privacystatement). We do not receive your Apple or Microsoft account details through the application.
+
+
+--------------------------------------------------
+7. RETENTION, SECURITY AND TRANSFERS
+--------------------------------------------------
+
+Retention
+We keep usage logs and crash reports for up to 24 months, then delete them. We keep Range Cloud account data and files while your account is active and delete them within 90 days after you close the account or ask us to delete it. We may keep limited records longer where the law requires it.
+
+Security
+Connections to our servers use TLS with client certificates. Access to stored data is limited to people who need it to run the service. No method of transfer or storage is completely secure, but we work to protect your information and will notify you and the authorities of a breach where the law requires.
+
+Where data is processed
+Range Software is based in the Czech Republic, in the European Union. AI providers you use may process data in the United States or other countries. Where data leaves the European Economic Area, we rely on adequacy decisions or the European Commission's Standard Contractual Clauses.
+
+Children
+Range Family is not directed at children under 16, and we do not knowingly collect their personal data as users. A family tree may contain information about children that a user records; such information stays on the user's device unless the user chooses an online feature. If you believe a child has given us personal data, contact us and we will delete it.
+
+
+--------------------------------------------------
+8. YOUR CHOICES AND RIGHTS
+--------------------------------------------------
+
+In the application:
+
+  - Turn usage information on or off in the application settings ("Send usage information").
+  - Review each crash report before sending it, or close the dialog to send nothing.
+  - Use Range Cloud and the AI features only if you want to. Decline the permission question to send nothing to an AI service, withdraw given permissions in the application settings, or remove an AI agent's settings to stop sending it data.
+  - Turn "Synchronize data directory" off to stop uploading your family trees, and delete your cloud files from the application at any time.
+
+Under data protection law (including the EU and UK GDPR and US state laws such as the CCPA), you can ask us to:
+
+  - give you access to, or a copy of, your personal data;
+  - correct inaccurate data;
+  - delete your data or close your Range Cloud account;
+  - restrict or object to processing;
+  - send your data to you or another provider in a portable format;
+  - withdraw consent at any time, without affecting earlier processing.
+
+Email us at the address below. We answer within 30 days and may need to confirm your identity first. We will not treat you differently for using these rights. You can also complain to a data protection authority. In the Czech Republic, that is the Office for Personal Data Protection (ÚOOÚ), https://uoou.gov.cz.
+
+
+--------------------------------------------------
+9. CHANGES AND CONTACT
+--------------------------------------------------
+
+We may update this policy when the application or the law changes. We will post the new version at the same address with a new effective date. For significant changes, we will also tell you in the application or by email before they take effect.
+
+For questions or requests about privacy, contact:
+
+Tomáš Šoltys, Range Software
+Ke Zlatkovu 597, 25070 Odolena Voda, Czech Republic
+Email: tomas.soltys@range-software.com
+Website: https://www.range-software.com
