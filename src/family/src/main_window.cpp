@@ -381,10 +381,16 @@ void MainWindow::createDockWidgets()
     this->placeDockWidgets();
 
     // Actions of the view menu follow docks closed by their buttons or restored with the window state.
+    // Toggle view action of a dock gets unchecked also when the window is minimized, while the dock itself stays shown.
+    // Following it would hide the dock for real, so actions follow only docks hidden explicitly.
     for (int i=0;i<this->dockWidgets.count();i++)
     {
         RAction *action = this->actionList->getAction(dockActionTypes.at(i));
-        QObject::connect(this->dockWidgets.at(i)->toggleViewAction(),&QAction::toggled,action,&QAction::setChecked);
+        QDockWidget *dockWidget = this->dockWidgets.at(i);
+        QObject::connect(dockWidget->toggleViewAction(),&QAction::toggled,action,[dockWidget,action]()
+        {
+            action->setChecked(!dockWidget->isHidden());
+        });
     }
     this->syncDockActions();
 
