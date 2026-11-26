@@ -2,7 +2,7 @@
 
 Range Family is an open-dource desktop application for family tree management.
 
-![Range Family](./doc/RangeFamily-darwin-light.png)
+![Range Family](./doc/RangeFamily-darwin-dark.png)
 
 ## Help and tutorials
 
