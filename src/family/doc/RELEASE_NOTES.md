@@ -194,6 +194,19 @@
   `Library/Application Support/Range Software/Family` inside its container
   (`~/Library/Containers/com.range-software.family/Data`); other versions keep
   the remaining folders in the Documents folder.
+- The Apple App Store version could not open, import or save a family tree
+  outside of its container, e.g. in the Documents or Downloads folder. Its file
+  dialogs listed only the container, because only the native macOS file dialog
+  grants a sandboxed application access to the file the user selects. The
+  sandboxed version now uses the native dialog; other versions keep the
+  application's own one.
+- The Apple App Store version could not save a family tree it was given access
+  to outside of its container, because the file was written into a temporary
+  file next to it first. Pictures of such a tree are embedded in the tree file,
+  as no picture files may be created next to it.
+- The Apple App Store version did not reopen the last family tree on start when
+  it was stored outside of its container. The access to the file is now kept in
+  the settings and restored on the next start.
 - After the color scheme changed, the person details kept the colors of the
   previous scheme, the labels of the "Editor" and "Output" tabs kept the previous
   text color, so a dark scheme left them white on a light background, and text
@@ -209,10 +222,10 @@
 
 - range-ai-lib @ v1.2.0
 - range-base-lib @ v1.2.2
-- range-build-tools @ v1.1.1
-- range-cloud-lib @ v1.3.0
+- range-build-tools @ v1.2.0
+- range-cloud-lib @ v1.3.1
 - range-family-lib @ v1.2.0
-- range-gui-lib @ v1.3.1
+- range-gui-lib @ v1.3.2
 
 ---
 

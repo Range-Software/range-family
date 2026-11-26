@@ -222,7 +222,7 @@ void Action::onFileOpen()
                                                     Application::instance()->getApplicationSettings()->getDataDir(),
                                                     dialogDesc,
                                                     nullptr,
-                                                    QFileDialog::DontUseNativeDialog);
+                                                    Application::treeFileDialogOptions());
     if (!fileName.isEmpty())
     {
         Application::instance()->getSession()->setTreeFileName(fileName);
@@ -255,7 +255,7 @@ void Action::onFileImport()
                                                     Application::instance()->getApplicationSettings()->getDataDir(),
                                                     dialogDesc,
                                                     nullptr,
-                                                    QFileDialog::DontUseNativeDialog);
+                                                    Application::treeFileDialogOptions());
     if (!fileName.isEmpty())
     {
         TreeDiffDialog *dialog = new TreeDiffDialog(fileName,Application::instance()->getSession()->getTreeFileName(),true,Application::instance()->getMainWindow());
@@ -288,7 +288,7 @@ void Action::onFileSave()
                                                 Application::instance()->getApplicationSettings()->getDataDir() + "/tree.xml",
                                                 "Family tree files (*.xml *.json);;Any files (*)",
                                                 nullptr,
-                                                QFileDialog::DontUseNativeDialog);
+                                                Application::treeFileDialogOptions());
     }
 
     if (!fileName.isEmpty())
@@ -318,7 +318,7 @@ void Action::onFileSaveAs()
                                             fileName,
                                             "Family tree files (*.xml *.json);;Any files (*)",
                                             nullptr,
-                                            QFileDialog::DontUseNativeDialog);
+                                            Application::treeFileDialogOptions());
 
     if (!fileName.isEmpty())
     {

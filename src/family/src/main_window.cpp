@@ -34,6 +34,7 @@
 #include "cloud_ai_query_widget.h"
 #include "editor_widget.h"
 #include "output_widget.h"
+#include "security_scoped_bookmark.h"
 
 //! Version of tool bar arrangement. Increase it when tool bars change, to place them anew for existing users.
 static constexpr int toolBarsVersion = 2;
@@ -745,7 +746,18 @@ void MainWindow::readSettings()
     this->isFirstRun = (this->applicationSettings->getStoredVersion() != RVendor::version());
     if (this->applicationSettings->getStoredVersion() <= RVendor::version())
     {
-        this->session->setTreeFileName(this->applicationSettings->value("session/treeFile").toString());
+        QString treeFileName = this->applicationSettings->value("session/treeFile").toString();
+        if (RApplicationSettings::isSandboxed())
+        {
+            // Sandboxed application lost access to the file selected outside of
+            // its container when it quit - regain it through the bookmark.
+            QString bookmarkFileName = SecurityScopedBookmark::resolve(this->applicationSettings->value("session/treeFileBookmark").toByteArray());
+            if (!bookmarkFileName.isEmpty())
+            {
+                treeFileName = bookmarkFileName;
+            }
+        }
+        this->session->setTreeFileName(treeFileName);
         this->session->setActivePersonId(this->applicationSettings->value("session/activePersonId").toUuid());
         this->session->setLastAiChatAgent(this->applicationSettings->value("session/lastAiAgent").toString());
         this->session->setLastAiChatLanguage(this->applicationSettings->value("session/lastAiChatLanguage").toString());
@@ -783,6 +795,11 @@ void MainWindow::writeSettings() const
     }
 
     this->applicationSettings->setValue("session/treeFile",this->session->getTreeFileName());
+    if (RApplicationSettings::isSandboxed())
+    {
+        // Bookmark is created while the access to the file is still granted.
+        this->applicationSettings->setValue("session/treeFileBookmark",SecurityScopedBookmark::create(this->session->getTreeFileName()));
+    }
     this->applicationSettings->setValue("session/activePersonId",this->session->getActivePersonId());
     this->applicationSettings->setValue("session/lastAiAgent",this->session->getLastAiChatAgent());
     this->applicationSettings->setValue("session/lastAiChatLanguage",this->session->getLastAiChatLanguage());

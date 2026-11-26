@@ -75,6 +75,8 @@ qt_add_executable(family
     src/relations_list_widget.h
     src/scale_control_widget.cpp
     src/scale_control_widget.h
+    src/security_scoped_bookmark.cpp
+    src/security_scoped_bookmark.h
     src/session.cpp
     src/session.h
     src/tree_diff_dialog.cpp
@@ -119,6 +121,9 @@ elseif (APPLE)
     set(APP_ICON "${CMAKE_CURRENT_SOURCE_DIR}/pixmaps/${PROJECT_PACKAGE_NAME}.icns")
     set_source_files_properties("${APP_ICON}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     target_sources(family PRIVATE "${APP_ICON}")
+
+    # Security-scoped bookmarks of the tree file (sandboxed App Store build)
+    target_link_libraries(family PRIVATE "-framework CoreFoundation")
 
     # Info.plist is generated from a template rather than patched after the
     # build, because the App Store requires keys CMake does not write on its own

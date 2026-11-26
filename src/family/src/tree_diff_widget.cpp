@@ -639,7 +639,7 @@ void TreeDiffWidget::onSaveButtonClicked()
                                             fileName,
                                             "Family tree files (*.xml *.json);;Any files (*)",
                                             nullptr,
-                                            QFileDialog::DontUseNativeDialog);
+                                            Application::treeFileDialogOptions());
 
     if (!fileName.isEmpty())
     {

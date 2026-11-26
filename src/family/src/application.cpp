@@ -18,6 +18,11 @@ Application::Application(int &argc, char **argv)
     this->translatorNames << "range-cloud-lib";
 }
 
+QFileDialog::Options Application::treeFileDialogOptions()
+{
+    return RApplicationSettings::isSandboxed() ? QFileDialog::Options() : QFileDialog::DontUseNativeDialog;
+}
+
 Application *Application::instance() noexcept
 {
     return qobject_cast<Application*>(RApplication::instance());

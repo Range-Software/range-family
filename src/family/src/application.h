@@ -1,6 +1,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <QFileDialog>
+
 #include <rgl_application.h>
 #include <rgl_application_settings.h>
 
@@ -27,6 +29,12 @@ class Application : public RApplication
         //! Return resource path of the application window icon.
         //! Windows gets a full bleed variant, the default one follows the macOS icon grid.
         static QString windowIconFile();
+
+        //! Return options for tree file dialogs.
+        //! Qt's own dialog is used unless sandboxed - only the native dialog
+        //! (macOS powerbox) grants a sandboxed application access to the files
+        //! the user selects outside of its container.
+        static QFileDialog::Options treeFileDialogOptions();
 
         //! Return const reference to session.
         const Session *getSession() const;
