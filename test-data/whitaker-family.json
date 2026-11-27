@@ -1,0 +1,1448 @@
+{
+    "version": "0.0.1",
+    "persons": [
+        {
+            "id": "a6cf9238-e356-5afc-9fbf-635bd7cf14be",
+            "sex": "male",
+            "name": {
+                "first-name": "Harold",
+                "middle-name": "James",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1921,
+                    "month": 3,
+                    "day": 14
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States",
+                        "street": "Maple Avenue",
+                        "street-number": "412"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1998,
+                    "month": 11,
+                    "day": 2
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "text": "TWFjaGluaXN0IGF0IGEgQ29sdW1idXMgdG9vbCBwbGFudCBmb3IgMzggeWVhcnMuClNlcnZlZCBpbiB0aGUgVVMgTmF2eSAxOTQyLTE5NDUu"
+        },
+        {
+            "id": "811a805c-02a1-55f7-b676-156952565e1f",
+            "sex": "female",
+            "name": {
+                "first-name": "Dorothy",
+                "middle-name": "Mae",
+                "last-name": "Whitaker",
+                "maiden-name": "Collins"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1924,
+                    "month": 7,
+                    "day": 8
+                },
+                "place": {
+                    "address": {
+                        "city": "Dayton, Ohio",
+                        "postal-code": "45402",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.7589,
+                        "longitude": -84.1916
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2011,
+                    "month": 1,
+                    "day": 19
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "ed212cf3-c19a-5c8b-b1f2-68f5e2066084",
+            "sex": "male",
+            "name": {
+                "first-name": "Walter",
+                "middle-name": "Eugene",
+                "last-name": "Brooks"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1919,
+                    "month": 10,
+                    "day": 27
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": true,
+                    "year": 1987
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "092fd759-cfb2-5c36-9184-1e7dce86d7b6",
+            "sex": "female",
+            "name": {
+                "first-name": "Margaret",
+                "middle-name": "Ann",
+                "last-name": "Brooks",
+                "maiden-name": "Sullivan"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": true,
+                    "year": 1922
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2004,
+                    "month": 5,
+                    "day": 16
+                },
+                "place": {
+                    "address": {
+                        "city": "Portland, Maine",
+                        "postal-code": "04101",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 43.6591,
+                        "longitude": -70.2568
+                    }
+                }
+            },
+            "text": "RXhhY3QgYmlydGggZGF0ZSB1bmtub3duOyBmYW1pbHkgcmVjYWxscyBzaGUgd2FzIGJvcm4gImFyb3VuZCAxOTIyIi4="
+        },
+        {
+            "id": "9fff8bed-83ea-512b-b753-afc025725129",
+            "sex": "male",
+            "name": {
+                "first-name": "Raymond",
+                "middle-name": "Lee",
+                "last-name": "Carter"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1925,
+                    "month": 2,
+                    "day": 3
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2001,
+                    "month": 8,
+                    "day": 30
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "18c07056-37ae-5cac-a241-26522b45ebe3",
+            "sex": "female",
+            "name": {
+                "first-name": "Evelyn",
+                "middle-name": "Rose",
+                "last-name": "Carter",
+                "maiden-name": "Hughes"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1927,
+                    "month": 12,
+                    "day": 24
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2015,
+                    "month": 3,
+                    "day": 11
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "239c8cf4-ed0d-5e91-8dd5-a76faba148ae",
+            "sex": "male",
+            "name": {
+                "first-name": "Robert",
+                "middle-name": "Allen",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1947,
+                    "month": 9,
+                    "day": 22
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "0530c671-f24b-53e7-9b7d-dee68ccf2179",
+            "sex": "female",
+            "name": {
+                "first-name": "Susan",
+                "middle-name": "Marie",
+                "last-name": "Morgan",
+                "maiden-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1950,
+                    "month": 2,
+                    "day": 11
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "text": "TWFycmllZCB0d2ljZTogR2FyeSBUaG9tcHNvbiAoZGl2b3JjZWQgMTk4MykgYW5kIEtlbm5ldGggTW9yZ2FuICgxOTg2KS4="
+        },
+        {
+            "id": "be73706f-be0d-5348-849d-79207dedf0ea",
+            "sex": "male",
+            "name": {
+                "first-name": "Thomas",
+                "middle-name": "Edward",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1953,
+                    "month": 5,
+                    "day": 30
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1972,
+                    "month": 7,
+                    "day": 4
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "text": "RGllZCBpbiBhIGNhciBhY2NpZGVudCBhdCAxOS4gTm8gZGVzY2VuZGFudHMu"
+        },
+        {
+            "id": "18379cf1-35bd-5952-8131-655f465c22df",
+            "sex": "female",
+            "name": {
+                "first-name": "Linda",
+                "middle-name": "Jean",
+                "last-name": "Whitaker",
+                "maiden-name": "Brooks"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1949,
+                    "month": 12,
+                    "day": 3
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "95999dd0-9967-5b53-9f8b-e3157915ca53",
+            "sex": "male",
+            "name": {
+                "first-name": "Michael",
+                "middle-name": "Patrick",
+                "last-name": "Brooks"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1952,
+                    "month": 6,
+                    "day": 18
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "ba709d4b-f6d3-5995-bb73-c41c24f2a82b",
+            "sex": "female",
+            "name": {
+                "first-name": "Karen",
+                "middle-name": "Lynn",
+                "last-name": "Brooks",
+                "maiden-name": "Carter"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1955,
+                    "month": 9,
+                    "day": 9
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "b41826f4-9df3-5469-a323-fd772ba27ef0",
+            "sex": "male",
+            "name": {
+                "first-name": "David",
+                "middle-name": "Wayne",
+                "last-name": "Carter"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1958,
+                    "month": 4,
+                    "day": 21
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            },
+            "text": "TmV2ZXIgbWFycmllZCwgbm8gY2hpbGRyZW4uIExpdmVzIGluIEF1c3RpbiwgVGV4YXMu"
+        },
+        {
+            "id": "8789a80e-c8ea-5e99-9042-2178cb748cd0",
+            "sex": "male",
+            "name": {
+                "first-name": "Gary",
+                "middle-name": "Lee",
+                "last-name": "Thompson"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1948,
+                    "month": 11,
+                    "day": 5
+                },
+                "place": {
+                    "address": {
+                        "city": "Chicago, Illinois",
+                        "postal-code": "60601",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 41.8781,
+                        "longitude": -87.6298
+                    }
+                }
+            }
+        },
+        {
+            "id": "0237efdc-e9b8-5ef0-96a7-30e1e7ebbdbf",
+            "sex": "male",
+            "name": {
+                "first-name": "Kenneth",
+                "middle-name": "Paul",
+                "last-name": "Morgan"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1946,
+                    "month": 1,
+                    "day": 30
+                },
+                "place": {
+                    "address": {
+                        "city": "Denver, Colorado",
+                        "postal-code": "80202",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.7392,
+                        "longitude": -104.9903
+                    }
+                }
+            },
+            "death": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2019,
+                    "month": 10,
+                    "day": 12
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "c1fc0a2c-4fce-5162-aa77-9ae69d4dd1a8",
+            "sex": "female",
+            "name": {
+                "first-name": "Jennifer",
+                "middle-name": "Lynn",
+                "last-name": "Foster",
+                "maiden-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1974,
+                    "month": 4,
+                    "day": 2
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "14bc4f4e-5bd3-592e-8000-a9d518ddf416",
+            "sex": "male",
+            "name": {
+                "first-name": "Christopher",
+                "middle-name": "Robert",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1976,
+                    "month": 10,
+                    "day": 17
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "69296c5e-979b-50ba-bd47-19dd28713f33",
+            "sex": "female",
+            "name": {
+                "first-name": "Emily",
+                "middle-name": "Anne",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1981,
+                    "month": 1,
+                    "day": 25
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "1cd2df0e-0e8f-55b0-84d0-6c8a42086c57",
+            "sex": "male",
+            "name": {
+                "first-name": "Jason",
+                "middle-name": "Michael",
+                "last-name": "Thompson"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1975,
+                    "month": 8,
+                    "day": 14
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "7f944c27-fefe-52b1-aa2d-6b20476f16fa",
+            "sex": "female",
+            "name": {
+                "first-name": "Ashley",
+                "middle-name": "Nicole",
+                "last-name": "Thompson"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1978,
+                    "month": 3,
+                    "day": 7
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "133c5167-e646-5fa4-b4d1-7fb9219456c1",
+            "sex": "male",
+            "name": {
+                "first-name": "Ryan",
+                "middle-name": "Scott",
+                "last-name": "Morgan"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1987,
+                    "month": 12,
+                    "day": 1
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "text": "SGFsZi1icm90aGVyIG9mIEphc29uIGFuZCBBc2hsZXkgVGhvbXBzb24u"
+        },
+        {
+            "id": "ef1c1a15-92ee-522f-8f80-ef92aeb5f61a",
+            "sex": "male",
+            "name": {
+                "first-name": "Matthew",
+                "middle-name": "David",
+                "last-name": "Brooks"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1980,
+                    "month": 5,
+                    "day": 26
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "e2873b5c-0b0d-54e7-b15b-5dc67c9eea94",
+            "sex": "female",
+            "name": {
+                "first-name": "Sarah",
+                "middle-name": "Elizabeth",
+                "last-name": "Brooks"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1983,
+                    "month": 9,
+                    "day": 30
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "d532bcc3-512c-5f83-a1d0-5e486ee5e689",
+            "sex": "male",
+            "name": {
+                "first-name": "Daniel",
+                "middle-name": "James",
+                "last-name": "Foster"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1972,
+                    "month": 2,
+                    "day": 19
+                },
+                "place": {
+                    "address": {
+                        "city": "Chicago, Illinois",
+                        "postal-code": "60601",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 41.8781,
+                        "longitude": -87.6298
+                    }
+                }
+            }
+        },
+        {
+            "id": "2b002802-75ae-5717-942b-ff4976489aa5",
+            "sex": "female",
+            "name": {
+                "first-name": "Megan",
+                "middle-name": "Rose",
+                "last-name": "Whitaker",
+                "maiden-name": "Kelly"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1978,
+                    "month": 7,
+                    "day": 11
+                },
+                "place": {
+                    "address": {
+                        "city": "Portland, Maine",
+                        "postal-code": "04101",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 43.6591,
+                        "longitude": -70.2568
+                    }
+                }
+            }
+        },
+        {
+            "id": "4799ee8e-a19b-5abb-ba1e-1146fa5c7309",
+            "sex": "female",
+            "name": {
+                "first-name": "Amanda",
+                "middle-name": "Lee",
+                "last-name": "Thompson",
+                "maiden-name": "Parker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1977,
+                    "month": 11,
+                    "day": 23
+                },
+                "place": {
+                    "address": {
+                        "city": "Denver, Colorado",
+                        "postal-code": "80202",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.7392,
+                        "longitude": -104.9903
+                    }
+                }
+            }
+        },
+        {
+            "id": "9de9e60a-4835-5869-a5d0-6c2aa60e6b27",
+            "sex": "female",
+            "name": {
+                "first-name": "Jessica",
+                "middle-name": "Marie",
+                "last-name": "Reed"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1982,
+                    "month": 4,
+                    "day": 15
+                },
+                "place": {
+                    "address": {
+                        "city": "Seattle, Washington",
+                        "postal-code": "98101",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 47.6062,
+                        "longitude": -122.3321
+                    }
+                }
+            }
+        },
+        {
+            "id": "b486bfbb-1858-57e8-a876-cdf9da5a5705",
+            "sex": "female",
+            "name": {
+                "first-name": "Olivia",
+                "middle-name": "Grace",
+                "last-name": "Foster"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2002,
+                    "month": 6,
+                    "day": 8
+                },
+                "place": {
+                    "address": {
+                        "city": "Chicago, Illinois",
+                        "postal-code": "60601",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 41.8781,
+                        "longitude": -87.6298
+                    }
+                }
+            }
+        },
+        {
+            "id": "c5edfe9e-edc5-59b4-b3f3-10919fae94b4",
+            "sex": "male",
+            "name": {
+                "first-name": "Ethan",
+                "middle-name": "James",
+                "last-name": "Foster"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2005,
+                    "month": 1,
+                    "day": 17
+                },
+                "place": {
+                    "address": {
+                        "city": "Chicago, Illinois",
+                        "postal-code": "60601",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 41.8781,
+                        "longitude": -87.6298
+                    }
+                }
+            }
+        },
+        {
+            "id": "f670c28c-c95e-5f2e-ac6b-46e2deffcd81",
+            "sex": "male",
+            "name": {
+                "first-name": "Noah",
+                "middle-name": "Christopher",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2006,
+                    "month": 9,
+                    "day": 3
+                },
+                "place": {
+                    "address": {
+                        "city": "Seattle, Washington",
+                        "postal-code": "98101",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 47.6062,
+                        "longitude": -122.3321
+                    }
+                }
+            }
+        },
+        {
+            "id": "c6ea5b53-3cd3-526b-8abf-b34d28c3735e",
+            "sex": "female",
+            "name": {
+                "first-name": "Ava",
+                "middle-name": "Rose",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2009,
+                    "month": 12,
+                    "day": 19
+                },
+                "place": {
+                    "address": {
+                        "city": "Seattle, Washington",
+                        "postal-code": "98101",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 47.6062,
+                        "longitude": -122.3321
+                    }
+                }
+            }
+        },
+        {
+            "id": "8c5e285b-eb2d-5c80-8c7b-499d23c1a29b",
+            "sex": "male",
+            "name": {
+                "first-name": "Tyler",
+                "middle-name": "Jason",
+                "last-name": "Thompson"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2003,
+                    "month": 3,
+                    "day": 28
+                },
+                "place": {
+                    "address": {
+                        "city": "Denver, Colorado",
+                        "postal-code": "80202",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.7392,
+                        "longitude": -104.9903
+                    }
+                }
+            }
+        },
+        {
+            "id": "759926a3-1428-5566-b10e-fef68bd07091",
+            "sex": "male",
+            "name": {
+                "first-name": "Mason",
+                "last-name": "Whitaker"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2012,
+                    "month": 8,
+                    "day": 5
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            },
+            "text": "RmF0aGVyIHVua25vd24u"
+        },
+        {
+            "id": "ccd83a02-8c27-559b-9e09-fa78f5495528",
+            "sex": "female",
+            "name": {
+                "first-name": "Lily",
+                "last-name": "Brooks"
+            },
+            "birth": {
+                "date": {
+                    "fuzzy": true,
+                    "year": 2015
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "id": "7993cb2e-9805-597e-925a-579045cd162f",
+            "partners": [
+                "a6cf9238-e356-5afc-9fbf-635bd7cf14be",
+                "811a805c-02a1-55f7-b676-156952565e1f"
+            ],
+            "children": [
+                "239c8cf4-ed0d-5e91-8dd5-a76faba148ae",
+                "0530c671-f24b-53e7-9b7d-dee68ccf2179",
+                "be73706f-be0d-5348-849d-79207dedf0ea"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1946,
+                    "month": 6,
+                    "day": 15
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "ee781aa2-d6ac-5a9e-aa92-625d1a467f69",
+            "partners": [
+                "ed212cf3-c19a-5c8b-b1f2-68f5e2066084",
+                "092fd759-cfb2-5c36-9184-1e7dce86d7b6"
+            ],
+            "children": [
+                "18379cf1-35bd-5952-8131-655f465c22df",
+                "95999dd0-9967-5b53-9f8b-e3157915ca53"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1945,
+                    "month": 9,
+                    "day": 1
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "ad352b80-4085-5c96-8887-369ffcde283d",
+            "partners": [
+                "9fff8bed-83ea-512b-b753-afc025725129",
+                "18c07056-37ae-5cac-a241-26522b45ebe3"
+            ],
+            "children": [
+                "ba709d4b-f6d3-5995-bb73-c41c24f2a82b",
+                "b41826f4-9df3-5469-a323-fd772ba27ef0"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1951,
+                    "month": 5,
+                    "day": 12
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "f241fe29-5b1c-58d1-a535-7ccec1343a72",
+            "partners": [
+                "239c8cf4-ed0d-5e91-8dd5-a76faba148ae",
+                "18379cf1-35bd-5952-8131-655f465c22df"
+            ],
+            "children": [
+                "c1fc0a2c-4fce-5162-aa77-9ae69d4dd1a8",
+                "14bc4f4e-5bd3-592e-8000-a9d518ddf416",
+                "69296c5e-979b-50ba-bd47-19dd28713f33"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1972,
+                    "month": 8,
+                    "day": 19
+                },
+                "place": {
+                    "address": {
+                        "city": "Boston, Massachusetts",
+                        "postal-code": "02108",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 42.3601,
+                        "longitude": -71.0589
+                    }
+                }
+            }
+        },
+        {
+            "id": "34d40066-bf3c-5632-b9e2-8a20c9021274",
+            "partners": [
+                "8789a80e-c8ea-5e99-9042-2178cb748cd0",
+                "0530c671-f24b-53e7-9b7d-dee68ccf2179"
+            ],
+            "children": [
+                "1cd2df0e-0e8f-55b0-84d0-6c8a42086c57",
+                "7f944c27-fefe-52b1-aa2d-6b20476f16fa"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1974,
+                    "month": 10,
+                    "day": 5
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            },
+            "end": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1983,
+                    "month": 3,
+                    "day": 22
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "49fcfa72-9262-5550-9f7c-d1d0769cb147",
+            "partners": [
+                "0237efdc-e9b8-5ef0-96a7-30e1e7ebbdbf",
+                "0530c671-f24b-53e7-9b7d-dee68ccf2179"
+            ],
+            "children": [
+                "133c5167-e646-5fa4-b4d1-7fb9219456c1"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1986,
+                    "month": 6,
+                    "day": 21
+                },
+                "place": {
+                    "address": {
+                        "city": "Columbus, Ohio",
+                        "postal-code": "43215",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.9612,
+                        "longitude": -82.9988
+                    }
+                }
+            }
+        },
+        {
+            "id": "e9e97bf5-1499-5c3d-a359-d779cf5f1e77",
+            "partners": [
+                "95999dd0-9967-5b53-9f8b-e3157915ca53",
+                "ba709d4b-f6d3-5995-bb73-c41c24f2a82b"
+            ],
+            "children": [
+                "ef1c1a15-92ee-522f-8f80-ef92aeb5f61a",
+                "e2873b5c-0b0d-54e7-b15b-5dc67c9eea94"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 1979,
+                    "month": 4,
+                    "day": 28
+                },
+                "place": {
+                    "address": {
+                        "city": "Nashville, Tennessee",
+                        "postal-code": "37203",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 36.1627,
+                        "longitude": -86.7816
+                    }
+                }
+            }
+        },
+        {
+            "id": "f9db49a3-ec22-5ddc-a868-d7ed34d256cc",
+            "partners": [
+                "d532bcc3-512c-5f83-a1d0-5e486ee5e689",
+                "c1fc0a2c-4fce-5162-aa77-9ae69d4dd1a8"
+            ],
+            "children": [
+                "b486bfbb-1858-57e8-a876-cdf9da5a5705",
+                "c5edfe9e-edc5-59b4-b3f3-10919fae94b4"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2000,
+                    "month": 9,
+                    "day": 16
+                },
+                "place": {
+                    "address": {
+                        "city": "Chicago, Illinois",
+                        "postal-code": "60601",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 41.8781,
+                        "longitude": -87.6298
+                    }
+                }
+            }
+        },
+        {
+            "id": "ce550f4a-9181-56d4-aafc-9bcc945081e7",
+            "partners": [
+                "14bc4f4e-5bd3-592e-8000-a9d518ddf416",
+                "2b002802-75ae-5717-942b-ff4976489aa5"
+            ],
+            "children": [
+                "f670c28c-c95e-5f2e-ac6b-46e2deffcd81",
+                "c6ea5b53-3cd3-526b-8abf-b34d28c3735e"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2003,
+                    "month": 5,
+                    "day": 24
+                },
+                "place": {
+                    "address": {
+                        "city": "Portland, Maine",
+                        "postal-code": "04101",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 43.6591,
+                        "longitude": -70.2568
+                    }
+                }
+            }
+        },
+        {
+            "id": "e0eed64b-5080-530a-b0bf-2369a1868298",
+            "partners": [
+                "1cd2df0e-0e8f-55b0-84d0-6c8a42086c57",
+                "4799ee8e-a19b-5abb-ba1e-1146fa5c7309"
+            ],
+            "children": [
+                "8c5e285b-eb2d-5c80-8c7b-499d23c1a29b"
+            ],
+            "begin": {
+                "date": {
+                    "fuzzy": false,
+                    "year": 2001,
+                    "month": 7,
+                    "day": 14
+                },
+                "place": {
+                    "address": {
+                        "city": "Denver, Colorado",
+                        "postal-code": "80202",
+                        "country": "United States"
+                    },
+                    "geo-coordinate": {
+                        "latitude": 39.7392,
+                        "longitude": -104.9903
+                    }
+                }
+            }
+        },
+        {
+            "id": "f716d1cd-b441-517a-a02a-cb8d0ad03cb9",
+            "partners": [
+                "ef1c1a15-92ee-522f-8f80-ef92aeb5f61a",
+                "9de9e60a-4835-5869-a5d0-6c2aa60e6b27"
+            ],
+            "children": [
+                "ccd83a02-8c27-559b-9e09-fa78f5495528"
+            ]
+        },
+        {
+            "id": "36b130bb-2ca8-5b3d-a23a-07d651853c7b",
+            "partners": [
+                "69296c5e-979b-50ba-bd47-19dd28713f33"
+            ],
+            "children": [
+                "759926a3-1428-5566-b10e-fef68bd07091"
+            ]
+        }
+    ]
+}
