@@ -234,7 +234,7 @@
 - range-build-tools @ v1.2.0
 - range-cloud-lib @ v1.3.1
 - range-family-lib @ v1.2.0
-- range-gui-lib @ v1.3.3
+- range-gui-lib @ v1.3.4
 
 ---
 
